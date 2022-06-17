@@ -1535,43 +1535,43 @@ export class AmauiTest {
 
     // Lines skipped
     for (let i = 0; i < value.length;) {
-      if (i === 0 || ['+', '-'].indexOf(value[i][2]) > -1) {
-        let anotherOperator: boolean;
-        let range = 1;
-        let j = i + 1;
+      let anotherOperator: boolean;
+      let range = 1;
+      let j = i + 1;
 
-        while (!anotherOperator && j < value.length) {
-          if (['+', '-'].indexOf(value[j][2]) > -1 || j === value.length - 1) anotherOperator = true;
-          else {
-            range++;
-            j++;
-          }
-        }
-
-        // Only if range is > than 4 lines skipped
-        if (range > 4 && anotherOperator) {
-          if (i === 0) {
-            value.splice(0, range - 1, `     ${range - 1} lines skipped\n`);
-
-            i = 2;
-          }
-          else if (j === value.length - 1) {
-            value.splice(i + 2, range - 1, `\n     ${range - 1} lines skipped`);
-
-            i = j;
-          }
-          else {
-            value.splice(i + 2, range - 3, `\n     ${range - 3} lines skipped\n`);
-
-            i = range + 1 - 3;
-          }
-        }
+      while (!anotherOperator && j < value.length) {
+        if (['+', '-'].indexOf(value[j][2]) > -1) anotherOperator = true;
         else {
-          i += range + 1;
+          range++;
+          j++;
         }
       }
+
+      // Only if range is > than 4 lines skipped
+      if (range >= 4 && anotherOperator) {
+        if (i === 0) {
+          value.splice(0, range - 1, `     ${range - 1} lines skipped\n`);
+
+          i = 2;
+        }
+        else if (j === value.length - 1) {
+          value.splice(i + 1, range - 2, `\n     ${j - i - 2} lines skipped`);
+
+          i = value.length - 1;
+        }
+        else {
+          value.splice(i + 1, range - 2, `\n     ${range - 2} lines skipped\n`);
+
+          i += 2;
+        }
+      }
+      else if (j >= value.length - 1 && j - i - 1 > 4) {
+        value.splice(i + 2, range - 1, `\n     ${j - i - 2} lines skipped`);
+
+        i = j + 1;
+      }
       else {
-        i++;
+        i += range + 1;
       }
     }
 

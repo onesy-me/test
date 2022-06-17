@@ -49,9 +49,9 @@ const run = async () => {
     paths.push(
       'https://unpkg.com/@amaui/utils@latest/umd/amaui-utils.prod.min.js',
 
-      'https://unpkg.com/@amaui/date@latest/umd/amaui-date.prod.min.js',
+      'https://unpkg.com/@amaui/date@latest/umd/amaui-date.production.min.js',
 
-      'https://unpkg.com/@amaui/diff@latest/umd/amaui-diff.prod.min.js',
+      'https://unpkg.com/@amaui/diff@latest/umd/amaui-diff.production.min.js',
 
       'https://unpkg.com/react@latest/umd/react.production.min.js'
     );

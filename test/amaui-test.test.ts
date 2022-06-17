@@ -2726,6 +2726,19 @@ describe('@amaui/test', () => {
                 }
               };
 
+              if (!window.document.getElementById('amaui-test')) {
+                const div = window.document.createElement('div');
+
+                div.id = 'amaui-test';
+
+                div.innerHTML = `<div id='amaui-test-results'></div>`;
+
+                window.document.body.append(div);
+              }
+              else {
+                window.document.getElementById('amaui-test').innerHTML = `<div id='amaui-test-results'></div>`;
+              }
+
               const amauiTest = new window.AmauiTest.AmauiTest(options);
 
               to('a', async () => {
@@ -3133,6 +3146,19 @@ describe('@amaui/test', () => {
                     }
                   }
                 };
+
+                if (!window.document.getElementById('amaui-test')) {
+                  const div = window.document.createElement('div');
+
+                  div.id = 'amaui-test';
+
+                  div.innerHTML = `<div id='amaui-test-results'></div>`;
+
+                  window.document.body.append(div);
+                }
+                else {
+                  window.document.getElementById('amaui-test').innerHTML = `<div id='amaui-test-results'></div>`;
+                }
 
                 const amauiTest = new window.AmauiTest.AmauiTest(options);
 
@@ -3544,6 +3570,19 @@ describe('@amaui/test', () => {
                     }
                   }
                 };
+
+                if (!window.document.getElementById('amaui-test')) {
+                  const div = window.document.createElement('div');
+
+                  div.id = 'amaui-test';
+
+                  div.innerHTML = `<div id='amaui-test-results'></div>`;
+
+                  window.document.body.append(div);
+                }
+                else {
+                  window.document.getElementById('amaui-test').innerHTML = `<div id='amaui-test-results'></div>`;
+                }
 
                 const amauiTest = new window.AmauiTest.AmauiTest(options);
 

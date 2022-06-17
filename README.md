@@ -100,14 +100,10 @@ Make an AmauiTest instance, which will prepare the environment, write all the te
   import { AmauiTest, assert } from '@amaui/test';
   import { wait } from '@amaui/utils';
 
-  const options = {
-    order: 'original'
-  };
-
-  const amauiTest = new AmauiTest(options);
+  const amauiTest = new AmauiTest();
 
   to('a', () => {
-    assert(true).true;
+    assert(4).eq(4);
   });
 
   group('@amaui/a1', () => {
@@ -121,7 +117,7 @@ Make an AmauiTest instance, which will prepare the environment, write all the te
     to('a2', async () => {
       await wait(140);
 
-      assert(true).true;
+      assert(4).eq(4);
     });
 
     group('@amaui/a3', () => {
@@ -133,11 +129,15 @@ Make an AmauiTest instance, which will prepare the environment, write all the te
     });
 
     to('a4', () => {
-      throw new Error('a');
+      [1, 2, 3, 4].forEach(value => {
+        assert(typeof value === 'number').true;
+
+        throw new Error('a');
+      });
     });
 
     group('@amaui/a5', () => {
-      let a;
+      let a: any;
 
       pre(async () => {
         await wait(14);
@@ -149,10 +149,8 @@ Make an AmauiTest instance, which will prepare the environment, write all the te
         a = 4;
       });
 
-      to('a5', async (resolve, reject) => {
-        await wait(74);
-
-        const error = new Error();
+      to('a5', (resolve, reject) => {
+        const error: any = new Error();
 
         // Added expected and expression message
         error.name = 'An Error';
@@ -165,11 +163,13 @@ Make an AmauiTest instance, which will prepare the environment, write all the te
     });
 
     to('a6', async () => {
-      assert(true).true;
+      await wait(74);
+
+      assert(4).eq(4);
     });
 
     to('a7', async () => {
-      assert(4).true;
+      assert(['padding-left', 'padding', 'padding-right']).eql(['padding', 'padding-left', 'padding-right']);
     });
 
     to('a8', async resolve => {
@@ -187,7 +187,59 @@ Make an AmauiTest instance, which will prepare the environment, write all the te
     });
 
     to('a10', async () => {
-      assert(0).truthy;
+      assert({
+        "direction": "ltr",
+        "preference": {
+          "background": {
+            "default": "neutral"
+          },
+          "text": {
+            "default": "neutral"
+          },
+          "visual_contrast": {
+            "default": "regular"
+          }
+        },
+        "mode": "regular",
+        "palette": {
+          "accessibility": "regular",
+          "visual_contrast": {
+            "low": {
+              "opacity": {
+                "primary": 0.77,
+                "secondary": 0.54,
+                "tertiary": 0.27
+              }
+            }
+          }
+        }
+      }).eql({
+        "direction": "ltl",
+        "preference": {
+          "background": {
+            "default": "neutral"
+          },
+          "text": {
+            "default": "neutral"
+          },
+          "visual_contrast": {
+            "default": "regular"
+          }
+        },
+        "mode": "regular",
+        "palette": {
+          "accessibility": "regular",
+          "visual_contrast": {
+            "low": {
+              "opacity": {
+                "primary": 0.77,
+                "secondary": 0.54,
+                "tertiary": 0.27
+              }
+            }
+          }
+        }
+      });
     });
 
     to('a11', async () => {
@@ -256,7 +308,7 @@ Make an AmauiTest instance, which will prepare the environment, write all the te
     });
 
     to('a13', async () => {
-      assert(true).true;
+      assert(4).eq(4);
     });
 
     post(async () => {
@@ -274,7 +326,7 @@ Make an AmauiTest instance, which will prepare the environment, write all the te
 
 Results logged in nodejs and browser (and with an option for HTML logs)
 
-![AmauiTest results](utils/images/amaui-test-results.png)
+![AmauiTest results](utils/images/amaui-test-results.jpg)
 
 ### Dev
 
