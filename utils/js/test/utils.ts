@@ -2,7 +2,6 @@
 import path from 'path';
 
 import playwright, { chromium, webkit, firefox } from 'playwright';
-
 import { TMethod } from '@amaui/models';
 
 export type TType = 'chromium' | 'firefox' | 'webkit';
