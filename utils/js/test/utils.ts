@@ -1,6 +1,7 @@
 /* tslint:disable: no-shadowed-variable */
+import path from 'path';
+
 import playwright, { chromium, webkit, firefox } from 'playwright';
-import fg from 'fast-glob';
 
 import { TMethod } from '@amaui/models';
 
@@ -104,32 +105,25 @@ export const evaluate = async (
 ): Promise<any> => {
   const responses = [];
 
-  for (const key of Object.keys(options.browsers)) {
-    const browser: IBrowser = options.browsers[key];
+  if (!options.browsers) options.browsers = utils.browsers;
 
-    const window = await browser.page.evaluateHandle(() => window);
+  for (const key of Object.keys(options.browsers || {})) {
+    const browser: IBrowser = options.browsers && options.browsers[key];
 
-    // Remove prod scripts
-    await browser.page.evaluateHandle((window: Window) => {
-      const scripts = window.document.getElementsByTagName('script');
+    // Reset
+    await browser.page.reload();
 
-      Array.from(scripts).filter(script => script.src.indexOf('localhost') > -1).forEach(script => script.parentElement.removeChild(script));
-    }, window);
-
-    // Add prod scripts
-    const paths = (await fg('build/umd/*.prod.min.js', { onlyFiles: true }));
-
-    for (const value of paths) await browser.page.addScriptTag({ url: value });
+    const window = await browser.page?.evaluateHandle(() => window);
 
     const args = options.arguments?.length ? [window, ...options.arguments] : window;
 
-    if (options.pre) await browser.page.evaluateHandle(options.pre, args);
+    if (options.pre) await browser.page?.evaluateHandle(options.pre, args);
 
-    const response = await browser.page.evaluateHandle(method, args);
+    const response = await browser.page?.evaluateHandle(method, args);
 
-    if (options.post) await browser.page.evaluateHandle(options.post, args);
+    if (options.post) await browser.page?.evaluateHandle(options.post, args);
 
-    responses.push(await response.jsonValue());
+    responses.push(await response?.jsonValue());
 
     // Clean up
     await window.dispose();
@@ -158,3 +152,13 @@ export const closeBrowser = async (browser: IBrowser, name?: string): Promise<vo
 export const closeBrowsers = async (browsers: IBrowsers): Promise<void> => {
   if (browsers) for (const browser of Object.keys(browsers)) await closeBrowser(browsers[browser], browser);
 };
+
+interface IUtils {
+  browsers?: IBrowsers;
+}
+
+export const utils: IUtils = {};
+
+before(async () => utils.browsers = await startBrowsers());
+
+after(async () => utils.browsers = await startBrowsers());

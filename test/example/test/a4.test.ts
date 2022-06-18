@@ -11,8 +11,16 @@ preEveryGroup(async () => {
   await wait(40);
 });
 
+preEveryGroupGroup(async () => {
+  await wait(141);
+});
+
 preEveryTo(async () => {
   await wait(4);
+});
+
+preEveryGroupTo(async () => {
+  await wait(14);
 });
 
 to('a', async () => {
@@ -27,8 +35,16 @@ group('@amaui/a', () => {
     throw new Error('a');
   });
 
+  preEveryGroupGroup(async () => {
+    await wait(141);
+  });
+
   preTo(async () => {
     await wait(40);
+  });
+
+  preEveryGroupTo(async () => {
+    await wait(14);
   });
 
   to('a1', async () => {
@@ -78,8 +94,16 @@ group('@amaui/a', () => {
     throw new Error('a');
   });
 
+  postEveryGroupGroup(async () => {
+    await wait(141);
+  });
+
   postTo(async () => {
     await wait(40);
+  });
+
+  postEveryGroupTo(async () => {
+    await wait(14);
   });
 
 });
@@ -90,6 +114,14 @@ to('a7', async () => {
 
 postEveryGroup(async () => {
   await wait(40);
+});
+
+postEveryGroupGroup(async () => {
+  await wait(141);
+});
+
+postEveryGroupTo(async () => {
+  await wait(14);
 });
 
 postEveryTo(async () => {

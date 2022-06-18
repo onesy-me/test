@@ -17,6 +17,10 @@ group('@amaui/a1', () => {
     throw new Error('a');
   });
 
+  preEveryGroupTo(async () => {
+    await wait(14);
+  });
+
   to('a2', async () => {
     await wait(140);
 
@@ -218,6 +222,9 @@ group('@amaui/a1', () => {
     await wait(40);
   });
 
+  postEveryGroupTo(async () => {
+    await wait(14);
+  });
 });
 
 to('a14', async () => {

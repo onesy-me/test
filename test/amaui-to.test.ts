@@ -3,18 +3,11 @@ import { expect } from 'chai';
 
 import * as AmauiUtils from '@amaui/utils';
 
-import { startBrowsers, IBrowsers, evaluate, closeBrowsers } from '../utils/js/test/utils';
+import { evaluate } from '../utils/js/test/utils';
 
 import { AmauiTo, AmauiGroup } from '../src';
 
 describe('@amaui/test/amaui-to', () => {
-  let browsers: IBrowsers;
-
-  before(async () => browsers = await startBrowsers());
-
-  after(async () => {
-    await closeBrowsers(browsers);
-  });
 
   it('AmauiTo', async () => {
     const amauiTo = new AmauiTo('a', () => 4);
@@ -81,7 +74,7 @@ describe('@amaui/test/amaui-to', () => {
       values_.push(amauiTo);
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 

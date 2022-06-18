@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import { copy, wait } from '@amaui/utils';
 import AmauiNode from '@amaui/node';
 
-import { startBrowsers, IBrowsers, evaluate, closeBrowsers } from '../utils/js/test/utils';
+import { evaluate } from '../utils/js/test/utils';
 
 import { AmauiTest, assert, IOptions } from '../src';
 
@@ -26,13 +26,6 @@ function clearRequireCache() {
 }
 
 describe('@amaui/test', () => {
-  let browsers: IBrowsers;
-
-  before(async () => browsers = await startBrowsers());
-
-  after(async () => {
-    await closeBrowsers(browsers);
-  });
 
   beforeEach(() => clearRequireCache());
 
@@ -235,7 +228,7 @@ describe('@amaui/test', () => {
         const items = window.AmauiTest.AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
 
         return items;
-      }, { browsers });
+      });
       const values = [valueNode, ...valueBrowsers];
 
       values.forEach(value => expect(value).eql(['a', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13', 'a14']));
@@ -436,7 +429,7 @@ describe('@amaui/test', () => {
         const items = window.AmauiTest.AmauiTest.order(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
 
         return items;
-      }, { browsers });
+      });
       const values = [valueNode, ...valueBrowsers];
 
       values.forEach(value => expect(value).eql(['a', '@amaui/a1', 'a14']));
@@ -484,7 +477,7 @@ describe('@amaui/test', () => {
         const amauiTest = new window.AmauiTest.AmauiTest(options);
 
         return amauiTest.mainGroup.name === 'main';
-      }, { browsers });
+      });
       const values = [valueNode, ...valueBrowsers];
 
       values.forEach(value => expect(value).eql(true));
@@ -531,7 +524,7 @@ describe('@amaui/test', () => {
         const amauiTest = new window.AmauiTest.AmauiTest(options);
 
         return amauiTest.options;
-      }, { browsers });
+      });
       const values = [valueNode, ...valueBrowsers];
 
       delete valueNode.imports;
@@ -928,7 +921,7 @@ describe('@amaui/test', () => {
             const items = window.AmauiTest.AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
 
             return items;
-          }, { browsers });
+          });
           const values = [valueNode, ...valueBrowsers];
 
           values.forEach(value => expect(value).eql(['a', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13', 'a14']));
@@ -1129,7 +1122,7 @@ describe('@amaui/test', () => {
             const items = window.AmauiTest.AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
 
             return items;
-          }, { browsers });
+          });
           const values = [valueNode, ...valueBrowsers];
 
           values.forEach(value => expect(value).eql(['a', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13', 'a14']));
@@ -1330,7 +1323,7 @@ describe('@amaui/test', () => {
             const items = window.AmauiTest.AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
 
             return items;
-          }, { browsers });
+          });
           const values = [valueNode, ...valueBrowsers];
 
           values.forEach(value => expect(value).eql(['a', 'a14', 'a2', 'a4', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13', 'a3', 'a5']));
@@ -1531,7 +1524,7 @@ describe('@amaui/test', () => {
             const items = window.AmauiTest.AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
 
             return items;
-          }, { browsers });
+          });
           const values = [valueNode, ...valueBrowsers];
 
           values.forEach(value => expect(value).eql(['a3', 'a5', 'a2', 'a4', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13', 'a', 'a14']));
@@ -1570,7 +1563,7 @@ describe('@amaui/test', () => {
 
             await amauiTest.run();
 
-            const valueNode = amauiTest.archive.logs;
+            let valueNode = amauiTest.archive.logs;
 
             const valueBrowsers = await evaluate(async (window: any) => {
               const options = {
@@ -1741,7 +1734,7 @@ describe('@amaui/test', () => {
               await amauiTest.run();
 
               return amauiTest.archive.logs;
-            }, { browsers });
+            });
 
             valueBrowsers[1].splice(86, 2);
             valueBrowsers[2].splice(86, 2);
@@ -1954,17 +1947,12 @@ describe('@amaui/test', () => {
             });
 
             // Milliseconds variations minor problem
-            valueNode[5] = valueNode[5].slice(0, 32) + '140ms\u001b[0m';
-            valueNode[13] = valueNode[13].slice(0, 32) + '74ms\u001b[0m';
-            valueNode[25] = valueNode[25].slice(0, 5) + '440ms\u001b[0m';
-
             const valueNodeOutput = [
               "\n\n  Amaui test running",
               "  \u001b[90m14 tests\u001b[0m",
               "\n\n",
               "  \u001b[32m✔\u001b[0m \u001b[90ma\u001b[0m",
               "\n  @amaui/a1",
-              "    \u001b[32m✔\u001b[0m \u001b[90ma2\u001b[0m \u001b[31m140ms\u001b[0m",
               "\n    @amaui/a3",
               "      \u001b[31m1) a3\u001b[0m",
               " ",
@@ -1972,7 +1960,6 @@ describe('@amaui/test', () => {
               "\n    @amaui/a5",
               "      \u001b[31m3) a5\u001b[0m",
               " ",
-              "    \u001b[32m✔\u001b[0m \u001b[90ma6\u001b[0m \u001b[33m74ms\u001b[0m",
               "    \u001b[31m4) a7\u001b[0m",
               "    \u001b[32m✔\u001b[0m \u001b[90ma8\u001b[0m",
               "    \u001b[31m5) a9\u001b[0m",
@@ -1984,7 +1971,6 @@ describe('@amaui/test', () => {
               "  \u001b[31m9) a14\u001b[0m",
               "\n",
               " ",
-              "\u001b[90m440ms\u001b[0m",
               "\n",
               " ",
               "\u001b[92m5 passing\u001b[0m",
@@ -1994,17 +1980,14 @@ describe('@amaui/test', () => {
               "  1) @amaui/a1 @amaui/a3 a3",
               " ",
               "  \u001b[91mAssertError: expected function a() { } to equal undefined\u001b[0m",
-              "\n\u001b[90m  test/example/test/a.test.ts:29:32\n\n  at Context.<anonymous> (test/amaui-test.test.ts:1571:13)\u001b[0m",
               "\n",
               "  2) @amaui/a1 a4",
               " ",
               "  \u001b[91mError: a\u001b[0m",
-              "\n\u001b[90m  test/example/test/a.test.ts:38:13\n\n  at test/example/test/a.test.ts:35:18\n  at Context.<anonymous> (test/amaui-test.test.ts:1571:13)\u001b[0m",
               "\n",
               "  3) @amaui/a1 @amaui/a5 a5",
               " ",
               "  \u001b[91mAn Error: expected 4 to be 🍊 \u001b[0m",
-              "\n\u001b[90m  test/example/test/a.test.ts:56:26\n\n  at Context.<anonymous> (test/amaui-test.test.ts:1571:13)\u001b[0m",
               "\n",
               "  4) @amaui/a1 a7",
               " ",
@@ -2018,12 +2001,10 @@ describe('@amaui/test', () => {
               "\u001b[91m  -  \"padding\"\u001b[0m",
               "     \"padding-right\"",
               "   ]",
-              "\n\u001b[90m  test/example/test/a.test.ts:75:58\n\n  at Context.<anonymous> (test/amaui-test.test.ts:1571:13)\u001b[0m",
               "\n",
               "  5) @amaui/a1 a9",
               " ",
               "  \u001b[91mAssertError: expected function a() { } to async throw 4\u001b[0m",
-              "\n\u001b[90m  test/example/test/a.test.ts:89:5\u001b[0m",
               "\n",
               "  6) @amaui/a1 a10",
               " ",
@@ -2036,7 +2017,6 @@ describe('@amaui/test', () => {
               "\u001b[91m  -  \"direction\": \"ltr\"\u001b[0m",
               "     \"preference\": {",
               "\u001b[96m\n     24 lines skipped\u001b[0m",
-              "\n\u001b[90m  test/example/test/a.test.ts:119:8\n\n  at Context.<anonymous> (test/amaui-test.test.ts:1571:13)\u001b[0m",
               "\n",
               "  7) @amaui/a1 a11",
               " ",
@@ -2049,7 +2029,6 @@ describe('@amaui/test', () => {
               "\u001b[91m  -  \"AssertError\"\u001b[0m",
               "     \"ValidationError\"",
               "\u001b[96m\n     7 lines skipped\u001b[0m",
-              "\n\u001b[90m  test/example/test/a.test.ts:183:19\n\n  at Context.<anonymous> (test/amaui-test.test.ts:1571:13)\u001b[0m",
               "\n",
               "  8) @amaui/a1 a12",
               " ",
@@ -2077,14 +2056,14 @@ describe('@amaui/test', () => {
               "\u001b[92m  +    4\u001b[0m",
               "\u001b[92m  +  ]\u001b[0m",
               "   }",
-              "\n\u001b[90m  test/example/test/a.test.ts:210:19\n\n  at Context.<anonymous> (test/amaui-test.test.ts:1571:13)\u001b[0m",
               "\n",
               "  9) a14",
               " ",
               "  \u001b[91mAssertError: expected [{\"label\":\"Pacific/Midway (GMT-11:00)\",\"code\":\"Pacific/Midway\",\"name\":\" ... ] (424) to equal deep [{\"a\":[{\"a\":4},4]}] (1)\u001b[0m",
-              "\n\u001b[90m  test/example/test/a.test.ts:224:21\n\n  at Context.<anonymous> (test/amaui-test.test.ts:1571:13)\u001b[0m",
               "\n"
             ];
+
+            valueNode = valueNode.filter(item => item.indexOf('test.ts:') === -1 && item.indexOf('ms') === -1);
 
             expect(valueNode).eql(valueNodeOutput);
           });
@@ -2289,7 +2268,7 @@ describe('@amaui/test', () => {
               await amauiTest.run();
 
               return amauiTest.archive.logs.length > 140;
-            }, { browsers });
+            });
             const values = [valueNode, ...valueBrowsers];
 
             values.forEach(value => expect(value).eq(true));
@@ -2495,7 +2474,7 @@ describe('@amaui/test', () => {
               await amauiTest.run();
 
               return !amauiTest.archive.logs.length;
-            }, { browsers });
+            });
             const values = [valueNode, ...valueBrowsers];
 
             values.forEach(value => expect(value).eq(true));
@@ -2705,7 +2684,7 @@ describe('@amaui/test', () => {
               await amauiTest.run();
 
               return amauiTest.archive.logs.length > 140;
-            }, { browsers });
+            });
             const values = [valueNode, ...valueBrowsers];
 
             values.forEach(value => expect(value).eq(true));
@@ -2897,7 +2876,7 @@ describe('@amaui/test', () => {
               await amauiTest.run();
 
               return window.document.getElementById('amaui-test').innerHTML.length > 7400;
-            }, { browsers });
+            });
 
             valueBrowsers.forEach(value => expect(value).eq(true));
           });
@@ -3125,7 +3104,7 @@ describe('@amaui/test', () => {
                 await window.AmauiUtils.wait(1400);
 
                 return partialArchives && amauiTest.archive.logs.length > 140;
-              }, { browsers });
+              });
               const values = [valueNode, ...valueBrowsers];
 
               values.forEach(value => expect(value).eq(true));
@@ -3324,7 +3303,7 @@ describe('@amaui/test', () => {
                 await window.AmauiUtils.wait(1400);
 
                 return partialPrintHtml && window.document.getElementById('amaui-test').innerHTML.length > 7400;
-              }, { browsers });
+              });
 
               valueBrowsers.forEach(value => expect(value).eq(true));
             });
@@ -3549,7 +3528,7 @@ describe('@amaui/test', () => {
                 await window.AmauiUtils.wait(1400);
 
                 return !archiveLogs.length && amauiTest.archive.logs.length > 140;
-              }, { browsers });
+              });
               const values = [valueNode, ...valueBrowsers];
 
               values.forEach(value => expect(value).eq(true));
@@ -3750,7 +3729,7 @@ describe('@amaui/test', () => {
                 await window.AmauiUtils.wait(1400);
 
                 return innerHTML < 44 && window.document.getElementById('amaui-test').innerHTML.length > 7400;
-              }, { browsers });
+              });
               const values = [...valueBrowsers];
 
               values.forEach(value => expect(value).eq(true));
@@ -3938,7 +3917,7 @@ describe('@amaui/test', () => {
                 await amauiTest.run();
 
                 return window.document.body.innerHTML.length > 7400;
-              }, { browsers });
+              });
 
               valueBrowsers.forEach(value => expect(value).eq(true));
             });
@@ -4000,7 +3979,7 @@ describe('@amaui/test', () => {
               await amauiTest.run();
 
               return amauiTest.archive.logs.reduce((result, item) => result += item.length, 0) < 340;
-            }, { browsers });
+            });
             const values = [valueNode, ...valueBrowsers];
 
             values.forEach(value => expect(value).eq(true));
@@ -4029,7 +4008,7 @@ describe('@amaui/test', () => {
               await amauiTest.run();
 
               return amauiTest.archive.logs.reduce((result, item) => result += item.length, 0) > 340;
-            }, { browsers });
+            });
 
             const options: IOptions = {
               imports: [
@@ -4307,7 +4286,7 @@ describe('@amaui/test', () => {
               );
 
               return value;
-            }, { browsers });
+            });
             const values = [valueNode, ...valueBrowsers];
 
             values.forEach(value => expect(value).eql({
@@ -4566,7 +4545,7 @@ describe('@amaui/test', () => {
               );
 
               return value;
-            }, { browsers });
+            });
             const values = [valueNode, ...valueBrowsers];
 
             values.forEach(value => expect(value).eql({
@@ -4829,7 +4808,7 @@ describe('@amaui/test', () => {
               );
 
               return value;
-            }, { browsers });
+            });
             const values = [valueNode, ...valueBrowsers];
 
             values.forEach(value => expect(value).eql({
@@ -5097,7 +5076,7 @@ describe('@amaui/test', () => {
               );
 
               return value;
-            }, { browsers });
+            });
             const values = [valueNode, ...valueBrowsers];
 
             values.forEach(value => expect(value).eql({
@@ -5231,7 +5210,7 @@ describe('@amaui/test', () => {
               await amauiTest.run();
 
               return true;
-            }, { browsers });
+            });
             const values = [valueNode, ...valueBrowsers];
 
             values.forEach(value => expect(value).eq(true));
@@ -5488,7 +5467,7 @@ describe('@amaui/test', () => {
                 value.name,
                 value.message
               ];
-            }, { browsers });
+            });
             const values = [valueNode, ...valueBrowsers];
 
             values.forEach(value => expect(value).eql([
@@ -5993,7 +5972,7 @@ describe('@amaui/test', () => {
 
         const amauiTest = new window.AmauiTest.AmauiTest(options);
 
-        to('a', async () => {
+        to('a', () => {
           window.AmauiTest.assert(4).eq(4);
         });
 
@@ -6003,6 +5982,10 @@ describe('@amaui/test', () => {
             await window.AmauiUtils.wait(140);
 
             throw new Error('a');
+          });
+
+          preEveryGroupTo(async () => {
+            await window.AmauiUtils.wait(14);
           });
 
           to('a2', async () => {
@@ -6019,8 +6002,12 @@ describe('@amaui/test', () => {
 
           });
 
-          to('a4', async () => {
-            throw new Error('a');
+          to('a4', () => {
+            [1, 2, 3, 4].forEach(value => {
+              window.AmauiTest.assert(typeof value === 'number').true;
+
+              throw new Error('a');
+            });
           });
 
           group('@amaui/a5', () => {
@@ -6036,15 +6023,15 @@ describe('@amaui/test', () => {
               a = 4;
             });
 
-            to('a5', async () => {
-              const error: any = new Error('a');
+            to('a5', (resolve, reject) => {
+              const error: any = new Error();
 
               // Added expected and expression message
               error.name = 'An Error';
               error.expected = 4;
               error.expression = 'to be 🍊';
 
-              throw error;
+              reject(error);
             });
 
           });
@@ -6056,10 +6043,16 @@ describe('@amaui/test', () => {
           });
 
           to('a7', async () => {
-            window.AmauiTest.assert(4).true;
+            window.AmauiTest.assert(['padding-left', 'padding', 'padding-right']).eql(['padding', 'padding-left', 'padding-right']);
           });
 
-          to('a8', async () => {
+          to('a8', async resolve => {
+            await window.AmauiUtils.wait(4);
+
+            resolve();
+
+            await window.AmauiUtils.wait(140);
+
             window.AmauiTest.assert(4).eq(4);
           });
 
@@ -6068,26 +6061,81 @@ describe('@amaui/test', () => {
           });
 
           to('a10', async () => {
-            window.AmauiTest.assert(0).truthy;
+            window.AmauiTest.assert({
+              "direction": "ltr",
+              "preference": {
+                "background": {
+                  "default": "neutral"
+                },
+                "text": {
+                  "default": "neutral"
+                },
+                "visual_contrast": {
+                  "default": "regular"
+                }
+              },
+              "mode": "regular",
+              "palette": {
+                "accessibility": "regular",
+                "visual_contrast": {
+                  "low": {
+                    "opacity": {
+                      "primary": 0.77,
+                      "secondary": 0.54,
+                      "tertiary": 0.27
+                    }
+                  }
+                }
+              }
+            }).eql({
+              "direction": "ltl",
+              "preference": {
+                "background": {
+                  "default": "neutral"
+                },
+                "text": {
+                  "default": "neutral"
+                },
+                "visual_contrast": {
+                  "default": "regular"
+                }
+              },
+              "mode": "regular",
+              "palette": {
+                "accessibility": "regular",
+                "visual_contrast": {
+                  "low": {
+                    "opacity": {
+                      "primary": 0.77,
+                      "secondary": 0.54,
+                      "tertiary": 0.27
+                    }
+                  }
+                }
+              }
+            });
           });
 
           to('a11', async () => {
             const value = [
               'AmauiError',
+              'AmauiError',
               'AmauiAwsError',
               'AmauiTestError',
               'AmauiAmqpError',
               'AuthenticationError',
               'AuthorizationError',
-              'window.AmauiTest.AssertError',
+              'AssertError',
               'ValidationError',
               'PermissionError',
               'AmauiMongoError',
               'ConnectionError',
               'NotFoundError',
               'DeveloperError',
+              'AmauiError',
             ];
             const value1 = [
+              'AmauiError',
               'AmauiError',
               'AmauiAwsError',
               'AmauiTestError',
@@ -6100,6 +6148,7 @@ describe('@amaui/test', () => {
               'ConnectionError',
               'NotFoundError',
               'DeveloperError',
+              'AmauiError',
             ];
 
             window.AmauiTest.assert(value).eql(value1);
@@ -6140,6 +6189,9 @@ describe('@amaui/test', () => {
             await window.AmauiUtils.wait(40);
           });
 
+          postEveryGroupTo(async () => {
+            await window.AmauiUtils.wait(14);
+          });
         });
 
         to('a14', async () => {
@@ -6153,7 +6205,7 @@ describe('@amaui/test', () => {
         await amauiTest.run();
 
         return values_.filter(Boolean);
-      }, { browsers });
+      });
 
       expect(valueNode).eql([
         'new',
@@ -6164,7 +6216,7 @@ describe('@amaui/test', () => {
       ]);
 
       valueBrowsers.forEach(value => expect(value).eql([
-        "running", "preAll", "group", ["main", undefined], "to", ["a", "main"], "to:end", ["a", "main"], "group", ["@amaui/a1", "main"], "middleware", ["pre", "@amaui/a1"], "middleware:end", ["pre", "@amaui/a1"], "to", ["a2", "@amaui/a1"], "to:end", ["a2", "@amaui/a1"], "group", ["@amaui/a3", "@amaui/a1"], "to", ["a3", "@amaui/a3"], "to:end", ["a3", "@amaui/a3"], "group:end", ["@amaui/a3", "@amaui/a1"], "to", ["a4", "@amaui/a1"], "to:end", ["a4", "@amaui/a1"], "group", ["@amaui/a5", "@amaui/a1"], "middleware", ["pre", "@amaui/a5"], "middleware:end", ["pre", "@amaui/a5"], "to", ["a5", "@amaui/a5"], "middleware", ["preTo", "@amaui/a5"], "middleware:end", ["preTo", "@amaui/a5"], "to:end", ["a5", "@amaui/a5"], "group:end", ["@amaui/a5", "@amaui/a1"], "to", ["a6", "@amaui/a1"], "to:end", ["a6", "@amaui/a1"], "to", ["a7", "@amaui/a1"], "to:end", ["a7", "@amaui/a1"], "to", ["a8", "@amaui/a1"], "to:end", ["a8", "@amaui/a1"], "to", ["a9", "@amaui/a1"], "to:end", ["a9", "@amaui/a1"], "to", ["a10", "@amaui/a1"], "to:end", ["a10", "@amaui/a1"], "to", ["a11", "@amaui/a1"], "to:end", ["a11", "@amaui/a1"], "to", ["a12", "@amaui/a1"], "to:end", ["a12", "@amaui/a1"], "to", ["a13", "@amaui/a1"], "to:end", ["a13", "@amaui/a1"], "middleware", ["post", "@amaui/a1"], "middleware:end", ["post", "@amaui/a1"], "group:end", ["@amaui/a1", "main"], "to", ["a14", "main"], "to:end", ["a14", "main"], "group:end", ["main", undefined], "postAll", "completed", "printed", "idle", "clear", "fail", "success"
+        "running", "preAll", "group", ["main", undefined], "to", ["a", "main"], "to:end", ["a", "main"], "group", ["@amaui/a1", "main"], "middleware", ["pre", "@amaui/a1"], "middleware:end", ["pre", "@amaui/a1"], "to", ["a2", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a2", "@amaui/a1"], "group", ["@amaui/a3", "@amaui/a1"], "to", ["a3", "@amaui/a3"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a3", "@amaui/a3"], "group:end", ["@amaui/a3", "@amaui/a1"], "to", ["a4", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a4", "@amaui/a1"], "group", ["@amaui/a5", "@amaui/a1"], "middleware", ["pre", "@amaui/a5"], "middleware:end", ["pre", "@amaui/a5"], "to", ["a5", "@amaui/a5"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["preTo", "@amaui/a5"], "middleware:end", ["preTo", "@amaui/a5"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a5", "@amaui/a5"], "group:end", ["@amaui/a5", "@amaui/a1"], "to", ["a6", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a6", "@amaui/a1"], "to", ["a7", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a7", "@amaui/a1"], "to", ["a8", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a8", "@amaui/a1"], "to", ["a9", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a9", "@amaui/a1"], "to", ["a10", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a10", "@amaui/a1"], "to", ["a11", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a11", "@amaui/a1"], "to", ["a12", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a12", "@amaui/a1"], "to", ["a13", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a13", "@amaui/a1"], "middleware", ["post", "@amaui/a1"], "middleware:end", ["post", "@amaui/a1"], "group:end", ["@amaui/a1", "main"], "to", ["a14", "main"], "to:end", ["a14", "main"], "group:end", ["main", undefined], "postAll", "completed", "printed", "idle", "clear", "fail", "success"
       ]));
     });
 
@@ -6220,8 +6272,16 @@ describe('@amaui/test', () => {
           await window.AmauiUtils.wait(40);
         });
 
+        preEveryGroupGroup(async () => {
+          await window.AmauiUtils.wait(141);
+        });
+
         preEveryTo(async () => {
           await window.AmauiUtils.wait(4);
+        });
+
+        preEveryGroupTo(async () => {
+          await window.AmauiUtils.wait(14);
         });
 
         to('a', async () => {
@@ -6236,8 +6296,16 @@ describe('@amaui/test', () => {
             throw new Error('a');
           });
 
+          preEveryGroupGroup(async () => {
+            await window.AmauiUtils.wait(141);
+          });
+
           preTo(async () => {
             await window.AmauiUtils.wait(40);
+          });
+
+          preEveryGroupTo(async () => {
+            await window.AmauiUtils.wait(14);
           });
 
           to('a1', async () => {
@@ -6287,8 +6355,16 @@ describe('@amaui/test', () => {
             throw new Error('a');
           });
 
+          postEveryGroupGroup(async () => {
+            await window.AmauiUtils.wait(141);
+          });
+
           postTo(async () => {
             await window.AmauiUtils.wait(40);
+          });
+
+          postEveryGroupTo(async () => {
+            await window.AmauiUtils.wait(14);
           });
 
         });
@@ -6299,6 +6375,14 @@ describe('@amaui/test', () => {
 
         postEveryGroup(async () => {
           await window.AmauiUtils.wait(40);
+        });
+
+        postEveryGroupGroup(async () => {
+          await window.AmauiUtils.wait(141);
+        });
+
+        postEveryGroupTo(async () => {
+          await window.AmauiUtils.wait(14);
         });
 
         postEveryTo(async () => {
@@ -6316,7 +6400,7 @@ describe('@amaui/test', () => {
         await amauiTest.run();
 
         return values_.filter(Boolean);
-      }, { browsers });
+      });
 
       expect(valueNode).eql([
         'new',
@@ -6326,9 +6410,7 @@ describe('@amaui/test', () => {
         ...valueBrowsers[0],
       ]);
 
-      valueBrowsers.forEach(value => expect(value).eql([
-        'running', 'middleware', ['preAll', 'main'], 'middleware:end', ['preAll', 'main'], 'preAll', 'group', ['main', undefined], 'to', ['a', 'main'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'to:end', ['a', 'main'], 'group', ['@amaui/a', 'main'], 'middleware', ['pre', '@amaui/a'], 'middleware:end', ['pre', '@amaui/a'], 'to', ['a1', '@amaui/a'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['preTo', '@amaui/a'], 'middleware:end', ['preTo', '@amaui/a'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'middleware', ['postTo', '@amaui/a'], 'middleware:end', ['postTo', '@amaui/a'], 'to:end', ['a1', '@amaui/a'], 'group', ['@amaui/a11', '@amaui/a'], 'to', ['a11', '@amaui/a11'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'to:end', ['a11', '@amaui/a11'], 'group:end', ['@amaui/a11', '@amaui/a'], 'to', ['a3', '@amaui/a'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['preTo', '@amaui/a'], 'middleware:end', ['preTo', '@amaui/a'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'middleware', ['postTo', '@amaui/a'], 'middleware:end', ['postTo', '@amaui/a'], 'to:end', ['a3', '@amaui/a'], 'group', ['@amaui/a14', '@amaui/a'], 'middleware', ['pre', '@amaui/a14'], 'middleware:end', ['pre', '@amaui/a14'], 'to', ['a14', '@amaui/a14'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['preTo', '@amaui/a14'], 'middleware:end', ['preTo', '@amaui/a14'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'to:end', ['a14', '@amaui/a14'], 'group:end', ['@amaui/a14', '@amaui/a'], 'to', ['a4', '@amaui/a'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['preTo', '@amaui/a'], 'middleware:end', ['preTo', '@amaui/a'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'middleware', ['postTo', '@amaui/a'], 'middleware:end', ['postTo', '@amaui/a'], 'to:end', ['a4', '@amaui/a'], 'middleware', ['post', '@amaui/a'], 'middleware:end', ['post', '@amaui/a'], 'group:end', ['@amaui/a', 'main'], 'to', ['a7', 'main'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['preEveryTo', 'main'], 'middleware:end', ['preEveryTo', 'main'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'middleware', ['postEveryTo', 'main'], 'middleware:end', ['postEveryTo', 'main'], 'to:end', ['a7', 'main'], 'group:end', ['main', undefined], 'middleware', ['postAll', 'main'], 'middleware:end', ['postAll', 'main'], 'postAll', 'completed', 'printed', 'idle', 'clear', 'fail', 'success'
-      ]));
+      expect(valueBrowsers[0]).eql(["running", "middleware", ["preAll", "main"], "middleware:end", ["preAll", "main"], "preAll", "group", ["main", undefined], "middleware", ["preEveryGroup", "main"], "middleware:end", ["preEveryGroup", "main"], "to", ["a", "main"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "to:end", ["a", "main"], "group", ["@amaui/a", "main"], "middleware", ["preEveryGroup", "main"], "middleware:end", ["preEveryGroup", "main"], "middleware", ["preEveryGroupGroup", "main"], "middleware:end", ["preEveryGroupGroup", "main"], "middleware", ["pre", "@amaui/a"], "middleware:end", ["pre", "@amaui/a"], "to", ["a1", "@amaui/a"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@amaui/a"], "middleware:end", ["preEveryGroupTo", "@amaui/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["preTo", "@amaui/a"], "middleware:end", ["preTo", "@amaui/a"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@amaui/a"], "middleware:end", ["postEveryGroupTo", "@amaui/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "middleware", ["postTo", "@amaui/a"], "middleware:end", ["postTo", "@amaui/a"], "to:end", ["a1", "@amaui/a"], "group", ["@amaui/a11", "@amaui/a"], "middleware", ["preEveryGroup", "main"], "middleware:end", ["preEveryGroup", "main"], "middleware", ["preEveryGroupGroup", "@amaui/a"], "middleware:end", ["preEveryGroupGroup", "@amaui/a"], "middleware", ["preEveryGroupGroup", "main"], "middleware:end", ["preEveryGroupGroup", "main"], "to", ["a11", "@amaui/a11"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@amaui/a"], "middleware:end", ["preEveryGroupTo", "@amaui/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@amaui/a"], "middleware:end", ["postEveryGroupTo", "@amaui/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "to:end", ["a11", "@amaui/a11"], "middleware", ["postEveryGroup", "main"], "middleware:end", ["postEveryGroup", "main"], "middleware", ["postEveryGroupGroup", "@amaui/a"], "middleware:end", ["postEveryGroupGroup", "@amaui/a"], "middleware", ["postEveryGroupGroup", "main"], "middleware:end", ["postEveryGroupGroup", "main"], "group:end", ["@amaui/a11", "@amaui/a"], "to", ["a3", "@amaui/a"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@amaui/a"], "middleware:end", ["preEveryGroupTo", "@amaui/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["preTo", "@amaui/a"], "middleware:end", ["preTo", "@amaui/a"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@amaui/a"], "middleware:end", ["postEveryGroupTo", "@amaui/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "middleware", ["postTo", "@amaui/a"], "middleware:end", ["postTo", "@amaui/a"], "to:end", ["a3", "@amaui/a"], "group", ["@amaui/a14", "@amaui/a"], "middleware", ["preEveryGroup", "main"], "middleware:end", ["preEveryGroup", "main"], "middleware", ["preEveryGroupGroup", "@amaui/a"], "middleware:end", ["preEveryGroupGroup", "@amaui/a"], "middleware", ["preEveryGroupGroup", "main"], "middleware:end", ["preEveryGroupGroup", "main"], "middleware", ["pre", "@amaui/a14"], "middleware:end", ["pre", "@amaui/a14"], "to", ["a14", "@amaui/a14"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@amaui/a"], "middleware:end", ["preEveryGroupTo", "@amaui/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["preTo", "@amaui/a14"], "middleware:end", ["preTo", "@amaui/a14"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@amaui/a"], "middleware:end", ["postEveryGroupTo", "@amaui/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "to:end", ["a14", "@amaui/a14"], "middleware", ["postEveryGroup", "main"], "middleware:end", ["postEveryGroup", "main"], "middleware", ["postEveryGroupGroup", "@amaui/a"], "middleware:end", ["postEveryGroupGroup", "@amaui/a"], "middleware", ["postEveryGroupGroup", "main"], "middleware:end", ["postEveryGroupGroup", "main"], "group:end", ["@amaui/a14", "@amaui/a"], "to", ["a4", "@amaui/a"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@amaui/a"], "middleware:end", ["preEveryGroupTo", "@amaui/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["preTo", "@amaui/a"], "middleware:end", ["preTo", "@amaui/a"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@amaui/a"], "middleware:end", ["postEveryGroupTo", "@amaui/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "middleware", ["postTo", "@amaui/a"], "middleware:end", ["postTo", "@amaui/a"], "to:end", ["a4", "@amaui/a"], "middleware", ["postEveryGroup", "main"], "middleware:end", ["postEveryGroup", "main"], "middleware", ["postEveryGroupGroup", "main"], "middleware:end", ["postEveryGroupGroup", "main"], "middleware", ["post", "@amaui/a"], "middleware:end", ["post", "@amaui/a"], "group:end", ["@amaui/a", "main"], "to", ["a7", "main"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "to:end", ["a7", "main"], "middleware", ["postEveryGroup", "main"], "middleware:end", ["postEveryGroup", "main"], "group:end", ["main", undefined], "middleware", ["postAll", "main"], "middleware:end", ["postAll", "main"], "postAll", "completed", "printed", "idle", "clear", "fail", "success"]);
     });
 
     it('clear', async () => {
@@ -6562,7 +6644,7 @@ describe('@amaui/test', () => {
         window.removeEventListener('amaui-test-clear', amauiEventsMethod);
 
         return [amauiEvents, values_.filter(Boolean)];
-      }, { browsers });
+      });
 
       expect(valueNode).eql([
         [true],
@@ -6796,7 +6878,7 @@ describe('@amaui/test', () => {
           amauiTest.printManual();
 
           return amauiTest.archive.logs.length > 140;
-        }, { browsers });
+        });
         const values = [valueNode, ...valueBrowsers];
 
         values.forEach(value => expect(value).eq(true));
@@ -6981,7 +7063,7 @@ describe('@amaui/test', () => {
           amauiTest.printManual();
 
           return window.document.getElementById('amaui-test').innerHTML.length > 7400;
-        }, { browsers });
+        });
 
         valueBrowsers.forEach(value => expect(value).eq(true));
       });
@@ -7216,7 +7298,7 @@ describe('@amaui/test', () => {
         await amauiTest.run();
 
         return amauiTest.mainGroup.summary;
-      }, { browsers });
+      });
 
       const values = [valueNode, ...valueBrowsers];
 
@@ -7320,7 +7402,7 @@ describe('@amaui/test', () => {
         await amauiTest.run();
 
         return amauiTest.archive.logs;
-      }, { browsers });
+      });
 
       delete valueNode[8];
       delete valueNode[18];
@@ -7581,7 +7663,7 @@ describe('@amaui/test', () => {
         await amauiTest.run();
 
         return amauiTest.mainGroup.tos.map(to => [to.name, to.response.type, to.response.response instanceof Error ? to.response.response.message : to.response.response]);
-      }, { browsers });
+      });
       const values = [valueNode, ...valueBrowsers];
 
       // Minor patch atm
@@ -7649,7 +7731,7 @@ describe('@amaui/test', () => {
         amauiTest.prepareEnvironment();
 
         return [window.to, window.group, window.preAll, window.preEveryGroup, window.preEveryTo, window.pre, window.preTo, window.postAll, window.postEveryGroup, window.postEveryTo, window.post, window.postTo].map(item => !!item);
-      }, { browsers });
+      });
       const values = [valueNode, ...valueBrowsers];
 
       values.forEach(value => expect(value).eql(new Array(12).fill(true)));

@@ -22,13 +22,17 @@ export interface IAmauiGroup {
   preEveryGroup: Array<AmauiMiddleware>;
   preEveryTo: Array<AmauiMiddleware>;
   pre: Array<AmauiMiddleware>;
+  preEveryGroupGroup: Array<AmauiMiddleware>;
   preTo: Array<AmauiMiddleware>;
+  preEveryGroupTo: Array<AmauiMiddleware>;
 
   postAll: Array<AmauiMiddleware>;
   postEveryGroup: Array<AmauiMiddleware>;
   postEveryTo: Array<AmauiMiddleware>;
   post: Array<AmauiMiddleware>;
+  postEveryGroupGroup: Array<AmauiMiddleware>;
   postTo: Array<AmauiMiddleware>;
+  postEveryGroupTo: Array<AmauiMiddleware>;
 
   summary: {
     amount: {
@@ -71,13 +75,17 @@ class AmauiGroup implements IAmauiGroup {
   public preEveryGroup: Array<AmauiMiddleware> = [];
   public preEveryTo: Array<AmauiMiddleware> = [];
   public pre: Array<AmauiMiddleware> = [];
+  public preEveryGroupGroup: Array<AmauiMiddleware> = [];
   public preTo: Array<AmauiMiddleware> = [];
+  public preEveryGroupTo: Array<AmauiMiddleware> = [];
 
   public postAll: Array<AmauiMiddleware> = [];
   public postEveryGroup: Array<AmauiMiddleware> = [];
   public postEveryTo: Array<AmauiMiddleware> = [];
   public post: Array<AmauiMiddleware> = [];
+  public postEveryGroupGroup: Array<AmauiMiddleware> = [];
   public postTo: Array<AmauiMiddleware> = [];
+  public postEveryGroupTo: Array<AmauiMiddleware> = [];
 
   constructor(
     public name: string,

@@ -5,13 +5,11 @@ import { expect } from 'chai';
 
 import * as AmauiUtils from '@amaui/utils';
 
-import { startBrowsers, IBrowsers, evaluate, closeBrowsers } from '../utils/js/test/utils';
+import { evaluate } from '../utils/js/test/utils';
 
 import { request } from '../src';
 
 describe('@amaui/test/request', () => {
-  let browsers: IBrowsers;
-
   const app = express();
 
   app.set('view engine', 'html');
@@ -63,12 +61,6 @@ describe('@amaui/test/request', () => {
   const METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
   const METHODS1 = ['HEAD', 'OPTIONS'];
 
-  before(async () => browsers = await startBrowsers());
-
-  after(async () => {
-    await closeBrowsers(browsers);
-  });
-
   it('request', async () => {
     const amauiTestRequest = await request();
 
@@ -84,7 +76,7 @@ describe('@amaui/test/request', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -118,7 +110,7 @@ describe('@amaui/test/request', () => {
           typeof item.status === 'function',
           item.value
         ]);
-      }, { browsers });
+      });
       const valueNode = values_.map(item => [
         typeof item.value === 'object' &&
         typeof item.response === 'function' &&
@@ -203,7 +195,7 @@ describe('@amaui/test/request', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -326,7 +318,7 @@ describe('@amaui/test/request', () => {
           ];
 
           return values_;
-        }, { browsers });
+        });
         const valueNode = values_;
         const values = [valueNode, ...valueBrowsers];
 
@@ -364,7 +356,7 @@ describe('@amaui/test/request', () => {
           ];
 
           return values_;
-        }, { browsers });
+        });
         const valueNode = values_;
         const values = [valueNode, ...valueBrowsers];
 
@@ -400,7 +392,7 @@ describe('@amaui/test/request', () => {
           ];
 
           return values_;
-        }, { browsers });
+        });
         const valueNode = values_;
         const values = [valueNode, ...valueBrowsers];
 
@@ -438,7 +430,7 @@ describe('@amaui/test/request', () => {
           ];
 
           return values_;
-        }, { browsers });
+        });
         const valueNode = values_;
         const values = [valueNode, ...valueBrowsers];
 
@@ -466,7 +458,7 @@ describe('@amaui/test/request', () => {
           ];
 
           return values_;
-        }, { browsers });
+        });
         const valueNode = values_;
         const values = [valueNode, ...valueBrowsers];
 
@@ -494,7 +486,7 @@ describe('@amaui/test/request', () => {
           ];
 
           return values_;
-        }, { browsers });
+        });
         const valueNode = values_;
         const values = [valueNode, ...valueBrowsers];
 
@@ -522,7 +514,7 @@ describe('@amaui/test/request', () => {
           ];
 
           return values_;
-        }, { browsers });
+        });
         const valueNode = values_;
         const values = [valueNode, ...valueBrowsers];
 
@@ -558,7 +550,7 @@ describe('@amaui/test/request', () => {
           ];
 
           return values_;
-        }, { browsers });
+        });
         const valueNode = values_;
         const values = [valueNode, ...valueBrowsers];
 
@@ -674,7 +666,7 @@ describe('@amaui/test/request', () => {
           ];
 
           return values_;
-        }, { browsers });
+        });
         const valueNode = values_;
         const values = [valueNode, ...valueBrowsers];
 
@@ -707,7 +699,7 @@ describe('@amaui/test/request', () => {
             ];
 
             return values_;
-          }, { browsers, arguments: [methodLower] });
+          }, { arguments: [methodLower] });
           const valueNode = values_;
           const values = [valueNode, ...valueBrowsers];
 
@@ -741,7 +733,7 @@ describe('@amaui/test/request', () => {
             ];
 
             return values_;
-          }, { browsers, arguments: [methodLower] });
+          }, { arguments: [methodLower] });
           const valueNode = values_;
           const values = [valueNode, ...valueBrowsers];
 

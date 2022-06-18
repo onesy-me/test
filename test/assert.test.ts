@@ -4,18 +4,11 @@ import React from 'react';
 
 import * as AmauiUtils from '@amaui/utils';
 
-import { startBrowsers, IBrowsers, evaluate, closeBrowsers } from '../utils/js/test/utils';
+import { evaluate } from '../utils/js/test/utils';
 
 import { assert } from '../src';
 
 describe('@amaui/test/assert', () => {
-  let browsers: IBrowsers;
-
-  before(async () => browsers = await startBrowsers());
-
-  after(async () => {
-    await closeBrowsers(browsers);
-  });
 
   it('aliases', async () => {
     const assertMethod = assert('a');
@@ -44,7 +37,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -188,7 +181,7 @@ describe('@amaui/test/assert', () => {
       }
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -451,7 +444,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -473,7 +466,7 @@ describe('@amaui/test/assert', () => {
           ];
 
           return values_;
-        }, { browsers });
+        });
         const valueNode = values_;
         const values = [valueNode, ...valueBrowsers];
 
@@ -491,7 +484,7 @@ describe('@amaui/test/assert', () => {
           ];
 
           return values_;
-        }, { browsers });
+        });
         const valueNode = values_;
         const values = [valueNode, ...valueBrowsers];
 
@@ -509,7 +502,7 @@ describe('@amaui/test/assert', () => {
           ];
 
           return values_;
-        }, { browsers });
+        });
         const valueNode = values_;
         const values = [valueNode, ...valueBrowsers];
 
@@ -524,7 +517,7 @@ describe('@amaui/test/assert', () => {
           ];
 
           return values_;
-        }, { browsers });
+        });
 
         const values_ = [
           !!assert('a', { not: true }).not.eq('a'),
@@ -570,7 +563,7 @@ describe('@amaui/test/assert', () => {
         }
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -596,7 +589,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -622,7 +615,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -640,7 +633,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -658,7 +651,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -676,7 +669,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -694,7 +687,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -720,7 +713,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -750,7 +743,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -772,7 +765,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -790,7 +783,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -808,7 +801,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -834,7 +827,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -856,7 +849,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -878,7 +871,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -900,7 +893,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -922,7 +915,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -956,7 +949,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -989,7 +982,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -1026,7 +1019,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -1063,7 +1056,7 @@ describe('@amaui/test/assert', () => {
         ];
 
         return values_;
-      }, { browsers });
+      });
       const valueNode = values_;
       const values = [valueNode, ...valueBrowsers];
 
@@ -1202,7 +1195,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const values = [valueNode, ...valueBrowsers];
 
     values.forEach(value => expect(value).eql([
@@ -1530,7 +1523,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
 
     // Value node
     expect(valueNode).eql([
@@ -1568,7 +1561,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -1611,7 +1604,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -1640,7 +1633,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -1669,7 +1662,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -1698,7 +1691,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -1727,7 +1720,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -1778,7 +1771,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -1827,7 +1820,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -1864,7 +1857,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -1899,7 +1892,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
@@ -1942,7 +1935,7 @@ describe('@amaui/test/assert', () => {
       ];
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 

@@ -5,25 +5,7 @@ import { expect } from 'chai';
 
 import AmauiNode from '@amaui/node';
 
-function clearRequireCache() {
-  const items = [
-    path.resolve('test/example/test/a.test.ts'),
-    path.resolve('test/example/test/a1.test.ts'),
-    path.resolve('test/example/test/a4.test.ts'),
-    path.resolve('test/example/package.json'),
-    path.resolve('amaui-test.options.js'),
-  ];
-
-  items.forEach(item => {
-    try {
-      delete require.cache[item];
-    } catch (error) { }
-  });
-}
-
 describe('@amaui/test/cli', () => {
-
-  beforeEach(() => clearRequireCache());
 
   it('cli', done => {
     let response: any;

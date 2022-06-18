@@ -3,18 +3,11 @@ import { expect } from 'chai';
 
 import * as AmauiUtils from '@amaui/utils';
 
-import { startBrowsers, IBrowsers, evaluate, closeBrowsers } from '../utils/js/test/utils';
+import { evaluate } from '../utils/js/test/utils';
 
 import { AmauiMiddleware, AmauiGroup } from '../src';
 
 describe('@amaui/test/amaui-middleware', () => {
-  let browsers: IBrowsers;
-
-  before(async () => browsers = await startBrowsers());
-
-  after(async () => {
-    await closeBrowsers(browsers);
-  });
 
   it('AmauiMiddleware', async () => {
     const amauiMiddleware = new AmauiMiddleware('a', () => 4);
@@ -75,8 +68,10 @@ describe('@amaui/test/amaui-middleware', () => {
       values_.push(amauiMiddleware);
 
       return values_;
-    }, { browsers });
+    });
+
     const valueNode = values_;
+
     const values = [valueNode, ...valueBrowsers];
 
     values.forEach(value => expect(value).eql([

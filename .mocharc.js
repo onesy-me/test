@@ -10,7 +10,10 @@ module.exports = {
   opts: false,
   package: './package.json',
   reporter: 'spec',
-  spec: 'test/*.test.ts',
+  spec: [
+    './utils/js/test/utils.ts',
+    'test/*.test.ts'
+  ],
   slow: 400,
   timeout: 40000,
 };

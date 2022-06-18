@@ -3,19 +3,11 @@ import { expect } from 'chai';
 
 import * as AmauiUtils from '@amaui/utils';
 
-import { startBrowsers, IBrowsers, evaluate, closeBrowsers } from '../utils/js/test/utils';
+import { evaluate } from '../utils/js/test/utils';
 
 import { AmauiTo, AmauiMiddleware, AmauiGroup } from '../src';
 
 describe('@amaui/test/amaui-group', () => {
-  let browsers: IBrowsers;
-
-  before(async () => browsers = await startBrowsers());
-
-  after(async () => {
-    await closeBrowsers(browsers);
-  });
-
   it('AmauiGroup', async () => {
     const amauiGroup = new AmauiGroup('a', () => 4);
 
@@ -34,13 +26,17 @@ describe('@amaui/test/amaui-group', () => {
     amauiGroup.preEveryGroup = [new AmauiMiddleware('a', () => 4)];
     amauiGroup.preEveryTo = [new AmauiMiddleware('a', () => 4)];
     amauiGroup.pre = [new AmauiMiddleware('a', () => 4)];
+    amauiGroup.preEveryGroupGroup = [new AmauiMiddleware('a', () => 4)];
     amauiGroup.preTo = [new AmauiMiddleware('a', () => 4)];
+    amauiGroup.preEveryGroupTo = [new AmauiMiddleware('a', () => 4)];
 
     amauiGroup.postAll = [new AmauiMiddleware('a', () => 4)];
     amauiGroup.postEveryGroup = [new AmauiMiddleware('a', () => 4)];
     amauiGroup.postEveryTo = [new AmauiMiddleware('a', () => 4)];
     amauiGroup.post = [new AmauiMiddleware('a', () => 4)];
+    amauiGroup.postEveryGroupGroup = [new AmauiMiddleware('a', () => 4)];
     amauiGroup.postTo = [new AmauiMiddleware('a', () => 4)];
+    amauiGroup.postEveryGroupTo = [new AmauiMiddleware('a', () => 4)];
 
     amauiGroup.summary = {
       amount: {
@@ -77,13 +73,17 @@ describe('@amaui/test/amaui-group', () => {
       amauiGroup.preEveryGroup[0] instanceof AmauiMiddleware,
       amauiGroup.preEveryTo[0] instanceof AmauiMiddleware,
       amauiGroup.pre[0] instanceof AmauiMiddleware,
+      amauiGroup.preEveryGroupGroup[0] instanceof AmauiMiddleware,
       amauiGroup.preTo[0] instanceof AmauiMiddleware,
+      amauiGroup.preEveryGroupTo[0] instanceof AmauiMiddleware,
 
       amauiGroup.postAll[0] instanceof AmauiMiddleware,
       amauiGroup.postEveryGroup[0] instanceof AmauiMiddleware,
       amauiGroup.postEveryTo[0] instanceof AmauiMiddleware,
       amauiGroup.post[0] instanceof AmauiMiddleware,
+      amauiGroup.postEveryGroupGroup[0] instanceof AmauiMiddleware,
       amauiGroup.postTo[0] instanceof AmauiMiddleware,
+      amauiGroup.postEveryGroupTo[0] instanceof AmauiMiddleware,
     );
 
     delete amauiGroup.parent;
@@ -97,13 +97,17 @@ describe('@amaui/test/amaui-group', () => {
     delete amauiGroup.preEveryGroup;
     delete amauiGroup.preEveryTo;
     delete amauiGroup.pre;
+    delete amauiGroup.preEveryGroupGroup;
     delete amauiGroup.preTo;
+    delete amauiGroup.preEveryGroupTo;
 
     delete amauiGroup.postAll;
     delete amauiGroup.postEveryGroup;
     delete amauiGroup.postEveryTo;
     delete amauiGroup.post;
+    delete amauiGroup.postEveryGroupGroup;
     delete amauiGroup.postTo;
+    delete amauiGroup.postEveryGroupTo;
 
     values_.push(amauiGroup);
 
@@ -121,17 +125,21 @@ describe('@amaui/test/amaui-group', () => {
       amauiGroup.groups = [new window.AmauiTest.AmauiGroup('a')];
       amauiGroup.tos = [new window.AmauiTest.AmauiTo('a', () => 4)];
 
-      amauiGroup.preAll = [new window.AmauiTest.AmauiMiddleware(() => 4)];
-      amauiGroup.preEveryGroup = [new window.AmauiTest.AmauiMiddleware(() => 4)];
-      amauiGroup.preEveryTo = [new window.AmauiTest.AmauiMiddleware(() => 4)];
-      amauiGroup.pre = [new window.AmauiTest.AmauiMiddleware(() => 4)];
-      amauiGroup.preTo = [new window.AmauiTest.AmauiMiddleware(() => 4)];
+      amauiGroup.preAll = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      amauiGroup.preEveryGroup = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      amauiGroup.preEveryTo = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      amauiGroup.pre = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      amauiGroup.preEveryGroupGroup = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      amauiGroup.preTo = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      amauiGroup.preEveryGroupTo = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
 
-      amauiGroup.postAll = [new window.AmauiTest.AmauiMiddleware(() => 4)];
-      amauiGroup.postEveryGroup = [new window.AmauiTest.AmauiMiddleware(() => 4)];
-      amauiGroup.postEveryTo = [new window.AmauiTest.AmauiMiddleware(() => 4)];
-      amauiGroup.post = [new window.AmauiTest.AmauiMiddleware(() => 4)];
-      amauiGroup.postTo = [new window.AmauiTest.AmauiMiddleware(() => 4)];
+      amauiGroup.postAll = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      amauiGroup.postEveryGroup = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      amauiGroup.postEveryTo = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      amauiGroup.post = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      amauiGroup.postEveryGroupGroup = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      amauiGroup.postTo = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      amauiGroup.postEveryGroupTo = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
 
       amauiGroup.summary = {
         amount: {
@@ -168,13 +176,17 @@ describe('@amaui/test/amaui-group', () => {
         amauiGroup.preEveryGroup[0] instanceof window.AmauiTest.AmauiMiddleware,
         amauiGroup.preEveryTo[0] instanceof window.AmauiTest.AmauiMiddleware,
         amauiGroup.pre[0] instanceof window.AmauiTest.AmauiMiddleware,
+        amauiGroup.preEveryGroupGroup[0] instanceof window.AmauiTest.AmauiMiddleware,
         amauiGroup.preTo[0] instanceof window.AmauiTest.AmauiMiddleware,
+        amauiGroup.preEveryGroupTo[0] instanceof window.AmauiTest.AmauiMiddleware,
 
         amauiGroup.postAll[0] instanceof window.AmauiTest.AmauiMiddleware,
         amauiGroup.postEveryGroup[0] instanceof window.AmauiTest.AmauiMiddleware,
         amauiGroup.postEveryTo[0] instanceof window.AmauiTest.AmauiMiddleware,
         amauiGroup.post[0] instanceof window.AmauiTest.AmauiMiddleware,
+        amauiGroup.postEveryGroupGroup[0] instanceof window.AmauiTest.AmauiMiddleware,
         amauiGroup.postTo[0] instanceof window.AmauiTest.AmauiMiddleware,
+        amauiGroup.postEveryGroupTo[0] instanceof window.AmauiTest.AmauiMiddleware,
       );
 
       delete amauiGroup.parent;
@@ -188,23 +200,27 @@ describe('@amaui/test/amaui-group', () => {
       delete amauiGroup.preEveryGroup;
       delete amauiGroup.preEveryTo;
       delete amauiGroup.pre;
+      delete amauiGroup.preEveryGroupGroup;
       delete amauiGroup.preTo;
+      delete amauiGroup.preEveryGroupTo;
 
       delete amauiGroup.postAll;
       delete amauiGroup.postEveryGroup;
       delete amauiGroup.postEveryTo;
       delete amauiGroup.post;
+      delete amauiGroup.postEveryGroupGroup;
       delete amauiGroup.postTo;
+      delete amauiGroup.postEveryGroupTo;
 
       values_.push(amauiGroup);
 
       return values_;
-    }, { browsers });
+    });
     const valueNode = values_;
     const values = [valueNode, ...valueBrowsers];
 
     values.forEach(value => expect(value).eql([
-      ...new Array(15).fill(true),
+      ...new Array(19).fill(true),
       {
         name: 'a',
         file: '/a',
