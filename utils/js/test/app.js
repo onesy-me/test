@@ -67,6 +67,11 @@ const run = async () => {
 </head>
 <body>
   a
+
+  <div id='amaui-test>
+    <div id='amaui-test-results'></div>
+  </div>
+
 </body>
 </html>
 `;

@@ -1300,7 +1300,7 @@ export class AmauiTest {
 
     getToName(values, parent);
 
-    const stringifyOutput = (value: any) => {
+    const stringifyOutput = (value: any, actual = false) => {
       let result = '';
 
       if (is('array', value) || is('object', value)) result = stringify(value, 0);
@@ -1310,7 +1310,7 @@ export class AmauiTest {
 
       result = result.length > 74 ? `${result.slice(0, 71)} ... ${result.slice(-1)}` : result;
 
-      if (is('array', value)) result = `${result} (${value.length})`;
+      if (is('array', value) && !(to.response.response?.filter && actual)) result = `${result} (${value.length})`;
 
       return result;
     };
@@ -1323,7 +1323,7 @@ export class AmauiTest {
         long: arrayOrObject && AmauiDiff.json.diff(response.expected, response.actual),
       },
       actual: {
-        short: response.hasOwnProperty('actual') && stringifyOutput(response.actual),
+        short: response.hasOwnProperty('actual') && stringifyOutput(response.actual, true),
       },
     };
 
@@ -1339,7 +1339,16 @@ export class AmauiTest {
 
     if (expected) expressionMessage += `${response.message ? `\n\n${' '.repeat(response.name.length + (isEnvironment('browser') ? 2 : 4))}` : ''}expected ${responses.expected.short}${expression ? ` ${expression} ` : ''}${responses.actual.short || ''}`;
 
-    const printInfoDiff = (arrayOrObject && responses.expected.long.items.length) ? this.printDiff(response.expected, response.actual, responses.expected.long) : [];
+    const printInfoDiffs = [];
+
+    const items = [];
+
+    if (response.filter) items.push(...(response.actual || []));
+    else items.push(response.actual);
+
+    items.forEach(item => printInfoDiffs.push(
+      (arrayOrObject && responses.expected.long.items.length) ? this.printDiff(response.expected, item, AmauiDiff.json.diff(response.expected, item)) : []
+    ));
 
     const stack = this.printErrorStackCleanUp(response.stack);
 
@@ -1373,37 +1382,41 @@ export class AmauiTest {
 
         // Diff info
         // Log all the value array items
-        printInfoDiff.forEach(item_ => {
-          const item = item_;
+        printInfoDiffs.forEach((printInfoDiff, index_) => {
+          printInfoDiff.forEach(item_ => {
+            const item = item_;
 
-          const colors = {
-            browser: 'inherit',
-            node: ''
-          };
+            const colors = {
+              browser: 'inherit',
+              node: ''
+            };
 
-          // Log value array item
-          const regular = item[2] === ' ';
-          const add = item[2] === '+';
-          const remove = item[2] === '-';
-          const linesSkipped = item.indexOf('lines skipped') > -1;
+            // Log value array item
+            const regular = item[2] === ' ';
+            const add = item[2] === '+';
+            const remove = item[2] === '-';
+            const linesSkipped = item.indexOf('lines skipped') > -1;
 
-          if (add) {
-            colors['browser'] = '#1fc926';
-            colors['node'] = '2';
-          }
+            if (add) {
+              colors['browser'] = '#1fc926';
+              colors['node'] = '2';
+            }
 
-          if (remove) {
-            colors['browser'] = '#d74644';
-            colors['node'] = '1';
-          }
+            if (remove) {
+              colors['browser'] = '#d74644';
+              colors['node'] = '1';
+            }
 
-          if (linesSkipped) {
-            colors['browser'] = '#0ebdd4';
-            colors['node'] = '6';
-          }
+            if (linesSkipped) {
+              colors['browser'] = '#0ebdd4';
+              colors['node'] = '6';
+            }
 
-          if (isEnvironment('browser')) this.log(`%c${item}`, `color: ${colors['browser']}`);
-          else this.log((regular && !linesSkipped) ? item : `\x1b[9${colors['node']}m${item}\x1b[0m`);
+            if (isEnvironment('browser')) this.log(`%c${item}`, `color: ${colors['browser']}`);
+            else this.log((regular && !linesSkipped) ? item : `\x1b[9${colors['node']}m${item}\x1b[0m`);
+          });
+
+          if (index_ < printInfoDiffs.length - 1) console.log(`\n  or${'\n'.repeat(isEnvironment('browser') ? 2 : 1)}`);
         });
       }
 
@@ -1466,28 +1479,32 @@ export class AmauiTest {
 
           printItemsDiff.appendChild(style);
 
-          printInfoDiff.forEach((item_, index_) => {
-            const item = item_.slice(2);
+          printInfoDiffs.forEach((printInfoDiff, index_) => {
+            printInfoDiff.forEach((item_, index__) => {
+              const item = item_.slice(2);
 
-            // Log value array item
-            const add = item[0] === '+';
-            const remove = item[0] === '-';
-            const linesSkipped = item.indexOf('lines skipped') > -1;
+              // Log value array item
+              const add = item[0] === '+';
+              const remove = item[0] === '-';
+              const linesSkipped = item.indexOf('lines skipped') > -1;
 
-            let color = 'inherit';
-            let margin = '7px 0';
+              let color = 'inherit';
+              let margin = '7px 0';
 
-            if (add) color = 'var(--palette-success)';
-            if (linesSkipped) color = 'var(--palette-info)';
-            if (remove) color = 'var(--palette-fail)';
+              if (add) color = 'var(--palette-success)';
+              if (linesSkipped) color = 'var(--palette-info)';
+              if (remove) color = 'var(--palette-fail)';
 
-            if (linesSkipped) {
-              if (!index_) margin = '0 0 21px 0';
-              else if (index_ === printInfoDiff.length - 1) margin = '21px 0 0 0';
-              else margin = '21px 0';
-            }
+              if (linesSkipped) {
+                if (!index__) margin = '0 0 21px 0';
+                else if (index__ === printInfoDiff.length - 1) margin = '21px 0 0 0';
+                else margin = '21px 0';
+              }
 
-            printItemsDiff.innerHTML += `<pre style='color: ${color}; margin: ${margin}'>${item}</pre>`;
+              printItemsDiff.innerHTML += `<pre style='color: ${color}; margin: ${margin}'>${item}</pre>`;
+            });
+
+            if (index_ < printInfoDiffs.length - 1) printItemsDiff.innerHTML += `<p style='margin: 21px 0; color: #555'>or</p>`;
           });
 
           error.appendChild(printItemsDiff);
@@ -1608,11 +1625,13 @@ export class AmauiTest {
     });
 
     // Add additional space to untouched value items in the array and clean up
-    value = value.map(item_ => {
+    value = value.map((item_, index) => {
       let item = item_;
 
       if (item.slice(-1) === '\n') item = item.slice(0, -1);
       if (item.slice(-1) === ',') item = item.slice(0, -1);
+
+      if (index === 0 || index === value.length - 1) return `  ${item}`;
 
       return ['  +', '  -'].indexOf(item.slice(0, 3)) === -1 ? `   ${item}` : item;
     });

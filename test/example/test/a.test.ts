@@ -30,7 +30,26 @@ group('@amaui/a1', () => {
   group('@amaui/a3', () => {
 
     to('a3', async () => {
-      assert(function a() { }).eq(undefined);
+      assert([1, 4, 3, 7]).any.eq([
+        [
+          1
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ]);
     });
 
   });

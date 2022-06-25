@@ -1599,7 +1599,26 @@ describe('@amaui/test', () => {
                 group('@amaui/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert(function a() { }).eq(undefined);
+                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      [
+                        1
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4
+                      ]
+                    ]);
                   });
 
                 });
@@ -1814,7 +1833,7 @@ describe('@amaui/test', () => {
                 "\n\n",
                 "  1) @amaui/a1 @amaui/a3 a3",
                 " ",
-                "%cAssertError: expected function a() { } to equal undefined",
+                "%cAssertError: expected [1,4,3,7] (4) to equal any of the values [[1],[1,2,3,4,5,6,7],[1,2,3,4]]",
                 "color: #d74644; padding-left: 14px;",
                 "a",
                 "color: #777",
@@ -1979,7 +1998,34 @@ describe('@amaui/test', () => {
               "\n",
               "  1) @amaui/a1 @amaui/a3 a3",
               " ",
-              "  \u001b[91mAssertError: expected function a() { } to equal undefined\u001b[0m",
+              "  \u001b[91mAssertError: expected [1,4,3,7] (4) to equal any of the values [[1],[1,2,3,4,5,6,7],[1,2,3,4]]\u001b[0m",
+              " ",
+              "  \u001b[92m+ add\u001b[0m \u001b[91m- remove\u001b[0m",
+              " ",
+              "\u001b[9m  [\u001b[0m",
+              "     1",
+              "\u001b[91m  -  4\u001b[0m",
+              "\u001b[91m  -  3\u001b[0m",
+              "\u001b[91m  -  7\u001b[0m",
+              "\u001b[9m  ]\u001b[0m",
+              "\u001b[9m  [\u001b[0m",
+              "     1",
+              "\u001b[92m  +  2\u001b[0m",
+              "\u001b[92m  +  3\u001b[0m",
+              "     4",
+              "\u001b[91m  -  3\u001b[0m",
+              "\u001b[92m  +  5\u001b[0m",
+              "\u001b[92m  +  6\u001b[0m",
+              "     7",
+              "\u001b[9m  ]\u001b[0m",
+              "\u001b[9m  [\u001b[0m",
+              "     1",
+              "\u001b[92m  +  2\u001b[0m",
+              "\u001b[91m  -  4\u001b[0m",
+              "     3",
+              "\u001b[92m  +  4\u001b[0m",
+              "\u001b[91m  -  7\u001b[0m",
+              "\u001b[9m  ]\u001b[0m",
               "\n",
               "  2) @amaui/a1 a4",
               " ",
@@ -1995,12 +2041,12 @@ describe('@amaui/test', () => {
               " ",
               "  \u001b[92m+ add\u001b[0m \u001b[91m- remove\u001b[0m",
               " ",
-              "   [",
+              "\u001b[9m  [\u001b[0m",
               "\u001b[92m  +  \"padding\"\u001b[0m",
               "     \"padding-left\"",
               "\u001b[91m  -  \"padding\"\u001b[0m",
               "     \"padding-right\"",
-              "   ]",
+              "\u001b[9m  ]\u001b[0m",
               "\n",
               "  5) @amaui/a1 a9",
               " ",
@@ -2012,7 +2058,7 @@ describe('@amaui/test', () => {
               " ",
               "  \u001b[92m+ add\u001b[0m \u001b[91m- remove\u001b[0m",
               " ",
-              "   {",
+              "\u001b[9m  {\u001b[0m",
               "\u001b[92m  +  \"direction\": \"ltl\"\u001b[0m",
               "\u001b[91m  -  \"direction\": \"ltr\"\u001b[0m",
               "     \"preference\": {",
@@ -2036,7 +2082,7 @@ describe('@amaui/test', () => {
               " ",
               "  \u001b[92m+ add\u001b[0m \u001b[91m- remove\u001b[0m",
               " ",
-              "   {",
+              "\u001b[9m  {\u001b[0m",
               "     \"a\": {",
               "       \"a\": {",
               "\u001b[92m  +      \"b\": 4\u001b[0m",
@@ -2055,7 +2101,7 @@ describe('@amaui/test', () => {
               "\u001b[92m  +    3\u001b[0m",
               "\u001b[92m  +    4\u001b[0m",
               "\u001b[92m  +  ]\u001b[0m",
-              "   }",
+              "\u001b[9m  }\u001b[0m",
               "\n",
               "  9) a14",
               " ",
@@ -2133,7 +2179,26 @@ describe('@amaui/test', () => {
                 group('@amaui/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert(function a() { }).eq(undefined);
+                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      [
+                        1
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4
+                      ]
+                    ]);
                   });
 
                 });
@@ -2339,7 +2404,26 @@ describe('@amaui/test', () => {
                 group('@amaui/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert(function a() { }).eq(undefined);
+                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      [
+                        1
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4
+                      ]
+                    ]);
                   });
 
                 });
@@ -2549,7 +2633,26 @@ describe('@amaui/test', () => {
                 group('@amaui/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert(function a() { }).eq(undefined);
+                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      [
+                        1
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4
+                      ]
+                    ]);
                   });
 
                 });
@@ -2741,7 +2844,26 @@ describe('@amaui/test', () => {
                 group('@amaui/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert(function a() { }).eq(undefined);
+                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      [
+                        1
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4
+                      ]
+                    ]);
                   });
 
                 });
@@ -2963,7 +3085,26 @@ describe('@amaui/test', () => {
                   group('@amaui/a3', () => {
 
                     to('a3', async () => {
-                      window.AmauiTest.assert(function a() { }).eq(undefined);
+                      window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                        [
+                          1
+                        ],
+                        [
+                          1,
+                          2,
+                          3,
+                          4,
+                          5,
+                          6,
+                          7
+                        ],
+                        [
+                          1,
+                          2,
+                          3,
+                          4
+                        ]
+                      ]);
                     });
 
                   });
@@ -3162,7 +3303,26 @@ describe('@amaui/test', () => {
                   group('@amaui/a3', () => {
 
                     to('a3', async () => {
-                      window.AmauiTest.assert(function a() { }).eq(undefined);
+                      window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                        [
+                          1
+                        ],
+                        [
+                          1,
+                          2,
+                          3,
+                          4,
+                          5,
+                          6,
+                          7
+                        ],
+                        [
+                          1,
+                          2,
+                          3,
+                          4
+                        ]
+                      ]);
                     });
 
                   });
@@ -3387,7 +3547,26 @@ describe('@amaui/test', () => {
                   group('@amaui/a3', () => {
 
                     to('a3', async () => {
-                      window.AmauiTest.assert(function a() { }).eq(undefined);
+                      window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                        [
+                          1
+                        ],
+                        [
+                          1,
+                          2,
+                          3,
+                          4,
+                          5,
+                          6,
+                          7
+                        ],
+                        [
+                          1,
+                          2,
+                          3,
+                          4
+                        ]
+                      ]);
                     });
 
                   });
@@ -3586,7 +3765,26 @@ describe('@amaui/test', () => {
                   group('@amaui/a3', () => {
 
                     to('a3', async () => {
-                      window.AmauiTest.assert(function a() { }).eq(undefined);
+                      window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                        [
+                          1
+                        ],
+                        [
+                          1,
+                          2,
+                          3,
+                          4,
+                          5,
+                          6,
+                          7
+                        ],
+                        [
+                          1,
+                          2,
+                          3,
+                          4
+                        ]
+                      ]);
                     });
 
                   });
@@ -3730,6 +3928,7 @@ describe('@amaui/test', () => {
 
                 return innerHTML < 44 && window.document.getElementById('amaui-test').innerHTML.length > 7400;
               });
+
               const values = [...valueBrowsers];
 
               values.forEach(value => expect(value).eq(true));
@@ -3782,7 +3981,26 @@ describe('@amaui/test', () => {
                   group('@amaui/a3', () => {
 
                     to('a3', async () => {
-                      window.AmauiTest.assert(function a() { }).eq(undefined);
+                      window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                        [
+                          1
+                        ],
+                        [
+                          1,
+                          2,
+                          3,
+                          4,
+                          5,
+                          6,
+                          7
+                        ],
+                        [
+                          1,
+                          2,
+                          3,
+                          4
+                        ]
+                      ]);
                     });
 
                   });
@@ -4134,7 +4352,26 @@ describe('@amaui/test', () => {
                 group('@amaui/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert(function a() { }).eq(undefined);
+                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      [
+                        1
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4
+                      ]
+                    ]);
                   });
 
                 });
@@ -4395,7 +4632,26 @@ describe('@amaui/test', () => {
                 group('@amaui/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert(function a() { }).eq(undefined);
+                    assert([1, 4, 3, 7]).any.eq([
+                      [
+                        1
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4
+                      ]
+                    ]);
                   });
 
                 });
@@ -4657,7 +4913,26 @@ describe('@amaui/test', () => {
                 group('@amaui/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert(function a() { }).eq(undefined);
+                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      [
+                        1
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4
+                      ]
+                    ]);
                   });
 
                 });
@@ -4921,7 +5196,26 @@ describe('@amaui/test', () => {
                 group('@amaui/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert(function a() { }).eq(undefined);
+                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      [
+                        1
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4
+                      ]
+                    ]);
                   });
 
                 });
@@ -5322,7 +5616,26 @@ describe('@amaui/test', () => {
                 group('@amaui/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert(function a() { }).eq(undefined);
+                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      [
+                        1
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                      ],
+                      [
+                        1,
+                        2,
+                        3,
+                        4
+                      ]
+                    ]);
                   });
 
                 });

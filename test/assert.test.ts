@@ -207,7 +207,7 @@ describe('@amaui/test/assert', () => {
       {
         "name": "AssertError",
         "operator": "equal",
-        "expression": "one value to equal",
+        "expression": "to equal one of the values",
         "expected": "a",
         "actual": [
           4,
@@ -218,7 +218,7 @@ describe('@amaui/test/assert', () => {
       {
         "name": "AssertError",
         "operator": "equal",
-        "expression": "any value to equal",
+        "expression": "to equal any of the values",
         "expected": "a",
         "actual": [
           4,
@@ -229,7 +229,7 @@ describe('@amaui/test/assert', () => {
       {
         "name": "AssertError",
         "operator": "equal",
-        "expression": "all values to equal",
+        "expression": "to equal all of the values",
         "expected": "a",
         "actual": [
           4,
@@ -240,7 +240,7 @@ describe('@amaui/test/assert', () => {
       {
         "name": "AssertError",
         "operator": "equal",
-        "expression": "any value not to equal",
+        "expression": "not to equal any of the values",
         "expected": "a",
         "actual": [
           "a"
@@ -251,7 +251,7 @@ describe('@amaui/test/assert', () => {
       {
         "name": "AssertError",
         "operator": "property",
-        "expression": "any value to have own property",
+        "expression": "to have own property for any of the values",
         "expected": {
           "a": 4
         },
@@ -264,7 +264,7 @@ describe('@amaui/test/assert', () => {
       {
         "name": "AssertError",
         "operator": "property",
-        "expression": "any value not to have own property",
+        "expression": "not to have own property for any of the values",
         "expected": {
           "a": 4
         },

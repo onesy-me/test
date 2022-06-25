@@ -230,13 +230,17 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
     if (!response) {
       let message = '';
 
-      if (options.one) message += `one value `;
-      if (options.any) message += `any value `;
-      if (options.all) message += `all values `;
-
       if (options.not) message += `not `;
 
       message += expression;
+
+      let prefix = '';
+
+      if (['equal', 'than'].every(item => expression.indexOf(item) === -1)) prefix = ` for`;
+
+      if (options.one) message += `${prefix} one of the values`;
+      if (options.any) message += `${prefix} any of the values`;
+      if (options.all) message += `${prefix} all of the values`;
 
       return onError(value, value_, message, operator, options) as any;
     }
