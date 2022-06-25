@@ -1631,8 +1631,6 @@ export class AmauiTest {
       if (item.slice(-1) === '\n') item = item.slice(0, -1);
       if (item.slice(-1) === ',') item = item.slice(0, -1);
 
-      if (index === 0 || index === value.length - 1) return `  ${item}`;
-
       return ['  +', '  -'].indexOf(item.slice(0, 3)) === -1 ? `   ${item}` : item;
     });
 
