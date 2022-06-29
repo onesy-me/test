@@ -617,7 +617,9 @@ export class AmauiTest {
       try {
         return path.isAbsolute(file) ? await import(url.pathToFileURL(file) as any) : import(file);
       }
-      catch (error) {
+      // First error is with more useful
+      // description about the error value
+      catch (error_) {
         throw error;
       }
     }
