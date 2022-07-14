@@ -43,13 +43,13 @@
     "@amaui/utils" "^1.0.11411"
     "@babel/runtime" "^7.18.3"
 
-"@amaui/log@^1.0.11141":
-  version "1.0.11141"
-  resolved "https://registry.yarnpkg.com/@amaui/log/-/log-1.0.11141.tgz#a20cf4e445993ebf71dd1c86d0acbe5fbc160bfb"
-  integrity sha512-VIpsW7PbeFmLpiMp2IMah3FCzqJiAB/rJk7zE/qyuteka9JZVFbQt5nY8E3+lfAh+7nmf+/Z/oDFhZYCQ5XdEw==
+"@amaui/log@^1.0.11144":
+  version "1.0.11144"
+  resolved "https://registry.yarnpkg.com/@amaui/log/-/log-1.0.11144.tgz#949184308064d66926899d27e66c7379e1ae7787"
+  integrity sha512-k6bUJg7KxZJegSz7m6e7Ly1gZqPwI2xOGdWCLNjGxPuGiJeFRtgYmblew0nPvI51KcsWbmumP+hZYII8mx1f0Q==
   dependencies:
     "@amaui/date" "^1.0.11414"
-    "@amaui/subscription" "^1.0.11144"
+    "@amaui/subscription" "^1.0.11147"
     "@amaui/utils" "^1.0.11411"
     "@babel/runtime" "^7.18.3"
 
@@ -78,23 +78,23 @@
   dependencies:
     "@babel/runtime" "^7.18.3"
 
-"@amaui/request@^1.0.11141":
-  version "1.0.11141"
-  resolved "https://registry.yarnpkg.com/@amaui/request/-/request-1.0.11141.tgz#f3102b691004ee241251ad320fdf412cc40cabee"
-  integrity sha512-ZzgUyxvFsN+0vD9pNnTvtJtf0Pl4W7l+CcQcmnTdduRMUpkqmp07ijcLBhKf33PtzWaTQGPWOeoYyf82RjyZlQ==
+"@amaui/request@^1.0.11144":
+  version "1.0.11144"
+  resolved "https://registry.yarnpkg.com/@amaui/request/-/request-1.0.11144.tgz#e7ee4bea60555712d65692ecc789d3354ae96850"
+  integrity sha512-6jufw2VlS7abhdnqntrM+xwdpfzodx0+GIXV20C/nKuAZW8FiVjaqL0hJp1l9pTM1RgorkfX7CX1IvlLyDHTxQ==
   dependencies:
     "@amaui/cookie" "^1.0.11141"
     "@amaui/huffman-code" "^1.0.11141"
     "@amaui/lz77" "^1.0.11147"
-    "@amaui/subscription" "^1.0.11144"
+    "@amaui/subscription" "^1.0.11147"
     "@amaui/utils" "^1.0.11411"
     "@amaui/zip" "^1.0.11141"
     "@babel/runtime" "^7.18.3"
 
-"@amaui/subscription@^1.0.11144":
-  version "1.0.11144"
-  resolved "https://registry.yarnpkg.com/@amaui/subscription/-/subscription-1.0.11144.tgz#43e4763576b2153b7757d2df9fb47da908556cad"
-  integrity sha512-8hQqNlTdd+L/CND9aZGKNr5aSsKS/pR+h0yPkE1rcCbtLfH29xeZlHgLKQtcUK8H+fskH9zgsR8Xwnli6fBDpQ==
+"@amaui/subscription@^1.0.11147":
+  version "1.0.11147"
+  resolved "https://registry.yarnpkg.com/@amaui/subscription/-/subscription-1.0.11147.tgz#345d4e4d09249008a939e1abc8a6dbfc35d4fc26"
+  integrity sha512-mVw0Z6TQtEuUTb7JpvpsTEK0EknoqRx8nxlrp4iNArt56G2L1Tb0Eu/qbSoPZAEwGLcveszwz8ofaqtw3IfBWw==
   dependencies:
     "@amaui/utils" "^1.0.11411"
     "@babel/runtime" "^7.18.3"

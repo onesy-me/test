@@ -8,7 +8,7 @@ import isEnvironment from '@amaui/utils/isEnvironment';
 import merge from '@amaui/utils/merge';
 import getEnvironment from '@amaui/utils/getEnvironment';
 import arrayMoveItem from '@amaui/utils/arrayMoveItem';
-import Try from '@amaui/utils/Try';
+import Try from '@amaui/utils/try';
 import stringify from '@amaui/utils/stringify';
 import equalDeep from '@amaui/utils/equalDeep';
 import wait from '@amaui/utils/wait';
