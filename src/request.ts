@@ -4,9 +4,12 @@ import https from 'https';
 import net from 'net';
 import events from 'events';
 
+import merge from '@amaui/utils/merge';
+import promisify from '@amaui/utils/promisify';
+import isValid from '@amaui/utils/isValid';
+import isEnvironment from '@amaui/utils/isEnvironment';
 import AmauiRequest from '@amaui/request';
 import { IAmauiRequestResponse, IOptionsRequest, TMethodType } from '@amaui/request/amaui-request';
-import { merge, promisify, isValid, isEnvironment } from '@amaui/utils';
 
 import assert, { IAssertObject, IAssertOptions } from './assert';
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { parse } from '@amaui/utils';
 import yargs from 'yargs';
+
+import parse from '@amaui/utils/parse';
 
 import AmauiTest, { IOptions } from './amaui-test';
 

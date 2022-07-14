@@ -1,4 +1,15 @@
-import { is, isValid, merge, getObjectValue, hasObjectProperty, equalDeep, isState, isEnvironment, isExists, isOS, isBrowser, isResponsive, IOptions as IIsOptions } from '@amaui/utils';
+import is, { IOptions as IIsOptions } from '@amaui/utils/is';
+import isValid from '@amaui/utils/isValid';
+import merge from '@amaui/utils/merge';
+import getObjectValue from '@amaui/utils/getObjectValue';
+import hasObjectProperty from '@amaui/utils/hasObjectProperty';
+import equalDeep from '@amaui/utils/equalDeep';
+import isState from '@amaui/utils/isState';
+import isEnvironment from '@amaui/utils/isEnvironment';
+import isExists from '@amaui/utils/isExists';
+import isOS from '@amaui/utils/isOS';
+import isBrowser from '@amaui/utils/isBrowser';
+import isResponsive from '@amaui/utils/isResponsive';
 import { TMethod } from '@amaui/models';
 import { AssertError } from '@amaui/errors';
 

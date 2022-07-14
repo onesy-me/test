@@ -1420,7 +1420,6 @@ describe('@amaui/test/assert', () => {
           'nodejs',
           'localhost'
         ], { any: true }),
-        !!window.AmauiTest.assert.a('crypto'),
         !!window.AmauiTest.assert.an('Intl'),
         !!window.AmauiTest.assert.a([
           'mac',
@@ -1494,7 +1493,6 @@ describe('@amaui/test/assert', () => {
           'nodejs',
           'localhost'
         ], { any: true }),
-        !window.AmauiTest.assert.a('crypto'),
         !window.AmauiTest.assert.an('Intl'),
         !window.AmauiTest.assert.a([
           'mac',
@@ -1533,8 +1531,8 @@ describe('@amaui/test/assert', () => {
 
     // Values browsers
     valueBrowsers.forEach(value => expect(value).eql([
-      ...new Array(53).fill(true),
-      ...new Array(47).fill(false),
+      ...new Array(52).fill(true),
+      ...new Array(46).fill(false),
     ]));
   });
 
