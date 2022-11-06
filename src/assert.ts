@@ -16,19 +16,19 @@ import { AssertError } from '@amaui/errors';
 export type TAssertOperator = 'a' | 'valid' | 'empty' | 'equal' | 'equal-deep' | 'include' | 'lt' | 'less-than' | 'lte' | 'less-than-equal' | 'gt' | 'greater-than' | 'gte' | 'greater-than-equal' | 'property' | 'properties' | 'truthy' | 'falsy' | 'true' | 'false' | 'undefined' | 'null' | 'NaN' | 'throw' | 'throw-async' | 'exist';
 
 export interface IAssertOptions extends IIsOptions {
-  message?: string;
+  message: string;
 
-  not?: boolean;
-  own?: boolean;
+  not: boolean;
+  own: boolean;
 
-  any?: boolean;
-  one?: boolean;
-  all?: boolean;
+  any: boolean;
+  one: boolean;
+  all: boolean;
 
-  noError?: boolean;
+  noError: boolean;
 }
 
-const optionsDefault: IAssertOptions = {};
+const optionsDefault: IAssertOptions = {} as any;
 
 const aliases = ['to', 'be', 'been', 'is', 'that', 'which', 'and', 'has', 'have', 'with', 'at', 'of', 'same', 'but', 'does', 'still', 'also'];
 
@@ -40,68 +40,68 @@ export type TAssertObjectAliases = {
 
 export interface IAssertObject extends TAssertObjectAliases {
   // Modifiers
-  own?: IAssertObject;
-  not?: IAssertObject;
+  own: IAssertObject;
+  not: IAssertObject;
 
   // Filters
-  one?: IAssertObject;
-  any?: IAssertObject;
-  all?: IAssertObject;
+  one: IAssertObject;
+  any: IAssertObject;
+  all: IAssertObject;
 
   // Props
-  true?: IAssertObject;
-  false?: IAssertObject;
-  undefined?: IAssertObject;
-  null?: IAssertObject;
-  NaN?: IAssertObject;
+  true: IAssertObject;
+  false: IAssertObject;
+  undefined: IAssertObject;
+  null: IAssertObject;
+  NaN: IAssertObject;
 
-  empty?: IAssertObject;
+  empty: IAssertObject;
 
-  exist?: IAssertObject;
-  truthy?: IAssertObject;
-  falsy?: IAssertObject;
+  exist: IAssertObject;
+  truthy: IAssertObject;
+  falsy: IAssertObject;
 
   // Methods
-  va?: (value: Array<string> | string, options?: IAssertOptions) => IAssertObject;
-  valid?: (value: Array<string> | string, options?: IAssertOptions) => IAssertObject;
+  va: (value: Array<string> | string, options?: IAssertOptions) => IAssertObject;
+  valid: (value: Array<string> | string, options?: IAssertOptions) => IAssertObject;
 
-  a?: (value: Array<string> | string, options?: IAssertOptions) => IAssertObject;
-  an?: (value: Array<string> | string, options?: IAssertOptions) => IAssertObject;
+  a: (value: Array<string> | string, options?: IAssertOptions) => IAssertObject;
+  an: (value: Array<string> | string, options?: IAssertOptions) => IAssertObject;
 
-  eq?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
-  equal?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
-  equals?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  eq: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  equal: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  equals: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
 
-  eql?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
-  equalDeep?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
-  equalsDeep?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  eql: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  equalDeep: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  equalsDeep: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
 
-  lt?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
-  lessThan?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  lt: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  lessThan: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
 
-  lte?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
-  lessThanEqual?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  lte: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  lessThanEqual: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
 
-  gt?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
-  greaterThan?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  gt: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  greaterThan: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
 
-  gte?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
-  greaterThanEqual?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  gte: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  greaterThanEqual: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
 
-  in?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
-  include?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  in: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
+  include: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
 
-  prop?: (value: string, value1?: any, options?: IAssertOptions) => IAssertObject;
-  property?: (value: string, value1?: any, options?: IAssertOptions) => IAssertObject;
+  prop: (value: string, value1?: any, options?: IAssertOptions) => IAssertObject;
+  property: (value: string, value1?: any, options?: IAssertOptions) => IAssertObject;
 
-  props?: (properties: Array<Record<string, any>> | Record<string, any>, options?: IAssertOptions) => IAssertObject;
-  properties?: (properties: Array<Record<string, any>> | Record<string, any>, options?: IAssertOptions) => IAssertObject;
+  props: (properties: Array<Record<string, any>> | Record<string, any>, options?: IAssertOptions) => IAssertObject;
+  properties: (properties: Array<Record<string, any>> | Record<string, any>, options?: IAssertOptions) => IAssertObject;
 
-  th?: (value?: any, options?: IAssertOptions) => IAssertObject;
-  throw?: (value?: any, options?: IAssertOptions) => IAssertObject;
+  th: (value?: any, options?: IAssertOptions) => IAssertObject;
+  throw: (value?: any, options?: IAssertOptions) => IAssertObject;
 
-  tha?: (value?: any, options?: IAssertOptions) => Promise<IAssertObject>;
-  throwAsync?: (value?: any, options?: IAssertOptions) => Promise<IAssertObject>;
+  tha: (value?: any, options?: IAssertOptions) => Promise<IAssertObject>;
+  throwAsync: (value?: any, options?: IAssertOptions) => Promise<IAssertObject>;
 }
 
 function onError(
@@ -150,10 +150,10 @@ export type IAssert = {
   valid?: (value: Array<string> | string, options?: IAssertOptions) => IAssertObject;
 };
 
-function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
+function assert(value?: any, options_: IAssertOptions = {} as any): IAssertObject {
   let options = merge(options_, optionsDefault, { copy: true });
 
-  const object: IAssertObject = {};
+  const object: IAssertObject = {} as any;
 
   // Resolve a value
   const valueResolve = (value_: any): boolean => options.not ? !value_ : !!value_;
@@ -218,7 +218,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
     value_: Array<any> | any,
     operator: TAssertOperator,
     expression: string,
-    options__: IAssertOptions = {},
+    options__: IAssertOptions = {} as any,
     method: TMethod = () => false
   ): any {
     options = merge(options__, options, { copy: true });
@@ -347,7 +347,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
   });
 
   // Valid
-  object.va = function (value_: Array<string> | string, options__: IAssertOptions = {}): IAssertObject {
+  object.va = function (value_: Array<string> | string, options__: IAssertOptions = {} as any): IAssertObject {
     return method_.bind(this)(
       value_, 'valid', 'to be a valid', options__, (item: any) => isValid(item, value, options__)
     );
@@ -357,7 +357,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
 
   // A, an
   const a = function (method: any = 'a') {
-    return function (value_: Array<string> | string, options__: IAssertOptions = {}): IAssertObject {
+    return function (value_: Array<string> | string, options__: IAssertOptions = {} as any): IAssertObject {
       return method_.bind(this)(
         value_, method, `to be ${method}`, options__, (item: any) => (
           is(item, value, options__) ||
@@ -376,7 +376,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
   object.an = a('an');
 
   // Equal
-  object.eq = function (value_: Array<string> | string, options__: IAssertOptions = {}): IAssertObject {
+  object.eq = function (value_: Array<string> | string, options__: IAssertOptions = {} as any): IAssertObject {
     return method_.bind(this)(
       value_, 'equal', 'to equal', options__, (item: any) => item === value
     );
@@ -386,7 +386,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
   object.equals = object.eq;
 
   // Equal deep
-  object.eql = function (value_: Array<string> | string, options__: IAssertOptions = {}): IAssertObject {
+  object.eql = function (value_: Array<string> | string, options__: IAssertOptions = {} as any): IAssertObject {
     return method_.bind(this)(
       value_, 'equal-deep', 'to equal deep', options__, (item: any) => equalDeep(value, item)
     );
@@ -396,7 +396,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
   object.equalsDeep = object.eql;
 
   // Less than
-  object.lt = function (value_: Array<any> | any, options__: IAssertOptions = {}): IAssertObject {
+  object.lt = function (value_: Array<any> | any, options__: IAssertOptions = {} as any): IAssertObject {
     return method_.bind(this)(
       value_, 'less-than', `to be less than`, options__, (item: any) => value < item
     );
@@ -405,7 +405,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
   object.lessThan = object.lt;
 
   // Less than or equal
-  object.lte = function (value_: Array<any> | any, options__: IAssertOptions = {}): IAssertObject {
+  object.lte = function (value_: Array<any> | any, options__: IAssertOptions = {} as any): IAssertObject {
     return method_.bind(this)(
       value_, 'less-than-equal', `to be less than or equal`, options__, (item: any) => value <= item
     );
@@ -414,7 +414,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
   object.lessThanEqual = object.lte;
 
   // Greater than
-  object.gt = function (value_: Array<any> | any, options__: IAssertOptions = {}): IAssertObject {
+  object.gt = function (value_: Array<any> | any, options__: IAssertOptions = {} as any): IAssertObject {
     return method_.bind(this)(
       value_, 'greater-than', `to be greater than`, options__, (item: any) => value > item
     );
@@ -423,7 +423,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
   object.greaterThan = object.gt;
 
   // Greater than equal
-  object.gte = function (value_: Array<any> | any, options__: IAssertOptions = {}): IAssertObject {
+  object.gte = function (value_: Array<any> | any, options__: IAssertOptions = {} as any): IAssertObject {
     return method_.bind(this)(
       value_, 'greater-than-equal', `to be greater than or equal`, options__, (item: any) => value >= item
     );
@@ -432,7 +432,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
   object.greaterThanEqual = object.gte;
 
   // Include
-  object.in = function (value_: Array<any> | any, options__: IAssertOptions = {}): IAssertObject {
+  object.in = function (value_: Array<any> | any, options__: IAssertOptions = {} as any): IAssertObject {
     return method_.bind(this)(
       value_, 'include', `to include`, options__, (item: any) => {
         if (is('string', value)) return value.indexOf(item) > -1;
@@ -446,7 +446,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
   object.include = object.in;
 
   // Property
-  object.prop = function (value_: Array<string> | string, value1: any = undefined, options__: IAssertOptions = {}): IAssertObject {
+  object.prop = function (value_: Array<string> | string, value1: any = undefined, options__: IAssertOptions = {} as any): IAssertObject {
     return method_.bind(this)(
       value_,
       'property',
@@ -464,7 +464,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
   // Aliases
   object.property = object.prop;
 
-  object.props = function (value_: Array<Record<string, any>> | Record<string, any>, options__: IAssertOptions = {}): IAssertObject {
+  object.props = function (value_: Array<Record<string, any>> | Record<string, any>, options__: IAssertOptions = {} as any): IAssertObject {
     return method_.bind(this)(
       value_,
       'properties',
@@ -480,7 +480,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
   object.properties = object.props;
 
   // Throw
-  object.th = function (value_?: any, options__: IAssertOptions = {}): IAssertObject {
+  object.th = function (value_?: any, options__: IAssertOptions = {} as any): IAssertObject {
     return method_.bind(this)(
       value_, 'throw', 'to throw', options__, (item: any) => {
         let value__: any;
@@ -500,7 +500,7 @@ function assert(value?: any, options_: IAssertOptions = {}): IAssertObject {
   object.throw = object.th;
 
   // Throw async
-  object.tha = async function (value_: any, options__: IAssertOptions = {}): Promise<IAssertObject> {
+  object.tha = async function (value_: any, options__: IAssertOptions = {} as any): Promise<IAssertObject> {
     options = merge(options__, options, { copy: true });
 
     const withoutFilters = [options.one, options.any, options.all].filter(Boolean).length === 0;
