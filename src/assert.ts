@@ -546,10 +546,10 @@ function assert(value?: any, options_: IAssertOptions = {} as any): IAssertObjec
 }
 
 // Add as well static methods
-assert.va = assert().va;
-assert.valid = assert().va;
+const instance = assert();
 
-assert.a = assert().a;
-assert.an = assert().a;
+assert.va = assert.valid = instance.va;
+
+assert.a = assert.an = instance.a; 
 
 export default assert as IAssert;
