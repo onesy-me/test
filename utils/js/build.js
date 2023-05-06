@@ -273,16 +273,12 @@ async function docsUpdateTypes(pathTypes, pathUse, isModules) {
 
   let values = use?.trim().match(/(?!^|}~)[^~]+(?!$|~{)/ig) || [];
 
-  if (values[0]?.startsWith('#')) values[0] = `#${values[0]}`;
-
-  if (values[values.length - 1]?.endsWith('\n``')) values[values.length - 1] = values[values.length - 1] + '`';
-
-  const parts = data.match(/((type|const) [^{|\n]+{\n[^}]+};)|((type|const|function) [^\n]+)|((interface|class) [^}]+};?\n)/ig) || [];
+  const parts = data.match(/((type|const) [^{|\n]+{\n[^}]+};)|((type|const|function|default function) [^\n]+)|((interface|class|default class) [^}]+};?(\n|$))/ig) || [];
 
   let valueNew = `\n\n### API\n\n`;
 
   parts.forEach(part => {
-    const partName = (part.match(/(?!type|interface|const|function) [^ \(\)\:]+/i) || [])[0]?.trim();
+    const partName = (part.replace('default ', '').match(/(?!type|interface|const|function|class) [^ \(\)\{\}\:]+/i) || [])[0]?.trim();
 
     valueNew += `#### ${partName}\n\n\`\`\`ts\n${part.trim()}\n\`\`\`\n\n`;
   });
