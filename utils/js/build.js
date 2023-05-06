@@ -260,9 +260,9 @@ async function docsUpdateTypes(pathTypes, pathUse, isModules) {
       return value;
     })
     .join('\n');
-
+  console.log(1, (path.parse(pathTypes).name).replace('.d', '').replace(/[\(\):]/gi, ''));
   const name = capitalizedCammelCase((path.parse(pathTypes).name).replace('.d', '').replace(/[\(\):]/gi, ''));
-
+  console.log(1114, name);
   const usePath = `${pathUse}${!isModules ? '.md' : `/${name}.md`}`;
 
   const use = fse.existsSync(usePath) ? await fse.readFile(usePath, 'utf8') : '';
