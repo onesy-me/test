@@ -240,6 +240,10 @@ async function types() {
   if (log) console.log(`🌱 Types done\n`);
 }
 
+const kebabCasetoCammelCase = value => typeof value === 'string' ? value.replace(/-./g, v => v[1] !== undefined ? v[1].toUpperCase() : '') : value;
+
+const capitalizedCammelCase = value => capitalize(kebabCasetoCammelCase(value));
+
 async function docsUpdateTypes(pathTypes, pathUse, isModules) {
   let data = await fse.readFile(pathTypes, 'utf8');
 
@@ -257,7 +261,7 @@ async function docsUpdateTypes(pathTypes, pathUse, isModules) {
     })
     .join('\n');
 
-  const name = (path.parse(pathTypes).name).replace('.d', '').replace(/[\(\):]/gi, '');
+  const name = capitalizedCammelCase((path.parse(pathTypes).name).replace('.d', '').replace(/[\(\):]/gi, ''));
 
   const usePath = `${pathUse}${!isModules ? '.md' : `/${name}.md`}`;
 
