@@ -240,9 +240,11 @@ async function types() {
   if (log) console.log(`🌱 Types done\n`);
 }
 
+const capitalizeCammelCase = value => typeof value === 'string' ? value.charAt(0).toUpperCase() + value.slice(1) : value;
+
 const kebabCasetoCammelCase = value => typeof value === 'string' ? value.replace(/-./g, v => v[1] !== undefined ? v[1].toUpperCase() : '') : value;
 
-const capitalizedCammelCase = value => capitalize(kebabCasetoCammelCase(value));
+const capitalizedCammelCase = value => capitalizeCammelCase(kebabCasetoCammelCase(value));
 
 async function docsUpdateTypes(pathTypes, pathUse, isModules) {
   let data = await fse.readFile(pathTypes, 'utf8');
@@ -269,9 +271,13 @@ async function docsUpdateTypes(pathTypes, pathUse, isModules) {
 
   const use = fse.existsSync(usePath) ? await fse.readFile(usePath, 'utf8') : '';
 
-  let values = use?.trim().match(/(?:^|}~)[^~]+(?:$|~{)/ig) || [];
+  let values = use?.trim().match(/(?!^|}~)[^~]+(?!$|~{)/ig) || [];
 
-  const parts = data.match(/((type|const) [^{|\n]+{\n[^}]+};)|((type|const|function) [^\n]+)|(interface [^}]+};?\n)/ig) || [];
+  if (values[0]?.startsWith('#')) values[0] = `#${values[0]}`;
+
+  if (values[values.length - 1]?.endsWith('\n``')) values[values.length - 1] = values[values.length - 1] + '`';
+
+  const parts = data.match(/((type|const) [^{|\n]+{\n[^}]+};)|((type|const|function) [^\n]+)|((interface|class) [^}]+};?\n)/ig) || [];
 
   let valueNew = `\n\n### API\n\n`;
 
