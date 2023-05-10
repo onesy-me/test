@@ -21,9 +21,9 @@ import AmauiSubscription from '@amaui/subscription';
 import AmauiDiff from '@amaui/diff';
 import { IDiff } from '@amaui/diff/amaui-diff';
 
-import AmauiGroup from './amaui-group';
-import AmauiTo from './amaui-to';
-import AmauiMiddleware from './amaui-middleware';
+import AmauiGroup from './AmauiGroup';
+import AmauiTo from './AmauiTo';
+import AmauiMiddleware from './AmauiMiddleware';
 import { IAssertError } from './assert';
 
 if (isEnvironment('nodejs') && !global.amauiEvents) global.amauiEvents = new events.EventEmitter();

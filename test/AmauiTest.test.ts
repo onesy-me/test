@@ -25,7 +25,7 @@ function clearRequireCache() {
   });
 }
 
-describe('@amaui/test', () => {
+describe('AmauiTest', () => {
 
   beforeEach(() => clearRequireCache());
 

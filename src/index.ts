@@ -1,10 +1,10 @@
 import { TMethod } from '@amaui/models';
 
-export * from './amaui-test';
-export { default as AmauiTest } from './amaui-test';
-export { default as AmauiTo } from './amaui-to';
-export { default as AmauiGroup } from './amaui-group';
-export { default as AmauiMiddleware } from './amaui-middleware';
+export * from './AmauiTest';
+export { default as AmauiTest } from './AmauiTest';
+export { default as AmauiTo } from './AmauiTo';
+export { default as AmauiGroup } from './AmauiGroup';
+export { default as AmauiMiddleware } from './AmauiMiddleware';
 export { default as assert } from './assert';
 export * from './assert';
 export { default as assertRequest } from './request';

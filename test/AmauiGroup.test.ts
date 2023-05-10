@@ -7,7 +7,8 @@ import { evaluate } from '../utils/js/test/utils';
 
 import { AmauiTo, AmauiMiddleware, AmauiGroup } from '../src';
 
-describe('@amaui/test/amaui-group', () => {
+describe('AmauiGroup', () => {
+
   it('AmauiGroup', async () => {
     const amauiGroup = new AmauiGroup('a', () => 4);
 

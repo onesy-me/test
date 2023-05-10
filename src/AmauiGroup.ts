@@ -1,8 +1,8 @@
 import { TMethod } from '@amaui/models';
 
-import AmauiTo from './amaui-to';
-import AmauiMiddleware from './amaui-middleware';
-import { IAmauiResponse } from './amaui-test';
+import AmauiTo from './AmauiTo';
+import AmauiMiddleware from './AmauiMiddleware';
+import { IAmauiResponse } from './AmauiTest';
 
 export interface IAmauiGroup {
   name: string;

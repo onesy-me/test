@@ -123,9 +123,6 @@ async function makePackage() {
 
   const newPackage = {
     ...other,
-    scripts: {
-      install: 'node utils/install.js'
-    },
     main: './index.js',
     module: './esm/index.js',
     types: './index.d.ts',
@@ -177,9 +174,9 @@ async function addLicense() {
   if (log) console.log(`🌱 Appended LICENSE to important build files`);
 }
 
-async function moveFile(value, valueTo) {
+async function moveFile(value) {
   const source = path.resolve(wd, value);
-  const target = path.resolve(to, valueTo || path.basename(value));
+  const target = path.resolve(to, path.basename(value));
 
   await fse.copy(source, target);
 }
@@ -188,14 +185,13 @@ async function moveFiles() {
   const { log } = cache;
 
   const toAddFiles = [
-    ['README.MD'],
-    ['LICENSE'],
-    ['utils/js/install.js', 'utils/install.js']
+    'README.MD',
+    'LICENSE',
   ];
 
   if (log) console.log(`🌱 Adding ${toAddFiles.join(', ')} files to build\n`);
 
-  await Promise.all(toAddFiles.map(value => moveFile(...value)));
+  await Promise.all(toAddFiles.map(value => moveFile(value)));
 }
 
 async function move() {
@@ -249,20 +245,6 @@ const capitalizedCammelCase = value => capitalizeCammelCase(kebabCasetoCammelCas
 async function docsUpdateTypes(pathTypes, pathUse, isModules) {
   let data = await fse.readFile(pathTypes, 'utf8');
 
-  data = data.split('\n')
-    .filter(Boolean)
-    .filter(item => !['import'].some(value => item.indexOf(value) === 0))
-    .map(item => {
-      let value = item;
-
-      if (item.startsWith('declare ')) value = value.slice(8);
-
-      if (item.startsWith('export ')) value = value.slice(7);
-
-      return value;
-    })
-    .join('\n');
-
   let name = (path.parse(pathTypes).name).replace('.d', '').replace(/[\(\):]/gi, '');
 
   name = name.includes('-') ? capitalizedCammelCase(name) : name;
@@ -273,24 +255,66 @@ async function docsUpdateTypes(pathTypes, pathUse, isModules) {
 
   let values = use?.trim().match(/(?!^|}~)[^~]+(?!$|~{)/ig) || [];
 
-  const parts = data.match(/((type|const) [^{|\n]+{\n[^}]+};)|((type|const|function|default function) [^\n]+)|((interface|class|default class) [^}]+};?(\n|$))/ig) || [];
+  if (values[0]?.startsWith('#')) values[0] = `#${values[0]}`;
+
+  if (values[values.length - 1]?.endsWith('\n``')) values[values.length - 1] = values[values.length - 1] + '`';
+
+  if (values.length > 0 && values.length <= 2) {
+    const md = (values[0].split(/### API[^~]+(?!$|~])/))[0]?.trim();
+    const api = (values[0].match(/### API[^~]+(?!$|~])/) || [])[0]?.trim();
+
+    values.splice(0, 1, md, api);
+
+    values = values.filter(Boolean);
+  }
+
+  let parts = [];
+
+  data.split('\n').forEach(item => {
+    if ([' ', '}'].includes(item[0])) parts[parts.length - 1] += `\n${item}`;
+    else parts.push(item);
+  });
+
+  parts = parts
+    .filter(Boolean)
+    .map(item => item.replace(/(export|declare) /g, ''))
+    .filter(item => {
+      const partName = (item.replace('default ', '').match(/(?!default|type|interface|const|function|class) [^ \(\)\{\}\<\:]+/i) || [])[0]?.trim();
+
+      return (
+        !item.startsWith('import') &&
+        !!partName
+      );
+    });
 
   let valueNew = `\n\n### API\n\n`;
 
-  parts.forEach(part => {
-    const partName = (part.replace('default ', '').match(/(?!type|interface|const|function|class) [^ \(\)\{\}\:]+/i) || [])[0]?.trim();
+  parts.forEach(item => {
+    const partName = (item.replace('default ', '').match(/(?!default|type|interface|const|function|class) [^ \(\)\{\}\<\:]+/i) || [])[0]?.trim();
 
-    valueNew += `#### ${partName}\n\n\`\`\`ts\n${part.trim()}\n\`\`\`\n\n`;
+    valueNew += `#### ${partName}\n\n\`\`\`ts\n${item.trim()}\n\`\`\`\n\n`;
   });
 
   // Update values value
+  let added = false;
+
   values = values.map(item => {
-    if (item.includes('# API')) return valueNew;
+    if (item.includes('# API')) {
+      added = true;
+
+      return valueNew;
+    }
 
     return item;
   });
 
-  if (!values.length) values.push(valueNew);
+  if (!added) values.push(valueNew);
+
+  values = values.map(item => {
+    if (item.startsWith('{')) return `~${item}~`;
+
+    return item;
+  });
 
   // Update the file or create it if it doesn't exist
   await fse.writeFile(usePath, values.join('\n'));

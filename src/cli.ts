@@ -3,7 +3,7 @@ import yargs from 'yargs';
 
 import parse from '@amaui/utils/parse';
 
-import AmauiTest, { IOptions } from './amaui-test';
+import AmauiTest, { IOptions } from './AmauiTest';
 
 export async function run(argv: any) {
   const { _, imports, order, resultsPrint, resultsTo, resultsAt, responseTimeoutTo, responseTimeoutMiddleware, responseMeasurementSlow, responseMeasurementVeryslow, responseOnfailExit, responseOnfailError, files: files_, package: package_ } = argv;
