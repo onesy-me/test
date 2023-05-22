@@ -16,16 +16,16 @@ import { AssertError } from '@amaui/errors';
 export type TAssertOperator = 'a' | 'valid' | 'empty' | 'equal' | 'equal-deep' | 'include' | 'lt' | 'less-than' | 'lte' | 'less-than-equal' | 'gt' | 'greater-than' | 'gte' | 'greater-than-equal' | 'property' | 'properties' | 'truthy' | 'falsy' | 'true' | 'false' | 'undefined' | 'null' | 'NaN' | 'throw' | 'throw-async' | 'exist';
 
 export interface IAssertOptions extends IIsOptions {
-  message: string;
+  message?: string;
 
-  not: boolean;
-  own: boolean;
+  not?: boolean;
+  own?: boolean;
 
-  any: boolean;
-  one: boolean;
-  all: boolean;
+  any?: boolean;
+  one?: boolean;
+  all?: boolean;
 
-  noError: boolean;
+  noError?: boolean;
 }
 
 const optionsDefault: IAssertOptions = {} as any;
@@ -550,6 +550,6 @@ const instance = assert();
 
 assert.va = assert.valid = instance.va;
 
-assert.a = assert.an = instance.a; 
+assert.a = assert.an = instance.a;
 
 export default assert as IAssert;
