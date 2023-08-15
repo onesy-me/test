@@ -1,12 +1,18 @@
 import { TMethod } from '@amaui/models';
+import assert from './assert';
 
 export * from './AmauiTest';
 export { default as AmauiTest } from './AmauiTest';
 export { default as AmauiTo } from './AmauiTo';
 export { default as AmauiGroup } from './AmauiGroup';
 export { default as AmauiMiddleware } from './AmauiMiddleware';
+
 export { default as assert } from './assert';
 export * from './assert';
+
+// alias for assert
+export const validate = assert;
+
 export { default as assertRequest } from './request';
 export * from './request';
 
