@@ -14,7 +14,7 @@ import equalDeep from '@amaui/utils/equalDeep';
 import wait from '@amaui/utils/wait';
 import { TMethod } from '@amaui/models';
 import { AmauiTestError } from '@amaui/errors';
-import AmauiDate from '@amaui/date/amaui-date';
+import AmauiDate from '@amaui/date/AmauiDate';
 import duration from '@amaui/date/duration';
 import AmauiLog from '@amaui/log';
 import AmauiSubscription from '@amaui/subscription';
@@ -1064,11 +1064,11 @@ export class AmauiTest {
       //  Success
       if (success) {
         if (isEnvironment('browser')) {
-          args.push(`${padding}%c✔ %c${name}${!quick ? ` %c${duration(value.duration, true, '')}` : ''}`, 'color: #1fc926', 'color: #777');
+          args.push(`${padding}%c✔ %c${name}${!quick ? ` %c${duration(value.duration, true, false, '')}` : ''}`, 'color: #1fc926', 'color: #777');
 
           if (!quick) args.push(`color: ${slow ? '#a9b030' : '#d74644'}`);
         }
-        else args.push(`${padding}\x1b[32m✔\x1b[0m \x1b[90m${name}\x1b[0m${!quick ? ` \x1b[${slow ? '33' : '31'}m${duration(value.duration, true, '')}\x1b[0m` : ''}`);
+        else args.push(`${padding}\x1b[32m✔\x1b[0m \x1b[90m${name}\x1b[0m${!quick ? ` \x1b[${slow ? '33' : '31'}m${duration(value.duration, true, false, '')}\x1b[0m` : ''}`);
       }
       //  Error
       else {
@@ -1133,7 +1133,7 @@ export class AmauiTest {
         if (success) {
           to.innerHTML = `<span style='color: var(--palette-success); font-size: 10px; margin-right: 11px;'>✔</span><span>${name}</span>`;
 
-          if (!quick) to.innerHTML += `<span style='color: ${slow ? 'orange' : 'var(--palette-fail)'}; font-size: 12px; margin-left: 9px;'>${duration(value.duration, true, '')}</span>`;
+          if (!quick) to.innerHTML += `<span style='color: ${slow ? 'orange' : 'var(--palette-fail)'}; font-size: 12px; margin-left: 9px;'>${duration(value.duration, true, false, '')}</span>`;
         }
         //  Error
         else {
@@ -1709,7 +1709,7 @@ export class AmauiTest {
     const pre = ` `.repeat(1);
     const offset = `\n`.repeat(isEnvironment('browser') ? 2 : 1);
 
-    const mainGroupDuration = duration(mainAmauiGroup.response.duration, true, '');
+    const mainGroupDuration = duration(mainAmauiGroup.response.duration, true, false, '');
 
     // Log
     if (this.options.results.to.indexOf('log') > -1) {

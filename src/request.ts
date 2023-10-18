@@ -9,7 +9,7 @@ import promisify from '@amaui/utils/promisify';
 import isValid from '@amaui/utils/isValid';
 import isEnvironment from '@amaui/utils/isEnvironment';
 import AmauiRequest from '@amaui/request';
-import { IAmauiRequestResponse, IOptionsRequest, TMethodType } from '@amaui/request/amaui-request';
+import { IAmauiRequestResponse, IOptionsRequest, TMethodType } from '@amaui/request/AmauiRequest';
 
 import assert, { IAssertObject, IAssertOptions } from './assert';
 
