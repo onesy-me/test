@@ -94,10 +94,10 @@
   dependencies:
     "@babel/runtime" "^7.18.3"
 
-"@amaui/request@^1.1.5":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@amaui/request/-/request-1.1.5.tgz#7605e71c23697582715407e816b53f4b3f8efe25"
-  integrity sha512-CnA8ChxzzDyReNAr5Y48ORU4rNKWmbrdUzlSbRzsH9OqTWtZuhjdhLagKw8olACE7pytRHH3OJz2NYtVNOOMjw==
+"@amaui/request@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@amaui/request/-/request-1.1.7.tgz#a29acebe8e15f2d38c087ec9c66b7404de22e0f7"
+  integrity sha512-WTYyQIXpjOZ1KqIKimby/moUEvAD2UsB57VMmPn21/RetGv7/7fLopGe4xDY6CjSdnzxyiugg/cfiXLmpyjpxQ==
   dependencies:
     "@amaui/cookie" "^1.0.11141"
     "@amaui/huffman-code" "^1.0.3"
