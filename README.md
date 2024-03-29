@@ -1,6 +1,6 @@
 
-</br >
-</br >
+</br>
+</br>
 
 <p align='center'>
   <a target='_blank' rel='noopener noreferrer' href='#'>
@@ -39,7 +39,7 @@
 ### Add
 
 ```sh
-  yarn add @amaui/test --dev
+yarn add @amaui/test --dev
 ```
 
 ### Use
@@ -85,7 +85,7 @@ or
 And with yarn test or npm test command amaui-test will run all the tests based on the amaui-test options
 
 ```javascript
-  yarn test
+yarn test
 ```
 
 #### **Browser**
@@ -329,13 +329,13 @@ Results logged in nodejs and browser (and with an option for HTML logs)
 Install
 
 ```sh
-  yarn
+yarn
 ```
 
 Test
 
 ```sh
-  yarn test
+yarn test
 ```
 
 ### Prod
@@ -343,5 +343,5 @@ Test
 Build
 
 ```sh
-  yarn build
+yarn build
 ```
