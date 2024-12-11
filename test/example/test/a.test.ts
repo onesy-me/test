@@ -1,7 +1,7 @@
 /* tslint:disable: no-shadowed-variable */
-import { wait } from '@amaui/utils';
+import { wait } from '@onesy/utils';
 
-import { timezones } from '@amaui/date';
+import { timezones } from '@onesy/date';
 
 import { assert } from '../../../src';
 
@@ -9,7 +9,7 @@ to('a', () => {
   assert(4).eq(4);
 });
 
-group('@amaui/a1', () => {
+group('@onesy/a1', () => {
 
   pre(async () => {
     await wait(140);
@@ -27,7 +27,7 @@ group('@amaui/a1', () => {
     assert(4).eq(4);
   });
 
-  group('@amaui/a3', () => {
+  group('@onesy/a3', () => {
 
     to('a3', async () => {
       assert([1, 4, 3, 7]).any.eq([
@@ -62,7 +62,7 @@ group('@amaui/a1', () => {
     });
   });
 
-  group('@amaui/a5', () => {
+  group('@onesy/a5', () => {
     let a: any;
 
     pre(async () => {
@@ -170,37 +170,37 @@ group('@amaui/a1', () => {
 
   to('a11', async () => {
     const value = [
-      'AmauiError',
-      'AmauiError',
-      'AmauiAwsError',
-      'AmauiTestError',
-      'AmauiAmqpError',
+      'OnesyError',
+      'OnesyError',
+      'OnesyAwsError',
+      'OnesyTestError',
+      'OnesyAmqpError',
       'AuthenticationError',
       'AuthorizationError',
       'AssertError',
       'ValidationError',
       'PermissionError',
-      'AmauiMongoError',
+      'OnesyMongoError',
       'ConnectionError',
       'NotFoundError',
       'DeveloperError',
-      'AmauiError',
+      'OnesyError',
     ];
     const value1 = [
-      'AmauiError',
-      'AmauiError',
-      'AmauiAwsError',
-      'AmauiTestError',
-      'AmauiAmqpError',
+      'OnesyError',
+      'OnesyError',
+      'OnesyAwsError',
+      'OnesyTestError',
+      'OnesyAmqpError',
       'AuthenticationError',
       'AuthorizationError',
       'ValidationError',
       'PermissionError',
-      'AmauiMongoError',
+      'OnesyMongoError',
       'ConnectionError',
       'NotFoundError',
       'DeveloperError',
-      'AmauiError',
+      'OnesyError',
     ];
 
     assert(value).eql(value1);

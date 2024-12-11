@@ -3,13 +3,13 @@ import express from 'express';
 
 import { expect } from 'chai';
 
-import * as AmauiUtils from '@amaui/utils';
+import * as OnesyUtils from '@onesy/utils';
 
 import { evaluate } from '../utils/js/test/utils';
 
 import { request } from '../src';
 
-describe('@amaui/test/request', () => {
+describe('@onesy/test/request', () => {
   const app = express();
 
   app.set('view engine', 'html');
@@ -52,8 +52,8 @@ describe('@amaui/test/request', () => {
 
     if (['HEAD', 'OPTIONS'].indexOf(response.method) === -1) return res.status(200).json(response);
 
-    res.set('amaui-method', response.method);
-    res.set('amaui-url', response.url);
+    res.set('onesy-method', response.method);
+    res.set('onesy-url', response.url);
 
     return res.send();
   });
@@ -62,17 +62,17 @@ describe('@amaui/test/request', () => {
   const METHODS1 = ['HEAD', 'OPTIONS'];
 
   it('request', async () => {
-    const amauiTestRequest = await request();
+    const onesyTestRequest = await request();
 
     const values_ = [
-      ['request', 'get', 'post', 'put', 'delete', 'head', 'options', 'patch'].every(method => amauiTestRequest[method]),
+      ['request', 'get', 'post', 'put', 'delete', 'head', 'options', 'patch'].every(method => onesyTestRequest[method]),
     ];
 
     const valueBrowsers = await evaluate(async (window: any) => {
-      const amauiTestRequest = await window.AmauiTest.request();
+      const onesyTestRequest = await window.OnesyTest.request();
 
       const values_ = [
-        ['request', 'get', 'post', 'put', 'delete', 'head', 'options', 'patch'].every(method => amauiTestRequest[method]),
+        ['request', 'get', 'post', 'put', 'delete', 'head', 'options', 'patch'].every(method => onesyTestRequest[method]),
       ];
 
       return values_;
@@ -86,17 +86,17 @@ describe('@amaui/test/request', () => {
   describe('response', () => {
 
     it('response', async () => {
-      const amauiTestRequest = await request();
+      const onesyTestRequest = await request();
 
       const values_ = [
-        await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' }),
+        await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' }),
       ];
 
       const valueBrowsers = await evaluate(async (window: any) => {
-        const amauiTestRequest = await window.AmauiTest.request();
+        const onesyTestRequest = await window.OnesyTest.request();
 
         const values_ = [
-          await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' }),
+          await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' }),
         ];
 
         return values_.map(item => [
@@ -155,7 +155,7 @@ describe('@amaui/test/request', () => {
                   accept: 'application/json, text/plain, */*'
                 },
                 zip: {
-                  amaui: {
+                  onesy: {
                     zip: false,
                     unzip: true,
                     only_positive: true
@@ -181,17 +181,17 @@ describe('@amaui/test/request', () => {
     });
 
     it('value', async () => {
-      const amauiTestRequest = await request();
+      const onesyTestRequest = await request();
 
       const values_ = [
-        (await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).value,
+        (await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).value,
       ];
 
       const valueBrowsers = await evaluate(async (window: any) => {
-        const amauiTestRequest = await window.AmauiTest.request();
+        const onesyTestRequest = await window.OnesyTest.request();
 
         const values_ = [
-          (await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).value,
+          (await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).value,
         ];
 
         return values_;
@@ -228,7 +228,7 @@ describe('@amaui/test/request', () => {
                   accept: 'application/json, text/plain, */*'
                 },
                 zip: {
-                  amaui: {
+                  onesy: {
                     zip: false,
                     unzip: true,
                     only_positive: true
@@ -256,15 +256,15 @@ describe('@amaui/test/request', () => {
     describe('methods', () => {
 
       it('response', async () => {
-        const amauiTestRequest = await request();
+        const onesyTestRequest = await request();
 
         const values_ = [
-          !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).response({
+          !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).response({
             method: 'GET',
             url: '/a',
             body: {}
           }),
-          !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).response({
+          !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).response({
             response: [
               'a'
             ],
@@ -277,25 +277,25 @@ describe('@amaui/test/request', () => {
               status: 201
             }
           }),
-          !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).response({
+          !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).response({
             meta: {
               status: 400,
               message: 'a'
             }
           }),
-          !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).response(4, { noError: true })
+          !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).response(4, { noError: true })
         ];
 
         const valueBrowsers = await evaluate(async (window: any) => {
-          const amauiTestRequest = await window.AmauiTest.request();
+          const onesyTestRequest = await window.OnesyTest.request();
 
           const values_ = [
-            !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).response({
+            !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).response({
               method: 'GET',
               url: '/a',
               body: {}
             }),
-            !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).response({
+            !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).response({
               response: [
                 'a'
               ],
@@ -308,13 +308,13 @@ describe('@amaui/test/request', () => {
                 status: 201
               }
             }),
-            !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).response({
+            !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).response({
               meta: {
                 status: 400,
                 message: 'a'
               }
             }),
-            !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).response(4, { noError: true })
+            !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).response(4, { noError: true })
           ];
 
           return values_;
@@ -326,33 +326,33 @@ describe('@amaui/test/request', () => {
       });
 
       it('meta', async () => {
-        const amauiTestRequest = await request();
+        const onesyTestRequest = await request();
 
         const values_ = [
-          !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).meta(undefined),
-          !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).meta({
+          !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).meta(undefined),
+          !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).meta({
             status: 201
           }),
-          !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).meta({
+          !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).meta({
             status: 400,
             message: 'a'
           }),
-          !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).meta(4, { noError: true })
+          !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).meta(4, { noError: true })
         ];
 
         const valueBrowsers = await evaluate(async (window: any) => {
-          const amauiTestRequest = await window.AmauiTest.request();
+          const onesyTestRequest = await window.OnesyTest.request();
 
           const values_ = [
-            !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).meta(undefined),
-            !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).meta({
+            !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).meta(undefined),
+            !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).meta({
               status: 201
             }),
-            !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).meta({
+            !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).meta({
               status: 400,
               message: 'a'
             }),
-            !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).meta(4, { noError: true })
+            !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).meta(4, { noError: true })
           ];
 
           return values_;
@@ -364,31 +364,31 @@ describe('@amaui/test/request', () => {
       });
 
       it('pagination', async () => {
-        const amauiTestRequest = await request();
+        const onesyTestRequest = await request();
 
         const values_ = [
-          !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).pagination(undefined),
-          !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).pagination({
+          !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).pagination(undefined),
+          !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).pagination({
             total: 4,
             next: 'a',
             previous: 'a1'
           }),
-          !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).pagination(undefined),
-          !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).pagination(4, { noError: true })
+          !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).pagination(undefined),
+          !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).pagination(4, { noError: true })
         ];
 
         const valueBrowsers = await evaluate(async (window: any) => {
-          const amauiTestRequest = await window.AmauiTest.request();
+          const onesyTestRequest = await window.OnesyTest.request();
 
           const values_ = [
-            !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).pagination(undefined),
-            !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).pagination({
+            !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).pagination(undefined),
+            !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).pagination({
               total: 4,
               next: 'a',
               previous: 'a1'
             }),
-            !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).pagination(undefined),
-            !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).pagination(4, { noError: true })
+            !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).pagination(undefined),
+            !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).pagination(4, { noError: true })
           ];
 
           return values_;
@@ -400,33 +400,33 @@ describe('@amaui/test/request', () => {
       });
 
       it('property', async () => {
-        const amauiTestRequest = await request();
+        const onesyTestRequest = await request();
 
         const values_ = [
-          !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).property('meta', undefined),
-          !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).property('meta', {
+          !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).property('meta', undefined),
+          !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).property('meta', {
             status: 201
           }),
-          !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).property('meta', {
+          !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).property('meta', {
             status: 400,
             message: 'a'
           }),
-          !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).property('meta', 4, { noError: true })
+          !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).property('meta', 4, { noError: true })
         ];
 
         const valueBrowsers = await evaluate(async (window: any) => {
-          const amauiTestRequest = await window.AmauiTest.request();
+          const onesyTestRequest = await window.OnesyTest.request();
 
           const values_ = [
-            !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).property('meta', undefined),
-            !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).property('meta', {
+            !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).property('meta', undefined),
+            !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).property('meta', {
               status: 201
             }),
-            !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).property('meta', {
+            !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).property('meta', {
               status: 400,
               message: 'a'
             }),
-            !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).property('meta', 4, { noError: true })
+            !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).property('meta', 4, { noError: true })
           ];
 
           return values_;
@@ -438,23 +438,23 @@ describe('@amaui/test/request', () => {
       });
 
       it('options', async () => {
-        const amauiTestRequest = await request();
+        const onesyTestRequest = await request();
 
         const values_ = [
-          !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).options('method', 'GET'),
-          !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).options('method', 'GET'),
-          !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).options('method', 'GET'),
-          !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).options('a', 'Express', { noError: true })
+          !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).options('method', 'GET'),
+          !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).options('method', 'GET'),
+          !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).options('method', 'GET'),
+          !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).options('a', 'Express', { noError: true })
         ];
 
         const valueBrowsers = await evaluate(async (window: any) => {
-          const amauiTestRequest = await window.AmauiTest.request();
+          const onesyTestRequest = await window.OnesyTest.request();
 
           const values_ = [
-            !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).options('method', 'GET'),
-            !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).options('method', 'GET'),
-            !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).options('method', 'GET'),
-            !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).options('method', 'PUT', { noError: true })
+            !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).options('method', 'GET'),
+            !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).options('method', 'GET'),
+            !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).options('method', 'GET'),
+            !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).options('method', 'PUT', { noError: true })
           ];
 
           return values_;
@@ -466,23 +466,23 @@ describe('@amaui/test/request', () => {
       });
 
       it('headers', async () => {
-        const amauiTestRequest = await request();
+        const onesyTestRequest = await request();
 
         const values_ = [
-          !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).headers('x-powered-by', 'Express'),
-          !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).headers('x-powered-by', 'Express'),
-          !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).headers('x-powered-by', 'Express'),
-          !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).headers('a', 'Express', { noError: true })
+          !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).headers('x-powered-by', 'Express'),
+          !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).headers('x-powered-by', 'Express'),
+          !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).headers('x-powered-by', 'Express'),
+          !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).headers('a', 'Express', { noError: true })
         ];
 
         const valueBrowsers = await evaluate(async (window: any) => {
-          const amauiTestRequest = await window.AmauiTest.request();
+          const onesyTestRequest = await window.OnesyTest.request();
 
           const values_ = [
-            !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).headers('x-powered-by', 'Express'),
-            !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).headers('x-powered-by', 'Express'),
-            !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).headers('x-powered-by', 'Express'),
-            !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).headers('a', 'Express', { noError: true })
+            !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).headers('x-powered-by', 'Express'),
+            !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).headers('x-powered-by', 'Express'),
+            !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).headers('x-powered-by', 'Express'),
+            !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).headers('a', 'Express', { noError: true })
           ];
 
           return values_;
@@ -494,23 +494,23 @@ describe('@amaui/test/request', () => {
       });
 
       it('request', async () => {
-        const amauiTestRequest = await request();
+        const onesyTestRequest = await request();
 
         const values_ = [
-          !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).request('writable', true),
-          !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).request('writable', true),
-          !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).request('writable', true),
-          !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).request('a', 'a', { noError: true })
+          !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).request('writable', true),
+          !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).request('writable', true),
+          !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).request('writable', true),
+          !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).request('a', 'a', { noError: true })
         ];
 
         const valueBrowsers = await evaluate(async (window: any) => {
-          const amauiTestRequest = await window.AmauiTest.request();
+          const onesyTestRequest = await window.OnesyTest.request();
 
           const values_ = [
-            !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).request('status', 200),
-            !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).request('status', 201),
-            !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).request('status', 400),
-            !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).request('a', 'a', { noError: true })
+            !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).request('status', 200),
+            !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).request('status', 201),
+            !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).request('status', 400),
+            !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).request('a', 'a', { noError: true })
           ];
 
           return values_;
@@ -522,31 +522,31 @@ describe('@amaui/test/request', () => {
       });
 
       it('status', async () => {
-        const amauiTestRequest = await request();
+        const onesyTestRequest = await request();
 
         const values_ = [
-          !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).status(200),
-          !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).status(200, 'eq'),
-          !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).status(201, 'lte'),
-          !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).status(204, 'lt'),
-          !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).status(400),
-          !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).status(400, 'gte'),
-          !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).status(201, 'gt'),
-          !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).status(204, 'eq', { noError: true })
+          !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).status(200),
+          !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).status(200, 'eq'),
+          !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).status(201, 'lte'),
+          !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).status(204, 'lt'),
+          !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).status(400),
+          !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).status(400, 'gte'),
+          !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).status(201, 'gt'),
+          !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).status(204, 'eq', { noError: true })
         ];
 
         const valueBrowsers = await evaluate(async (window: any) => {
-          const amauiTestRequest = await window.AmauiTest.request();
+          const onesyTestRequest = await window.OnesyTest.request();
 
           const values_ = [
-            !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).status(200),
-            !!(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).status(200, 'eq'),
-            !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).status(201, 'lte'),
-            !!(await amauiTestRequest.request('http://localhost:4000/success', { method: 'GET' })).status(204, 'lt'),
-            !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).status(400),
-            !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).status(400, 'gte'),
-            !!(await amauiTestRequest.request('http://localhost:4000/error', { method: 'GET' })).status(201, 'gt'),
-            !(await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).status(204, 'eq', { noError: true })
+            !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).status(200),
+            !!(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).status(200, 'eq'),
+            !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).status(201, 'lte'),
+            !!(await onesyTestRequest.request('http://localhost:4000/success', { method: 'GET' })).status(204, 'lt'),
+            !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).status(400),
+            !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).status(400, 'gte'),
+            !!(await onesyTestRequest.request('http://localhost:4000/error', { method: 'GET' })).status(201, 'gt'),
+            !(await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).status(204, 'eq', { noError: true })
           ];
 
           return values_;
@@ -571,21 +571,21 @@ describe('@amaui/test/request', () => {
         const eventListenerAppStart = () => values.push(true);
         const eventListenerAppEnd = () => values.push(false);
 
-        global.amauiEvents.on('amaui-test-app-start', eventListenerAppStart);
+        global.onesyEvents.on('onesy-test-app-start', eventListenerAppStart);
 
-        global.amauiEvents.on('amaui-test-app-end', eventListenerAppEnd);
+        global.onesyEvents.on('onesy-test-app-end', eventListenerAppEnd);
 
-        const amauiTestRequest = await request(app, { keepOpen: true });
+        const onesyTestRequest = await request(app, { keepOpen: true });
 
         values.push(
-          (await amauiTestRequest.request('/a', { method: 'GET' })).value.response,
-          (await amauiTestRequest.request('/a', { method: 'PUT' })).value.response,
-          (await amauiTestRequest.request('/a', { method: 'PATCH' })).value.response,
+          (await onesyTestRequest.request('/a', { method: 'GET' })).value.response,
+          (await onesyTestRequest.request('/a', { method: 'PUT' })).value.response,
+          (await onesyTestRequest.request('/a', { method: 'PATCH' })).value.response,
         );
 
-        global.amauiEvents.emit('amaui-test-clear');
+        global.onesyEvents.emit('onesy-test-clear');
 
-        await AmauiUtils.wait(440);
+        await OnesyUtils.wait(440);
 
         expect(values).eql([
           true,
@@ -595,10 +595,10 @@ describe('@amaui/test/request', () => {
           false,
         ]);
 
-        expect(global.amauiEvents.listenerCount('amaui-test-clear')).eq(0);
+        expect(global.onesyEvents.listenerCount('onesy-test-clear')).eq(0);
 
-        global.amauiEvents.off('amaui-test-app-start', eventListenerAppStart);
-        global.amauiEvents.off('amaui-test-app-end', eventListenerAppEnd);
+        global.onesyEvents.off('onesy-test-app-start', eventListenerAppStart);
+        global.onesyEvents.off('onesy-test-app-end', eventListenerAppEnd);
       });
 
       it('false', async () => {
@@ -607,22 +607,22 @@ describe('@amaui/test/request', () => {
         const eventListenerAppStart = () => values.push(true);
         const eventListenerAppEnd = () => values.push(false);
 
-        global.amauiEvents.on('amaui-test-app-start', eventListenerAppStart);
+        global.onesyEvents.on('onesy-test-app-start', eventListenerAppStart);
 
-        global.amauiEvents.on('amaui-test-app-end', eventListenerAppEnd);
+        global.onesyEvents.on('onesy-test-app-end', eventListenerAppEnd);
 
-        const amauiTestRequest = await request(app, { keepOpen: false });
+        const onesyTestRequest = await request(app, { keepOpen: false });
 
         values.push(
-          (await amauiTestRequest.request('/a', { method: 'GET' })).value.response,
+          (await onesyTestRequest.request('/a', { method: 'GET' })).value.response,
         );
 
         values.push(
-          (await amauiTestRequest.request('/a', { method: 'PUT' })).value.response,
+          (await onesyTestRequest.request('/a', { method: 'PUT' })).value.response,
         );
 
         values.push(
-          (await amauiTestRequest.request('/a', { method: 'PATCH' })).value.response,
+          (await onesyTestRequest.request('/a', { method: 'PATCH' })).value.response,
         );
 
         expect(values).eql([
@@ -637,10 +637,10 @@ describe('@amaui/test/request', () => {
           { method: 'PATCH', url: '/a', body: {} },
         ]);
 
-        expect(global.amauiEvents.listenerCount('amaui-test-clear')).eq(0);
+        expect(global.onesyEvents.listenerCount('onesy-test-clear')).eq(0);
 
-        global.amauiEvents.off('amaui-test-app-start', eventListenerAppStart);
-        global.amauiEvents.off('amaui-test-app-end', eventListenerAppEnd);
+        global.onesyEvents.off('onesy-test-app-start', eventListenerAppStart);
+        global.onesyEvents.off('onesy-test-app-end', eventListenerAppEnd);
       });
 
     });
@@ -652,17 +652,17 @@ describe('@amaui/test/request', () => {
     describe('url', () => {
 
       it('request', async () => {
-        const amauiTestRequest = await request();
+        const onesyTestRequest = await request();
 
         const values_ = [
-          (await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).value.response,
+          (await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).value.response,
         ];
 
         const valueBrowsers = await evaluate(async (window: any) => {
-          const amauiTestRequest = await window.AmauiTest.request();
+          const onesyTestRequest = await window.OnesyTest.request();
 
           const values_ = [
-            (await amauiTestRequest.request('http://localhost:4000/a', { method: 'GET' })).value.response,
+            (await onesyTestRequest.request('http://localhost:4000/a', { method: 'GET' })).value.response,
           ];
 
           return values_;
@@ -683,19 +683,19 @@ describe('@amaui/test/request', () => {
         const methodLower = method.toLowerCase();
 
         it(methodLower, async () => {
-          const amauiTestRequest = await request();
+          const onesyTestRequest = await request();
 
           const values_ = [
-            (await amauiTestRequest[methodLower]('http://localhost:4000/a')).value.response,
+            (await onesyTestRequest[methodLower]('http://localhost:4000/a')).value.response,
           ];
 
           const valueBrowsers = await evaluate(async (args: any) => {
             const [window, method] = args;
 
-            const amauiTestRequest = await window.AmauiTest.request();
+            const onesyTestRequest = await window.OnesyTest.request();
 
             const values_ = [
-              (await amauiTestRequest[method]('http://localhost:4000/a')).value.response,
+              (await onesyTestRequest[method]('http://localhost:4000/a')).value.response,
             ];
 
             return values_;
@@ -717,19 +717,19 @@ describe('@amaui/test/request', () => {
         const methodLower = method.toLowerCase();
 
         it(methodLower, async () => {
-          const amauiTestRequest = await request();
+          const onesyTestRequest = await request();
 
           const values_ = [
-            (await amauiTestRequest[methodLower]('http://localhost:4000/a')).value.headers,
+            (await onesyTestRequest[methodLower]('http://localhost:4000/a')).value.headers,
           ];
 
           const valueBrowsers = await evaluate(async (args: any) => {
             const [window, method] = args;
 
-            const amauiTestRequest = await window.AmauiTest.request();
+            const onesyTestRequest = await window.OnesyTest.request();
 
             const values_ = [
-              (await amauiTestRequest[method]('http://localhost:4000/a')).value.headers,
+              (await onesyTestRequest[method]('http://localhost:4000/a')).value.headers,
             ];
 
             return values_;
@@ -738,8 +738,8 @@ describe('@amaui/test/request', () => {
           const values = [valueNode, ...valueBrowsers];
 
           values.forEach(value => {
-            expect(value[0]['amaui-method']).eq(method);
-            expect(value[0]['amaui-url']).eq('/a');
+            expect(value[0]['onesy-method']).eq(method);
+            expect(value[0]['onesy-url']).eq('/a');
           });
         });
       });
@@ -748,10 +748,10 @@ describe('@amaui/test/request', () => {
     describe('app', () => {
 
       it('request', async () => {
-        const amauiTestRequest = await request(app);
+        const onesyTestRequest = await request(app);
 
         const values_ = [
-          (await amauiTestRequest.request('/a', { method: 'GET' })).value.response,
+          (await onesyTestRequest.request('/a', { method: 'GET' })).value.response,
         ];
 
         const valueNode = values_;
@@ -770,10 +770,10 @@ describe('@amaui/test/request', () => {
         const methodLower = method.toLowerCase();
 
         it(methodLower, async () => {
-          const amauiTestRequest = await request(app);
+          const onesyTestRequest = await request(app);
 
           const values_ = [
-            (await amauiTestRequest[methodLower]('/a')).value.response,
+            (await onesyTestRequest[methodLower]('/a')).value.response,
           ];
 
           const valueNode = values_;
@@ -793,18 +793,18 @@ describe('@amaui/test/request', () => {
         const methodLower = method.toLowerCase();
 
         it(methodLower, async () => {
-          const amauiTestRequest = await request(app);
+          const onesyTestRequest = await request(app);
 
           const values_ = [
-            (await amauiTestRequest[methodLower]('/a')).value.headers,
+            (await onesyTestRequest[methodLower]('/a')).value.headers,
           ];
 
           const valueNode = values_;
           const values = [valueNode];
 
           values.forEach(value => {
-            expect(value[0]['amaui-method']).eq(method);
-            expect(value[0]['amaui-url']).eq('/a');
+            expect(value[0]['onesy-method']).eq(method);
+            expect(value[0]['onesy-url']).eq('/a');
           });
         });
       });

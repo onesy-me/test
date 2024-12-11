@@ -1,24 +1,24 @@
 /* tslint:disable: no-shadowed-variable */
 import { expect } from 'chai';
 
-import * as AmauiUtils from '@amaui/utils';
+import * as OnesyUtils from '@onesy/utils';
 
 import { evaluate } from '../utils/js/test/utils';
 
-import { AmauiTo, AmauiGroup } from '../src';
+import { OnesyTo, OnesyGroup } from '../src';
 
-describe('AmauiTo', () => {
+describe('OnesyTo', () => {
 
-  it('AmauiTo', async () => {
-    const amauiTo = new AmauiTo('a', () => 4);
+  it('OnesyTo', async () => {
+    const onesyTo = new OnesyTo('a', () => 4);
 
-    amauiTo.parent = new AmauiGroup('a4');
-    amauiTo.index = 1;
-    amauiTo.mainIndex = 41;
-    amauiTo.level = 41;
-    amauiTo.file = '/a';
-    amauiTo.response = {
-      for: amauiTo,
+    onesyTo.parent = new OnesyGroup('a4');
+    onesyTo.index = 1;
+    onesyTo.mainIndex = 41;
+    onesyTo.level = 41;
+    onesyTo.file = '/a';
+    onesyTo.response = {
+      for: onesyTo,
       start: 14,
       end: 41,
       duration: 41 - 14,
@@ -30,27 +30,27 @@ describe('AmauiTo', () => {
     const values_ = [];
 
     values_.push(
-      amauiTo.parent instanceof AmauiGroup,
-      amauiTo.response.for === amauiTo,
-      AmauiUtils.is('function', amauiTo.method),
+      onesyTo.parent instanceof OnesyGroup,
+      onesyTo.response.for === onesyTo,
+      OnesyUtils.is('function', onesyTo.method),
     );
 
-    delete amauiTo.parent;
-    delete amauiTo.method;
-    delete amauiTo.response.for;
+    delete onesyTo.parent;
+    delete onesyTo.method;
+    delete onesyTo.response.for;
 
-    values_.push(amauiTo);
+    values_.push(onesyTo);
 
     const valueBrowsers = await evaluate((window: any) => {
-      const amauiTo = new window.AmauiTest.AmauiTo('a', () => 4);
+      const onesyTo = new window.OnesyTest.OnesyTo('a', () => 4);
 
-      amauiTo.parent = new window.AmauiTest.AmauiGroup('a');
-      amauiTo.index = 1;
-      amauiTo.mainIndex = 41;
-      amauiTo.level = 41;
-      amauiTo.file = '/a';
-      amauiTo.response = {
-        for: amauiTo,
+      onesyTo.parent = new window.OnesyTest.OnesyGroup('a');
+      onesyTo.index = 1;
+      onesyTo.mainIndex = 41;
+      onesyTo.level = 41;
+      onesyTo.file = '/a';
+      onesyTo.response = {
+        for: onesyTo,
         start: 14,
         end: 41,
         duration: 41 - 14,
@@ -62,16 +62,16 @@ describe('AmauiTo', () => {
       const values_ = [];
 
       values_.push(
-        amauiTo.parent instanceof window.AmauiTest.AmauiGroup,
-        amauiTo.response.for === amauiTo,
-        window.AmauiUtils.is('function', amauiTo.method),
+        onesyTo.parent instanceof window.OnesyTest.OnesyGroup,
+        onesyTo.response.for === onesyTo,
+        window.OnesyUtils.is('function', onesyTo.method),
       );
 
-      delete amauiTo.parent;
-      delete amauiTo.method;
-      delete amauiTo.response.for;
+      delete onesyTo.parent;
+      delete onesyTo.method;
+      delete onesyTo.response.for;
 
-      values_.push(amauiTo);
+      values_.push(onesyTo);
 
       return values_;
     });

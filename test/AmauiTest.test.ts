@@ -2,12 +2,12 @@
 import path from 'path';
 import { expect } from 'chai';
 
-import { copy, wait } from '@amaui/utils';
-import AmauiNode from '@amaui/node';
+import { copy, wait } from '@onesy/utils';
+import OnesyNode from '@onesy/node';
 
 import { evaluate } from '../utils/js/test/utils';
 
-import { AmauiTest, assert, IOptions } from '../src';
+import { OnesyTest, assert, IOptions } from '../src';
 
 function clearRequireCache() {
   const items = [
@@ -15,7 +15,7 @@ function clearRequireCache() {
     path.resolve('test/example/test/a1.test.ts'),
     path.resolve('test/example/test/a4.test.ts'),
     path.resolve('test/example/package.json'),
-    path.resolve('amaui-test.options.js'),
+    path.resolve('onesy-test.options.js'),
   ];
 
   items.forEach(item => {
@@ -25,11 +25,11 @@ function clearRequireCache() {
   });
 }
 
-describe('AmauiTest', () => {
+describe('OnesyTest', () => {
 
   beforeEach(() => clearRequireCache());
 
-  describe('AmauiTest', () => {
+  describe('OnesyTest', () => {
 
     beforeEach(() => clearRequireCache());
 
@@ -53,11 +53,11 @@ describe('AmauiTest', () => {
         ]
       };
 
-      const amauiTest = new AmauiTest(options);
+      const onesyTest = new OnesyTest(options);
 
-      await amauiTest.init();
+      await onesyTest.init();
 
-      const valueNode = AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
+      const valueNode = OnesyTest.orderTos(onesyTest.mainGroup, onesyTest.options.order).map(item => item.name);
 
       const valueBrowsers = await evaluate((window: any) => {
         const options = {
@@ -70,30 +70,30 @@ describe('AmauiTest', () => {
           }
         };
 
-        const amauiTest = new window.AmauiTest.AmauiTest(options);
+        const onesyTest = new window.OnesyTest.OnesyTest(options);
 
         to('a', async () => {
-          window.AmauiTest.assert(4).eq(4);
+          window.OnesyTest.assert(4).eq(4);
         });
 
-        group('@amaui/a1', () => {
+        group('@onesy/a1', () => {
 
           pre(async () => {
-            await window.AmauiUtils.wait(140);
+            await window.OnesyUtils.wait(140);
 
             throw new Error('a');
           });
 
           to('a2', async () => {
-            await window.AmauiUtils.wait(140);
+            await window.OnesyUtils.wait(140);
 
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
-          group('@amaui/a3', () => {
+          group('@onesy/a3', () => {
 
             to('a3', async () => {
-              window.AmauiTest.assert(function a() { }).eq(undefined);
+              window.OnesyTest.assert(function a() { }).eq(undefined);
             });
 
           });
@@ -102,15 +102,15 @@ describe('AmauiTest', () => {
             throw new Error('a');
           });
 
-          group('@amaui/a5', () => {
+          group('@onesy/a5', () => {
             let a: any;
 
             pre(async () => {
-              await window.AmauiUtils.wait(14);
+              await window.OnesyUtils.wait(14);
             });
 
             preTo(async () => {
-              await window.AmauiUtils.wait(140);
+              await window.OnesyUtils.wait(140);
 
               a = 4;
             });
@@ -129,59 +129,59 @@ describe('AmauiTest', () => {
           });
 
           to('a6', async () => {
-            await window.AmauiUtils.wait(74);
+            await window.OnesyUtils.wait(74);
 
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           to('a7', async () => {
-            window.AmauiTest.assert(4).true;
+            window.OnesyTest.assert(4).true;
           });
 
           to('a8', async () => {
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           to('a9', async () => {
-            await window.AmauiTest.assert(function a() { }).throwAsync(4);
+            await window.OnesyTest.assert(function a() { }).throwAsync(4);
           });
 
           to('a10', async () => {
-            window.AmauiTest.assert(0).truthy;
+            window.OnesyTest.assert(0).truthy;
           });
 
           to('a11', async () => {
             const value = [
-              'AmauiError',
-              'AmauiAwsError',
-              'AmauiTestError',
-              'AmauiAmqpError',
+              'OnesyError',
+              'OnesyAwsError',
+              'OnesyTestError',
+              'OnesyAmqpError',
               'AuthenticationError',
               'AuthorizationError',
-              'window.AmauiTest.AssertError',
+              'window.OnesyTest.AssertError',
               'ValidationError',
               'PermissionError',
-              'AmauiMongoError',
+              'OnesyMongoError',
               'ConnectionError',
               'NotFoundError',
               'DeveloperError',
             ];
             const value1 = [
-              'AmauiError',
-              'AmauiAwsError',
-              'AmauiTestError',
-              'AmauiAmqpError',
+              'OnesyError',
+              'OnesyAwsError',
+              'OnesyTestError',
+              'OnesyAmqpError',
               'AuthenticationError',
               'AuthorizationError',
               'ValidationError',
               'PermissionError',
-              'AmauiMongoError',
+              'OnesyMongoError',
               'ConnectionError',
               'NotFoundError',
               'DeveloperError',
             ];
 
-            window.AmauiTest.assert(value).eql(value1);
+            window.OnesyTest.assert(value).eql(value1);
           });
 
           to('a12', async () => {
@@ -208,24 +208,24 @@ describe('AmauiTest', () => {
               ab: [1, 2, 3, 4],
             };
 
-            window.AmauiTest.assert(value).eql(value1);
+            window.OnesyTest.assert(value).eql(value1);
           });
 
           to('a13', async () => {
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           post(async () => {
-            await window.AmauiUtils.wait(40);
+            await window.OnesyUtils.wait(40);
           });
 
         });
 
         to('a14', async () => {
-          window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+          window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
         });
 
-        const items = window.AmauiTest.AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
+        const items = window.OnesyTest.OnesyTest.orderTos(onesyTest.mainGroup, onesyTest.options.order).map(item => item.name);
 
         return items;
       });
@@ -254,11 +254,11 @@ describe('AmauiTest', () => {
         ]
       };
 
-      const amauiTest = new AmauiTest(options);
+      const onesyTest = new OnesyTest(options);
 
-      await amauiTest.init();
+      await onesyTest.init();
 
-      const valueNode = AmauiTest.order(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
+      const valueNode = OnesyTest.order(onesyTest.mainGroup, onesyTest.options.order).map(item => item.name);
 
       const valueBrowsers = await evaluate((window: any) => {
         const options = {
@@ -271,30 +271,30 @@ describe('AmauiTest', () => {
           }
         };
 
-        const amauiTest = new window.AmauiTest.AmauiTest(options);
+        const onesyTest = new window.OnesyTest.OnesyTest(options);
 
         to('a', async () => {
-          window.AmauiTest.assert(4).eq(4);
+          window.OnesyTest.assert(4).eq(4);
         });
 
-        group('@amaui/a1', () => {
+        group('@onesy/a1', () => {
 
           pre(async () => {
-            await window.AmauiUtils.wait(140);
+            await window.OnesyUtils.wait(140);
 
             throw new Error('a');
           });
 
           to('a2', async () => {
-            await window.AmauiUtils.wait(140);
+            await window.OnesyUtils.wait(140);
 
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
-          group('@amaui/a3', () => {
+          group('@onesy/a3', () => {
 
             to('a3', async () => {
-              window.AmauiTest.assert(function a() { }).eq(undefined);
+              window.OnesyTest.assert(function a() { }).eq(undefined);
             });
 
           });
@@ -303,15 +303,15 @@ describe('AmauiTest', () => {
             throw new Error('a');
           });
 
-          group('@amaui/a5', () => {
+          group('@onesy/a5', () => {
             let a: any;
 
             pre(async () => {
-              await window.AmauiUtils.wait(14);
+              await window.OnesyUtils.wait(14);
             });
 
             preTo(async () => {
-              await window.AmauiUtils.wait(140);
+              await window.OnesyUtils.wait(140);
 
               a = 4;
             });
@@ -330,59 +330,59 @@ describe('AmauiTest', () => {
           });
 
           to('a6', async () => {
-            await window.AmauiUtils.wait(74);
+            await window.OnesyUtils.wait(74);
 
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           to('a7', async () => {
-            window.AmauiTest.assert(4).true;
+            window.OnesyTest.assert(4).true;
           });
 
           to('a8', async () => {
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           to('a9', async () => {
-            await window.AmauiTest.assert(function a() { }).throwAsync(4);
+            await window.OnesyTest.assert(function a() { }).throwAsync(4);
           });
 
           to('a10', async () => {
-            window.AmauiTest.assert(0).truthy;
+            window.OnesyTest.assert(0).truthy;
           });
 
           to('a11', async () => {
             const value = [
-              'AmauiError',
-              'AmauiAwsError',
-              'AmauiTestError',
-              'AmauiAmqpError',
+              'OnesyError',
+              'OnesyAwsError',
+              'OnesyTestError',
+              'OnesyAmqpError',
               'AuthenticationError',
               'AuthorizationError',
-              'window.AmauiTest.AssertError',
+              'window.OnesyTest.AssertError',
               'ValidationError',
               'PermissionError',
-              'AmauiMongoError',
+              'OnesyMongoError',
               'ConnectionError',
               'NotFoundError',
               'DeveloperError',
             ];
             const value1 = [
-              'AmauiError',
-              'AmauiAwsError',
-              'AmauiTestError',
-              'AmauiAmqpError',
+              'OnesyError',
+              'OnesyAwsError',
+              'OnesyTestError',
+              'OnesyAmqpError',
               'AuthenticationError',
               'AuthorizationError',
               'ValidationError',
               'PermissionError',
-              'AmauiMongoError',
+              'OnesyMongoError',
               'ConnectionError',
               'NotFoundError',
               'DeveloperError',
             ];
 
-            window.AmauiTest.assert(value).eql(value1);
+            window.OnesyTest.assert(value).eql(value1);
           });
 
           to('a12', async () => {
@@ -409,35 +409,35 @@ describe('AmauiTest', () => {
               ab: [1, 2, 3, 4],
             };
 
-            window.AmauiTest.assert(value).eql(value1);
+            window.OnesyTest.assert(value).eql(value1);
           });
 
           to('a13', async () => {
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           post(async () => {
-            await window.AmauiUtils.wait(40);
+            await window.OnesyUtils.wait(40);
           });
 
         });
 
         to('a14', async () => {
-          window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+          window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
         });
 
-        const items = window.AmauiTest.AmauiTest.order(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
+        const items = window.OnesyTest.OnesyTest.order(onesyTest.mainGroup, onesyTest.options.order).map(item => item.name);
 
         return items;
       });
       const values = [valueNode, ...valueBrowsers];
 
-      values.forEach(value => expect(value).eql(['a', '@amaui/a1', 'a14']));
+      values.forEach(value => expect(value).eql(['a', '@onesy/a1', 'a14']));
     });
 
   });
 
-  describe('amauiTest', () => {
+  describe('onesyTest', () => {
 
     it('mainGroup', async () => {
       const options: IOptions = {
@@ -459,9 +459,9 @@ describe('AmauiTest', () => {
         ]
       };
 
-      const amauiTest = new AmauiTest(options);
+      const onesyTest = new OnesyTest(options);
 
-      const valueNode = amauiTest.mainGroup.name === 'main';
+      const valueNode = onesyTest.mainGroup.name === 'main';
 
       const valueBrowsers = await evaluate((window: any) => {
         const options = {
@@ -474,9 +474,9 @@ describe('AmauiTest', () => {
           }
         };
 
-        const amauiTest = new window.AmauiTest.AmauiTest(options);
+        const onesyTest = new window.OnesyTest.OnesyTest(options);
 
-        return amauiTest.mainGroup.name === 'main';
+        return onesyTest.mainGroup.name === 'main';
       });
       const values = [valueNode, ...valueBrowsers];
 
@@ -503,9 +503,9 @@ describe('AmauiTest', () => {
         ]
       };
 
-      const amauiTest = new AmauiTest(options);
+      const onesyTest = new OnesyTest(options);
 
-      const valueNode = amauiTest.options;
+      const valueNode = onesyTest.options;
 
       const valueBrowsers = await evaluate((window: any) => {
         const options = {
@@ -521,9 +521,9 @@ describe('AmauiTest', () => {
           }
         };
 
-        const amauiTest = new window.AmauiTest.AmauiTest(options);
+        const onesyTest = new window.OnesyTest.OnesyTest(options);
 
-        return amauiTest.options;
+        return onesyTest.options;
       });
       const values = [valueNode, ...valueBrowsers];
 
@@ -554,7 +554,7 @@ describe('AmauiTest', () => {
           at: 'auto',
           errors_minify: true,
           html: {
-            id: 'amaui-test-results'
+            id: 'onesy-test-results'
           }
         }
       }));
@@ -585,15 +585,15 @@ describe('AmauiTest', () => {
             ]
           };
 
-          const amauiTest = new AmauiTest(options);
+          const onesyTest = new OnesyTest(options);
 
-          await amauiTest.init();
+          await onesyTest.init();
 
-          await amauiTest.run();
+          await onesyTest.run();
 
           const value = {
-            summary: amauiTest.mainGroup.summary,
-            options: amauiTest.options,
+            summary: onesyTest.mainGroup.summary,
+            options: onesyTest.options,
           };
 
           expect(value.options.files[0].indexOf('test/**/a.test.ts') > -1).true;
@@ -620,7 +620,7 @@ describe('AmauiTest', () => {
                 at: 'auto',
                 errors_minify: true,
                 html: {
-                  id: 'amaui-test-results'
+                  id: 'onesy-test-results'
                 }
               },
               response: {
@@ -662,15 +662,15 @@ describe('AmauiTest', () => {
             ]
           };
 
-          const amauiTest = new AmauiTest(options);
+          const onesyTest = new OnesyTest(options);
 
-          await amauiTest.init();
+          await onesyTest.init();
 
-          await amauiTest.run();
+          await onesyTest.run();
 
           const value = {
-            summary: amauiTest.mainGroup.summary,
-            options: amauiTest.options,
+            summary: onesyTest.mainGroup.summary,
+            options: onesyTest.options,
           };
 
           expect(value.options.files[0].indexOf('test/**/a.test.ts') > -1).true;
@@ -697,7 +697,7 @@ describe('AmauiTest', () => {
                 at: 'auto',
                 errors_minify: true,
                 html: {
-                  id: 'amaui-test-results'
+                  id: 'onesy-test-results'
                 }
               },
               response: {
@@ -747,11 +747,11 @@ describe('AmauiTest', () => {
             ]
           };
 
-          const amauiTest = new AmauiTest(options);
+          const onesyTest = new OnesyTest(options);
 
-          await amauiTest.init();
+          await onesyTest.init();
 
-          const valueNode = AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
+          const valueNode = OnesyTest.orderTos(onesyTest.mainGroup, onesyTest.options.order).map(item => item.name);
 
           const valueBrowsers = await evaluate((window: any) => {
             const options = {
@@ -763,30 +763,30 @@ describe('AmauiTest', () => {
               }
             };
 
-            const amauiTest = new window.AmauiTest.AmauiTest(options);
+            const onesyTest = new window.OnesyTest.OnesyTest(options);
 
             to('a', async () => {
-              window.AmauiTest.assert(4).eq(4);
+              window.OnesyTest.assert(4).eq(4);
             });
 
-            group('@amaui/a1', () => {
+            group('@onesy/a1', () => {
 
               pre(async () => {
-                await window.AmauiUtils.wait(140);
+                await window.OnesyUtils.wait(140);
 
                 throw new Error('a');
               });
 
               to('a2', async () => {
-                await window.AmauiUtils.wait(140);
+                await window.OnesyUtils.wait(140);
 
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
-              group('@amaui/a3', () => {
+              group('@onesy/a3', () => {
 
                 to('a3', async () => {
-                  window.AmauiTest.assert(function a() { }).eq(undefined);
+                  window.OnesyTest.assert(function a() { }).eq(undefined);
                 });
 
               });
@@ -795,15 +795,15 @@ describe('AmauiTest', () => {
                 throw new Error('a');
               });
 
-              group('@amaui/a5', () => {
+              group('@onesy/a5', () => {
                 let a: any;
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(14);
+                  await window.OnesyUtils.wait(14);
                 });
 
                 preTo(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   a = 4;
                 });
@@ -822,59 +822,59 @@ describe('AmauiTest', () => {
               });
 
               to('a6', async () => {
-                await window.AmauiUtils.wait(74);
+                await window.OnesyUtils.wait(74);
 
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
               to('a7', async () => {
-                window.AmauiTest.assert(4).true;
+                window.OnesyTest.assert(4).true;
               });
 
               to('a8', async () => {
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
               to('a9', async () => {
-                await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                await window.OnesyTest.assert(function a() { }).throwAsync(4);
               });
 
               to('a10', async () => {
-                window.AmauiTest.assert(0).truthy;
+                window.OnesyTest.assert(0).truthy;
               });
 
               to('a11', async () => {
                 const value = [
-                  'AmauiError',
-                  'AmauiAwsError',
-                  'AmauiTestError',
-                  'AmauiAmqpError',
+                  'OnesyError',
+                  'OnesyAwsError',
+                  'OnesyTestError',
+                  'OnesyAmqpError',
                   'AuthenticationError',
                   'AuthorizationError',
-                  'window.AmauiTest.AssertError',
+                  'window.OnesyTest.AssertError',
                   'ValidationError',
                   'PermissionError',
-                  'AmauiMongoError',
+                  'OnesyMongoError',
                   'ConnectionError',
                   'NotFoundError',
                   'DeveloperError',
                 ];
                 const value1 = [
-                  'AmauiError',
-                  'AmauiAwsError',
-                  'AmauiTestError',
-                  'AmauiAmqpError',
+                  'OnesyError',
+                  'OnesyAwsError',
+                  'OnesyTestError',
+                  'OnesyAmqpError',
                   'AuthenticationError',
                   'AuthorizationError',
                   'ValidationError',
                   'PermissionError',
-                  'AmauiMongoError',
+                  'OnesyMongoError',
                   'ConnectionError',
                   'NotFoundError',
                   'DeveloperError',
                 ];
 
-                window.AmauiTest.assert(value).eql(value1);
+                window.OnesyTest.assert(value).eql(value1);
               });
 
               to('a12', async () => {
@@ -901,24 +901,24 @@ describe('AmauiTest', () => {
                   ab: [1, 2, 3, 4],
                 };
 
-                window.AmauiTest.assert(value).eql(value1);
+                window.OnesyTest.assert(value).eql(value1);
               });
 
               to('a13', async () => {
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
               post(async () => {
-                await window.AmauiUtils.wait(40);
+                await window.OnesyUtils.wait(40);
               });
 
             });
 
             to('a14', async () => {
-              window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+              window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
             });
 
-            const items = window.AmauiTest.AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
+            const items = window.OnesyTest.OnesyTest.orderTos(onesyTest.mainGroup, onesyTest.options.order).map(item => item.name);
 
             return items;
           });
@@ -947,11 +947,11 @@ describe('AmauiTest', () => {
             ]
           };
 
-          const amauiTest = new AmauiTest(options);
+          const onesyTest = new OnesyTest(options);
 
-          await amauiTest.init();
+          await onesyTest.init();
 
-          const valueNode = AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
+          const valueNode = OnesyTest.orderTos(onesyTest.mainGroup, onesyTest.options.order).map(item => item.name);
 
           const valueBrowsers = await evaluate((window: any) => {
             const options = {
@@ -964,30 +964,30 @@ describe('AmauiTest', () => {
               }
             };
 
-            const amauiTest = new window.AmauiTest.AmauiTest(options);
+            const onesyTest = new window.OnesyTest.OnesyTest(options);
 
             to('a', async () => {
-              window.AmauiTest.assert(4).eq(4);
+              window.OnesyTest.assert(4).eq(4);
             });
 
-            group('@amaui/a1', () => {
+            group('@onesy/a1', () => {
 
               pre(async () => {
-                await window.AmauiUtils.wait(140);
+                await window.OnesyUtils.wait(140);
 
                 throw new Error('a');
               });
 
               to('a2', async () => {
-                await window.AmauiUtils.wait(140);
+                await window.OnesyUtils.wait(140);
 
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
-              group('@amaui/a3', () => {
+              group('@onesy/a3', () => {
 
                 to('a3', async () => {
-                  window.AmauiTest.assert(function a() { }).eq(undefined);
+                  window.OnesyTest.assert(function a() { }).eq(undefined);
                 });
 
               });
@@ -996,15 +996,15 @@ describe('AmauiTest', () => {
                 throw new Error('a');
               });
 
-              group('@amaui/a5', () => {
+              group('@onesy/a5', () => {
                 let a: any;
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(14);
+                  await window.OnesyUtils.wait(14);
                 });
 
                 preTo(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   a = 4;
                 });
@@ -1023,59 +1023,59 @@ describe('AmauiTest', () => {
               });
 
               to('a6', async () => {
-                await window.AmauiUtils.wait(74);
+                await window.OnesyUtils.wait(74);
 
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
               to('a7', async () => {
-                window.AmauiTest.assert(4).true;
+                window.OnesyTest.assert(4).true;
               });
 
               to('a8', async () => {
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
               to('a9', async () => {
-                await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                await window.OnesyTest.assert(function a() { }).throwAsync(4);
               });
 
               to('a10', async () => {
-                window.AmauiTest.assert(0).truthy;
+                window.OnesyTest.assert(0).truthy;
               });
 
               to('a11', async () => {
                 const value = [
-                  'AmauiError',
-                  'AmauiAwsError',
-                  'AmauiTestError',
-                  'AmauiAmqpError',
+                  'OnesyError',
+                  'OnesyAwsError',
+                  'OnesyTestError',
+                  'OnesyAmqpError',
                   'AuthenticationError',
                   'AuthorizationError',
-                  'window.AmauiTest.AssertError',
+                  'window.OnesyTest.AssertError',
                   'ValidationError',
                   'PermissionError',
-                  'AmauiMongoError',
+                  'OnesyMongoError',
                   'ConnectionError',
                   'NotFoundError',
                   'DeveloperError',
                 ];
                 const value1 = [
-                  'AmauiError',
-                  'AmauiAwsError',
-                  'AmauiTestError',
-                  'AmauiAmqpError',
+                  'OnesyError',
+                  'OnesyAwsError',
+                  'OnesyTestError',
+                  'OnesyAmqpError',
                   'AuthenticationError',
                   'AuthorizationError',
                   'ValidationError',
                   'PermissionError',
-                  'AmauiMongoError',
+                  'OnesyMongoError',
                   'ConnectionError',
                   'NotFoundError',
                   'DeveloperError',
                 ];
 
-                window.AmauiTest.assert(value).eql(value1);
+                window.OnesyTest.assert(value).eql(value1);
               });
 
               to('a12', async () => {
@@ -1102,24 +1102,24 @@ describe('AmauiTest', () => {
                   ab: [1, 2, 3, 4],
                 };
 
-                window.AmauiTest.assert(value).eql(value1);
+                window.OnesyTest.assert(value).eql(value1);
               });
 
               to('a13', async () => {
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
               post(async () => {
-                await window.AmauiUtils.wait(40);
+                await window.OnesyUtils.wait(40);
               });
 
             });
 
             to('a14', async () => {
-              window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+              window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
             });
 
-            const items = window.AmauiTest.AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
+            const items = window.OnesyTest.OnesyTest.orderTos(onesyTest.mainGroup, onesyTest.options.order).map(item => item.name);
 
             return items;
           });
@@ -1148,11 +1148,11 @@ describe('AmauiTest', () => {
             ]
           };
 
-          const amauiTest = new AmauiTest(options);
+          const onesyTest = new OnesyTest(options);
 
-          await amauiTest.init();
+          await onesyTest.init();
 
-          const valueNode = AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
+          const valueNode = OnesyTest.orderTos(onesyTest.mainGroup, onesyTest.options.order).map(item => item.name);
 
           const valueBrowsers = await evaluate((window: any) => {
             const options = {
@@ -1165,30 +1165,30 @@ describe('AmauiTest', () => {
               }
             };
 
-            const amauiTest = new window.AmauiTest.AmauiTest(options);
+            const onesyTest = new window.OnesyTest.OnesyTest(options);
 
             to('a', async () => {
-              window.AmauiTest.assert(4).eq(4);
+              window.OnesyTest.assert(4).eq(4);
             });
 
-            group('@amaui/a1', () => {
+            group('@onesy/a1', () => {
 
               pre(async () => {
-                await window.AmauiUtils.wait(140);
+                await window.OnesyUtils.wait(140);
 
                 throw new Error('a');
               });
 
               to('a2', async () => {
-                await window.AmauiUtils.wait(140);
+                await window.OnesyUtils.wait(140);
 
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
-              group('@amaui/a3', () => {
+              group('@onesy/a3', () => {
 
                 to('a3', async () => {
-                  window.AmauiTest.assert(function a() { }).eq(undefined);
+                  window.OnesyTest.assert(function a() { }).eq(undefined);
                 });
 
               });
@@ -1197,15 +1197,15 @@ describe('AmauiTest', () => {
                 throw new Error('a');
               });
 
-              group('@amaui/a5', () => {
+              group('@onesy/a5', () => {
                 let a: any;
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(14);
+                  await window.OnesyUtils.wait(14);
                 });
 
                 preTo(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   a = 4;
                 });
@@ -1224,59 +1224,59 @@ describe('AmauiTest', () => {
               });
 
               to('a6', async () => {
-                await window.AmauiUtils.wait(74);
+                await window.OnesyUtils.wait(74);
 
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
               to('a7', async () => {
-                window.AmauiTest.assert(4).true;
+                window.OnesyTest.assert(4).true;
               });
 
               to('a8', async () => {
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
               to('a9', async () => {
-                await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                await window.OnesyTest.assert(function a() { }).throwAsync(4);
               });
 
               to('a10', async () => {
-                window.AmauiTest.assert(0).truthy;
+                window.OnesyTest.assert(0).truthy;
               });
 
               to('a11', async () => {
                 const value = [
-                  'AmauiError',
-                  'AmauiAwsError',
-                  'AmauiTestError',
-                  'AmauiAmqpError',
+                  'OnesyError',
+                  'OnesyAwsError',
+                  'OnesyTestError',
+                  'OnesyAmqpError',
                   'AuthenticationError',
                   'AuthorizationError',
-                  'window.AmauiTest.AssertError',
+                  'window.OnesyTest.AssertError',
                   'ValidationError',
                   'PermissionError',
-                  'AmauiMongoError',
+                  'OnesyMongoError',
                   'ConnectionError',
                   'NotFoundError',
                   'DeveloperError',
                 ];
                 const value1 = [
-                  'AmauiError',
-                  'AmauiAwsError',
-                  'AmauiTestError',
-                  'AmauiAmqpError',
+                  'OnesyError',
+                  'OnesyAwsError',
+                  'OnesyTestError',
+                  'OnesyAmqpError',
                   'AuthenticationError',
                   'AuthorizationError',
                   'ValidationError',
                   'PermissionError',
-                  'AmauiMongoError',
+                  'OnesyMongoError',
                   'ConnectionError',
                   'NotFoundError',
                   'DeveloperError',
                 ];
 
-                window.AmauiTest.assert(value).eql(value1);
+                window.OnesyTest.assert(value).eql(value1);
               });
 
               to('a12', async () => {
@@ -1303,24 +1303,24 @@ describe('AmauiTest', () => {
                   ab: [1, 2, 3, 4],
                 };
 
-                window.AmauiTest.assert(value).eql(value1);
+                window.OnesyTest.assert(value).eql(value1);
               });
 
               to('a13', async () => {
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
               post(async () => {
-                await window.AmauiUtils.wait(40);
+                await window.OnesyUtils.wait(40);
               });
 
             });
 
             to('a14', async () => {
-              window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+              window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
             });
 
-            const items = window.AmauiTest.AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
+            const items = window.OnesyTest.OnesyTest.orderTos(onesyTest.mainGroup, onesyTest.options.order).map(item => item.name);
 
             return items;
           });
@@ -1349,11 +1349,11 @@ describe('AmauiTest', () => {
             ]
           };
 
-          const amauiTest = new AmauiTest(options);
+          const onesyTest = new OnesyTest(options);
 
-          await amauiTest.init();
+          await onesyTest.init();
 
-          const valueNode = AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
+          const valueNode = OnesyTest.orderTos(onesyTest.mainGroup, onesyTest.options.order).map(item => item.name);
 
           const valueBrowsers = await evaluate((window: any) => {
             const options = {
@@ -1366,30 +1366,30 @@ describe('AmauiTest', () => {
               }
             };
 
-            const amauiTest = new window.AmauiTest.AmauiTest(options);
+            const onesyTest = new window.OnesyTest.OnesyTest(options);
 
             to('a', async () => {
-              window.AmauiTest.assert(4).eq(4);
+              window.OnesyTest.assert(4).eq(4);
             });
 
-            group('@amaui/a1', () => {
+            group('@onesy/a1', () => {
 
               pre(async () => {
-                await window.AmauiUtils.wait(140);
+                await window.OnesyUtils.wait(140);
 
                 throw new Error('a');
               });
 
               to('a2', async () => {
-                await window.AmauiUtils.wait(140);
+                await window.OnesyUtils.wait(140);
 
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
-              group('@amaui/a3', () => {
+              group('@onesy/a3', () => {
 
                 to('a3', async () => {
-                  window.AmauiTest.assert(function a() { }).eq(undefined);
+                  window.OnesyTest.assert(function a() { }).eq(undefined);
                 });
 
               });
@@ -1398,15 +1398,15 @@ describe('AmauiTest', () => {
                 throw new Error('a');
               });
 
-              group('@amaui/a5', () => {
+              group('@onesy/a5', () => {
                 let a: any;
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(14);
+                  await window.OnesyUtils.wait(14);
                 });
 
                 preTo(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   a = 4;
                 });
@@ -1425,59 +1425,59 @@ describe('AmauiTest', () => {
               });
 
               to('a6', async () => {
-                await window.AmauiUtils.wait(74);
+                await window.OnesyUtils.wait(74);
 
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
               to('a7', async () => {
-                window.AmauiTest.assert(4).true;
+                window.OnesyTest.assert(4).true;
               });
 
               to('a8', async () => {
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
               to('a9', async () => {
-                await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                await window.OnesyTest.assert(function a() { }).throwAsync(4);
               });
 
               to('a10', async () => {
-                window.AmauiTest.assert(0).truthy;
+                window.OnesyTest.assert(0).truthy;
               });
 
               to('a11', async () => {
                 const value = [
-                  'AmauiError',
-                  'AmauiAwsError',
-                  'AmauiTestError',
-                  'AmauiAmqpError',
+                  'OnesyError',
+                  'OnesyAwsError',
+                  'OnesyTestError',
+                  'OnesyAmqpError',
                   'AuthenticationError',
                   'AuthorizationError',
-                  'window.AmauiTest.AssertError',
+                  'window.OnesyTest.AssertError',
                   'ValidationError',
                   'PermissionError',
-                  'AmauiMongoError',
+                  'OnesyMongoError',
                   'ConnectionError',
                   'NotFoundError',
                   'DeveloperError',
                 ];
                 const value1 = [
-                  'AmauiError',
-                  'AmauiAwsError',
-                  'AmauiTestError',
-                  'AmauiAmqpError',
+                  'OnesyError',
+                  'OnesyAwsError',
+                  'OnesyTestError',
+                  'OnesyAmqpError',
                   'AuthenticationError',
                   'AuthorizationError',
                   'ValidationError',
                   'PermissionError',
-                  'AmauiMongoError',
+                  'OnesyMongoError',
                   'ConnectionError',
                   'NotFoundError',
                   'DeveloperError',
                 ];
 
-                window.AmauiTest.assert(value).eql(value1);
+                window.OnesyTest.assert(value).eql(value1);
               });
 
               to('a12', async () => {
@@ -1504,24 +1504,24 @@ describe('AmauiTest', () => {
                   ab: [1, 2, 3, 4],
                 };
 
-                window.AmauiTest.assert(value).eql(value1);
+                window.OnesyTest.assert(value).eql(value1);
               });
 
               to('a13', async () => {
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
               post(async () => {
-                await window.AmauiUtils.wait(40);
+                await window.OnesyUtils.wait(40);
               });
 
             });
 
             to('a14', async () => {
-              window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+              window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
             });
 
-            const items = window.AmauiTest.AmauiTest.orderTos(amauiTest.mainGroup, amauiTest.options.order).map(item => item.name);
+            const items = window.OnesyTest.OnesyTest.orderTos(onesyTest.mainGroup, onesyTest.options.order).map(item => item.name);
 
             return items;
           });
@@ -1557,13 +1557,13 @@ describe('AmauiTest', () => {
               ]
             };
 
-            const amauiTest = new AmauiTest(options);
+            const onesyTest = new OnesyTest(options);
 
-            await amauiTest.init();
+            await onesyTest.init();
 
-            await amauiTest.run();
+            await onesyTest.run();
 
-            let valueNode = amauiTest.archive.logs;
+            let valueNode = onesyTest.archive.logs;
 
             const valueBrowsers = await evaluate(async (window: any) => {
               const options = {
@@ -1576,30 +1576,30 @@ describe('AmauiTest', () => {
                 }
               };
 
-              const amauiTest = new window.AmauiTest.AmauiTest(options);
+              const onesyTest = new window.OnesyTest.OnesyTest(options);
 
               to('a', async () => {
-                window.AmauiTest.assert(true).true;
+                window.OnesyTest.assert(true).true;
               });
 
-              group('@amaui/a1', () => {
+              group('@onesy/a1', () => {
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   throw new Error('a');
                 });
 
                 to('a2', async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
-                group('@amaui/a3', () => {
+                group('@onesy/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                    window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                       [
                         1
                       ],
@@ -1627,15 +1627,15 @@ describe('AmauiTest', () => {
                   throw new Error('a');
                 });
 
-                group('@amaui/a5', () => {
+                group('@onesy/a5', () => {
                   let a;
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(14);
+                    await window.OnesyUtils.wait(14);
                   });
 
                   preTo(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     a = 4;
                   });
@@ -1654,59 +1654,59 @@ describe('AmauiTest', () => {
                 });
 
                 to('a6', async () => {
-                  await window.AmauiUtils.wait(74);
+                  await window.OnesyUtils.wait(74);
 
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 to('a7', async () => {
-                  window.AmauiTest.assert(4).true;
+                  window.OnesyTest.assert(4).true;
                 });
 
                 to('a8', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 to('a9', async () => {
-                  await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                  await window.OnesyTest.assert(function a() { }).throwAsync(4);
                 });
 
                 to('a10', async () => {
-                  window.AmauiTest.assert(0).truthy;
+                  window.OnesyTest.assert(0).truthy;
                 });
 
                 to('a11', async () => {
                   const value = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'AssertError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
                   const value1 = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a12', async () => {
@@ -1733,26 +1733,26 @@ describe('AmauiTest', () => {
                     ab: [1, 2, 3, 4],
                   };
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a13', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 post(async () => {
-                  await window.AmauiUtils.wait(40);
+                  await window.OnesyUtils.wait(40);
                 });
 
               });
 
               to('a14', async () => {
-                window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
               });
 
-              await amauiTest.run();
+              await onesyTest.run();
 
-              return amauiTest.archive.logs;
+              return onesyTest.archive.logs;
             });
 
             valueBrowsers[1].splice(86, 2);
@@ -1777,25 +1777,25 @@ describe('AmauiTest', () => {
               });
 
               const valueBrowserOutput = [
-                "\n\n  Amaui test running",
+                "\n\n  Onesy test running",
                 "%c  14 tests",
                 "color: #777",
                 "\n\n\n",
                 "  %c✔ %ca",
                 "color: #1fc926",
                 "color: #777",
-                "\n  @amaui/a1",
+                "\n  @onesy/a1",
                 "    %c✔ %ca2 %c140ms",
                 "color: #1fc926",
                 "color: #777",
                 "color: #d74644",
-                "\n    @amaui/a3",
+                "\n    @onesy/a3",
                 "      %c1) a3",
                 "color: #d74644",
                 " ",
                 "    %c2) a4",
                 "color: #d74644",
-                "\n    @amaui/a5",
+                "\n    @onesy/a5",
                 "      %c3) a5",
                 "color: #d74644",
                 " ",
@@ -1831,58 +1831,58 @@ describe('AmauiTest', () => {
                 "%c  9 failed",
                 "color: #d74644",
                 "\n\n",
-                "  1) @amaui/a1 @amaui/a3 a3",
+                "  1) @onesy/a1 @onesy/a3 a3",
                 " ",
                 "%cAssertError: expected [1,4,3,7] (4) to equal any of the values [[1],[1,2,3,4,5,6,7],[1,2,3,4]]",
                 "color: #d74644; padding-left: 14px;",
                 "a",
                 "color: #777",
                 "\n",
-                "  2) @amaui/a1 a4",
+                "  2) @onesy/a1 a4",
                 " ",
                 "%cError",
                 "color: #d74644; padding-left: 14px;",
                 "a",
                 "color: #777",
                 "\n",
-                "  3) @amaui/a1 @amaui/a5 a5",
+                "  3) @onesy/a1 @onesy/a5 a5",
                 " ",
                 "%cAn Error: expected 4 to be 🍊 ",
                 "color: #d74644; padding-left: 14px;",
                 "a",
                 "color: #777",
                 "\n",
-                "  4) @amaui/a1 a7",
+                "  4) @onesy/a1 a7",
                 " ",
                 "%cAssertError: expected 4 to be true ",
                 "color: #d74644; padding-left: 14px;",
                 "a",
                 "color: #777",
                 "\n",
-                "  5) @amaui/a1 a9",
+                "  5) @onesy/a1 a9",
                 " ",
                 "%cAssertError: expected function a() { } to async throw 4",
                 "color: #d74644; padding-left: 14px;",
                 "\n",
-                "  6) @amaui/a1 a10",
+                "  6) @onesy/a1 a10",
                 " ",
                 "%cAssertError: expected 0 to be truthy ",
                 "color: #d74644; padding-left: 14px;",
                 "a",
                 "color: #777",
                 "\n",
-                "  7) @amaui/a1 a11",
+                "  7) @onesy/a1 a11",
                 " ",
-                "%cAssertError: expected [\"AmauiError\",\"AmauiAwsError\",\"AmauiTestError\",\"AmauiAmqpError\",\"Authen ... ] to equal deep [\"AmauiError\",\"AmauiAwsError\",\"AmauiTestError\",\"AmauiAmqpError\",\"Authen ... ]",
+                "%cAssertError: expected [\"OnesyError\",\"OnesyAwsError\",\"OnesyTestError\",\"OnesyAmqpError\",\"Authen ... ] to equal deep [\"OnesyError\",\"OnesyAwsError\",\"OnesyTestError\",\"OnesyAmqpError\",\"Authen ... ]",
                 "color: #d74644; padding-left: 14px;",
                 " ",
                 "  %c+ add %c- remove",
                 "color: #1fc926",
                 "color: #d74644",
                 " ",
-                "%c     \"AmauiTestError\"",
+                "%c     \"OnesyTestError\"",
                 "color: inherit",
-                "%c     \"AmauiAmqpError\"",
+                "%c     \"OnesyAmqpError\"",
                 "color: inherit",
                 "%c     \"AuthenticationError\"",
                 "color: inherit",
@@ -1894,14 +1894,14 @@ describe('AmauiTest', () => {
                 "color: inherit",
                 "%c     \"PermissionError\"",
                 "color: inherit",
-                "%c     \"AmauiMongoError\"",
+                "%c     \"OnesyMongoError\"",
                 "color: inherit",
                 "%c     \"ConnectionError\"",
                 "color: inherit",
                 "a",
                 "color: #777",
                 "\n",
-                "  8) @amaui/a1 a12",
+                "  8) @onesy/a1 a12",
                 " ",
                 "%cAssertError: expected {\"a\":{\"a\":{\"a\":{\"ab\":4}},\"ab\":4}} to equal deep {\"a\":{\"a\":{\"b\":4,\"a\":{\"ab\":5,\"ac\":4}}},\"ab\":[1,2,3,4]}",
                 "color: #d74644; padding-left: 14px;",
@@ -1967,16 +1967,16 @@ describe('AmauiTest', () => {
 
             // Milliseconds variations minor problem
             const valueNodeOutput = [
-              "\n\n  Amaui test running",
+              "\n\n  Onesy test running",
               "  \u001b[90m14 tests\u001b[0m",
               "\n\n",
               "  \u001b[32m✔\u001b[0m \u001b[90ma\u001b[0m",
-              "\n  @amaui/a1",
-              "\n    @amaui/a3",
+              "\n  @onesy/a1",
+              "\n    @onesy/a3",
               "      \u001b[31m1) a3\u001b[0m",
               " ",
               "    \u001b[31m2) a4\u001b[0m",
-              "\n    @amaui/a5",
+              "\n    @onesy/a5",
               "      \u001b[31m3) a5\u001b[0m",
               " ",
               "    \u001b[31m4) a7\u001b[0m",
@@ -1996,7 +1996,7 @@ describe('AmauiTest', () => {
               " ",
               "\u001b[91m9 failed\u001b[0m",
               "\n",
-              "  1) @amaui/a1 @amaui/a3 a3",
+              "  1) @onesy/a1 @onesy/a3 a3",
               " ",
               "  \u001b[91mAssertError: expected [1,4,3,7] (4) to equal any of the values [[1],[1,2,3,4,5,6,7],[1,2,3,4]]\u001b[0m",
               " ",
@@ -2027,15 +2027,15 @@ describe('AmauiTest', () => {
               "\u001b[91m  -  7\u001b[0m",
               "   ]",
               "\n",
-              "  2) @amaui/a1 a4",
+              "  2) @onesy/a1 a4",
               " ",
               "  \u001b[91mError: a\u001b[0m",
               "\n",
-              "  3) @amaui/a1 @amaui/a5 a5",
+              "  3) @onesy/a1 @onesy/a5 a5",
               " ",
               "  \u001b[91mAn Error: expected 4 to be 🍊 \u001b[0m",
               "\n",
-              "  4) @amaui/a1 a7",
+              "  4) @onesy/a1 a7",
               " ",
               "  \u001b[91mAssertError: expected [\"padding-left\",\"padding\",\"padding-right\"] (3) to equal deep [\"padding\",\"padding-left\",\"padding-right\"] (3)\u001b[0m",
               " ",
@@ -2048,11 +2048,11 @@ describe('AmauiTest', () => {
               "     \"padding-right\"",
               "   ]",
               "\n",
-              "  5) @amaui/a1 a9",
+              "  5) @onesy/a1 a9",
               " ",
               "  \u001b[91mAssertError: expected function a() { } to async throw 4\u001b[0m",
               "\n",
-              "  6) @amaui/a1 a10",
+              "  6) @onesy/a1 a10",
               " ",
               "  \u001b[91mAssertError: expected {\"direction\":\"ltr\",\"preference\":{\"background\":{\"default\":\"neutral\"},\"te ... } to equal deep {\"direction\":\"ltl\",\"preference\":{\"background\":{\"default\":\"neutral\"},\"te ... }\u001b[0m",
               " ",
@@ -2064,9 +2064,9 @@ describe('AmauiTest', () => {
               "     \"preference\": {",
               "\u001b[96m\n     24 lines skipped\u001b[0m",
               "\n",
-              "  7) @amaui/a1 a11",
+              "  7) @onesy/a1 a11",
               " ",
-              "  \u001b[91mAssertError: expected [\"AmauiError\",\"AmauiError\",\"AmauiAwsError\",\"AmauiTestError\",\"AmauiAmqpE ... ] (15) to equal deep [\"AmauiError\",\"AmauiError\",\"AmauiAwsError\",\"AmauiTestError\",\"AmauiAmqpE ... ] (14)\u001b[0m",
+              "  \u001b[91mAssertError: expected [\"OnesyError\",\"OnesyError\",\"OnesyAwsError\",\"OnesyTestError\",\"OnesyAmqpE ... ] (15) to equal deep [\"OnesyError\",\"OnesyError\",\"OnesyAwsError\",\"OnesyTestError\",\"OnesyAmqpE ... ] (14)\u001b[0m",
               " ",
               "  \u001b[92m+ add\u001b[0m \u001b[91m- remove\u001b[0m",
               " ",
@@ -2076,7 +2076,7 @@ describe('AmauiTest', () => {
               "     \"ValidationError\"",
               "\u001b[96m\n     7 lines skipped\u001b[0m",
               "\n",
-              "  8) @amaui/a1 a12",
+              "  8) @onesy/a1 a12",
               " ",
               "  \u001b[91mAssertError: expected {\"a\":{\"a\":{\"a\":{\"ab\":4}},\"ab\":4}} to equal deep {\"a\":{\"a\":{\"b\":4,\"a\":{\"ab\":5,\"ac\":4}}},\"ab\":[1,2,3,4]}\u001b[0m",
               " ",
@@ -2134,13 +2134,13 @@ describe('AmauiTest', () => {
               ]
             };
 
-            const amauiTest = new AmauiTest(options);
+            const onesyTest = new OnesyTest(options);
 
-            await amauiTest.init();
+            await onesyTest.init();
 
-            await amauiTest.run();
+            await onesyTest.run();
 
-            const valueNode = amauiTest.archive.logs.length > 104;
+            const valueNode = onesyTest.archive.logs.length > 104;
 
             const valueBrowsers = await evaluate(async (window: any) => {
               const options = {
@@ -2156,30 +2156,30 @@ describe('AmauiTest', () => {
                 }
               };
 
-              const amauiTest = new window.AmauiTest.AmauiTest(options);
+              const onesyTest = new window.OnesyTest.OnesyTest(options);
 
               to('a', async () => {
-                window.AmauiTest.assert(true).true;
+                window.OnesyTest.assert(true).true;
               });
 
-              group('@amaui/a1', () => {
+              group('@onesy/a1', () => {
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   throw new Error('a');
                 });
 
                 to('a2', async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
-                group('@amaui/a3', () => {
+                group('@onesy/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                    window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                       [
                         1
                       ],
@@ -2207,21 +2207,21 @@ describe('AmauiTest', () => {
                   throw new Error('a');
                 });
 
-                group('@amaui/a5', () => {
+                group('@onesy/a5', () => {
                   let a;
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(14);
+                    await window.OnesyUtils.wait(14);
                   });
 
                   preTo(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     a = 4;
                   });
 
                   to('a5', async () => {
-                    await window.AmauiUtils.wait(74);
+                    await window.OnesyUtils.wait(74);
 
                     const error: any = new Error('a');
 
@@ -2236,57 +2236,57 @@ describe('AmauiTest', () => {
                 });
 
                 to('a6', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 to('a7', async () => {
-                  window.AmauiTest.assert(4).true;
+                  window.OnesyTest.assert(4).true;
                 });
 
                 to('a8', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 to('a9', async () => {
-                  await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                  await window.OnesyTest.assert(function a() { }).throwAsync(4);
                 });
 
                 to('a10', async () => {
-                  window.AmauiTest.assert(0).truthy;
+                  window.OnesyTest.assert(0).truthy;
                 });
 
                 to('a11', async () => {
                   const value = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'AssertError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
                   const value1 = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a12', async () => {
@@ -2313,26 +2313,26 @@ describe('AmauiTest', () => {
                     ab: [1, 2, 3, 4],
                   };
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a13', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 post(async () => {
-                  await window.AmauiUtils.wait(40);
+                  await window.OnesyUtils.wait(40);
                 });
 
               });
 
               to('a14', async () => {
-                window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
               });
 
-              await amauiTest.run();
+              await onesyTest.run();
 
-              return amauiTest.archive.logs.length > 140;
+              return onesyTest.archive.logs.length > 140;
             });
             const values = [valueNode, ...valueBrowsers];
 
@@ -2359,13 +2359,13 @@ describe('AmauiTest', () => {
               ]
             };
 
-            const amauiTest = new AmauiTest(options);
+            const onesyTest = new OnesyTest(options);
 
-            await amauiTest.init();
+            await onesyTest.init();
 
-            await amauiTest.run();
+            await onesyTest.run();
 
-            const valueNode = !amauiTest.archive.logs.length;
+            const valueNode = !onesyTest.archive.logs.length;
 
             const valueBrowsers = await evaluate(async (window: any) => {
               const options = {
@@ -2381,30 +2381,30 @@ describe('AmauiTest', () => {
                 }
               };
 
-              const amauiTest = new window.AmauiTest.AmauiTest(options);
+              const onesyTest = new window.OnesyTest.OnesyTest(options);
 
               to('a', async () => {
-                window.AmauiTest.assert(true).true;
+                window.OnesyTest.assert(true).true;
               });
 
-              group('@amaui/a1', () => {
+              group('@onesy/a1', () => {
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   throw new Error('a');
                 });
 
                 to('a2', async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
-                group('@amaui/a3', () => {
+                group('@onesy/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                    window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                       [
                         1
                       ],
@@ -2432,21 +2432,21 @@ describe('AmauiTest', () => {
                   throw new Error('a');
                 });
 
-                group('@amaui/a5', () => {
+                group('@onesy/a5', () => {
                   let a;
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(14);
+                    await window.OnesyUtils.wait(14);
                   });
 
                   preTo(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     a = 4;
                   });
 
                   to('a5', async () => {
-                    await window.AmauiUtils.wait(74);
+                    await window.OnesyUtils.wait(74);
 
                     const error: any = new Error('a');
 
@@ -2461,57 +2461,57 @@ describe('AmauiTest', () => {
                 });
 
                 to('a6', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 to('a7', async () => {
-                  window.AmauiTest.assert(4).true;
+                  window.OnesyTest.assert(4).true;
                 });
 
                 to('a8', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 to('a9', async () => {
-                  await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                  await window.OnesyTest.assert(function a() { }).throwAsync(4);
                 });
 
                 to('a10', async () => {
-                  window.AmauiTest.assert(0).truthy;
+                  window.OnesyTest.assert(0).truthy;
                 });
 
                 to('a11', async () => {
                   const value = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'AssertError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
                   const value1 = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a12', async () => {
@@ -2538,26 +2538,26 @@ describe('AmauiTest', () => {
                     ab: [1, 2, 3, 4],
                   };
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a13', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 post(async () => {
-                  await window.AmauiUtils.wait(40);
+                  await window.OnesyUtils.wait(40);
                 });
 
               });
 
               to('a14', async () => {
-                window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
               });
 
-              await amauiTest.run();
+              await onesyTest.run();
 
-              return !amauiTest.archive.logs.length;
+              return !onesyTest.archive.logs.length;
             });
             const values = [valueNode, ...valueBrowsers];
 
@@ -2588,13 +2588,13 @@ describe('AmauiTest', () => {
               ]
             };
 
-            const amauiTest = new AmauiTest(options);
+            const onesyTest = new OnesyTest(options);
 
-            await amauiTest.init();
+            await onesyTest.init();
 
-            await amauiTest.run();
+            await onesyTest.run();
 
-            const valueNode = amauiTest.archive.logs.length > 40;
+            const valueNode = onesyTest.archive.logs.length > 40;
 
             const valueBrowsers = await evaluate(async (window: any) => {
               const options = {
@@ -2610,30 +2610,30 @@ describe('AmauiTest', () => {
                 }
               };
 
-              const amauiTest = new window.AmauiTest.AmauiTest(options);
+              const onesyTest = new window.OnesyTest.OnesyTest(options);
 
               to('a', async () => {
-                window.AmauiTest.assert(true).true;
+                window.OnesyTest.assert(true).true;
               });
 
-              group('@amaui/a1', () => {
+              group('@onesy/a1', () => {
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   throw new Error('a');
                 });
 
                 to('a2', async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
-                group('@amaui/a3', () => {
+                group('@onesy/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                    window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                       [
                         1
                       ],
@@ -2661,21 +2661,21 @@ describe('AmauiTest', () => {
                   throw new Error('a');
                 });
 
-                group('@amaui/a5', () => {
+                group('@onesy/a5', () => {
                   let a;
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(14);
+                    await window.OnesyUtils.wait(14);
                   });
 
                   preTo(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     a = 4;
                   });
 
                   to('a5', async () => {
-                    await window.AmauiUtils.wait(74);
+                    await window.OnesyUtils.wait(74);
 
                     const error: any = new Error('a');
 
@@ -2690,57 +2690,57 @@ describe('AmauiTest', () => {
                 });
 
                 to('a6', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 to('a7', async () => {
-                  window.AmauiTest.assert(4).true;
+                  window.OnesyTest.assert(4).true;
                 });
 
                 to('a8', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 to('a9', async () => {
-                  await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                  await window.OnesyTest.assert(function a() { }).throwAsync(4);
                 });
 
                 to('a10', async () => {
-                  window.AmauiTest.assert(0).truthy;
+                  window.OnesyTest.assert(0).truthy;
                 });
 
                 to('a11', async () => {
                   const value = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'AssertError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
                   const value1 = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a12', async () => {
@@ -2767,26 +2767,26 @@ describe('AmauiTest', () => {
                     ab: [1, 2, 3, 4],
                   };
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a13', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 post(async () => {
-                  await window.AmauiUtils.wait(40);
+                  await window.OnesyUtils.wait(40);
                 });
 
               });
 
               to('a14', async () => {
-                window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
               });
 
-              await amauiTest.run();
+              await onesyTest.run();
 
-              return amauiTest.archive.logs.length > 140;
+              return onesyTest.archive.logs.length > 140;
             });
             const values = [valueNode, ...valueBrowsers];
 
@@ -2808,43 +2808,43 @@ describe('AmauiTest', () => {
                 }
               };
 
-              if (!window.document.getElementById('amaui-test')) {
+              if (!window.document.getElementById('onesy-test')) {
                 const div = window.document.createElement('div');
 
-                div.id = 'amaui-test';
+                div.id = 'onesy-test';
 
-                div.innerHTML = `<div id='amaui-test-results'></div>`;
+                div.innerHTML = `<div id='onesy-test-results'></div>`;
 
                 window.document.body.append(div);
               }
               else {
-                window.document.getElementById('amaui-test').innerHTML = `<div id='amaui-test-results'></div>`;
+                window.document.getElementById('onesy-test').innerHTML = `<div id='onesy-test-results'></div>`;
               }
 
-              const amauiTest = new window.AmauiTest.AmauiTest(options);
+              const onesyTest = new window.OnesyTest.OnesyTest(options);
 
               to('a', async () => {
-                window.AmauiTest.assert(true).true;
+                window.OnesyTest.assert(true).true;
               });
 
-              group('@amaui/a1', () => {
+              group('@onesy/a1', () => {
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   throw new Error('a');
                 });
 
                 to('a2', async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
-                group('@amaui/a3', () => {
+                group('@onesy/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                    window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                       [
                         1
                       ],
@@ -2872,21 +2872,21 @@ describe('AmauiTest', () => {
                   throw new Error('a');
                 });
 
-                group('@amaui/a5', () => {
+                group('@onesy/a5', () => {
                   let a;
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(14);
+                    await window.OnesyUtils.wait(14);
                   });
 
                   preTo(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     a = 4;
                   });
 
                   to('a5', async () => {
-                    await window.AmauiUtils.wait(74);
+                    await window.OnesyUtils.wait(74);
 
                     const error: any = new Error('a');
 
@@ -2901,57 +2901,57 @@ describe('AmauiTest', () => {
                 });
 
                 to('a6', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 to('a7', async () => {
-                  window.AmauiTest.assert(4).true;
+                  window.OnesyTest.assert(4).true;
                 });
 
                 to('a8', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 to('a9', async () => {
-                  await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                  await window.OnesyTest.assert(function a() { }).throwAsync(4);
                 });
 
                 to('a10', async () => {
-                  window.AmauiTest.assert(0).truthy;
+                  window.OnesyTest.assert(0).truthy;
                 });
 
                 to('a11', async () => {
                   const value = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'AssertError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
                   const value1 = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a12', async () => {
@@ -2978,26 +2978,26 @@ describe('AmauiTest', () => {
                     ab: [1, 2, 3, 4],
                   };
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a13', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
                 post(async () => {
-                  await window.AmauiUtils.wait(40);
+                  await window.OnesyUtils.wait(40);
                 });
 
               });
 
               to('a14', async () => {
-                window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
               });
 
-              await amauiTest.run();
+              await onesyTest.run();
 
-              return window.document.getElementById('amaui-test').innerHTML.length > 7400;
+              return window.document.getElementById('onesy-test').innerHTML.length > 7400;
             });
 
             valueBrowsers.forEach(value => expect(value).eq(true));
@@ -3033,19 +3033,19 @@ describe('AmauiTest', () => {
                 ]
               };
 
-              const amauiTest = new AmauiTest(options);
+              const onesyTest = new OnesyTest(options);
 
-              await amauiTest.init();
+              await onesyTest.init();
 
-              amauiTest.run();
+              onesyTest.run();
 
               await wait(700);
 
-              const partialArchives = amauiTest.archive.logs.length > 0;
+              const partialArchives = onesyTest.archive.logs.length > 0;
 
               await wait(1400);
 
-              const valueNode = partialArchives && amauiTest.archive.logs.length > 104;
+              const valueNode = partialArchives && onesyTest.archive.logs.length > 104;
 
               const valueBrowsers = await evaluate(async (window: any) => {
                 const options = {
@@ -3062,30 +3062,30 @@ describe('AmauiTest', () => {
                   }
                 };
 
-                const amauiTest = new window.AmauiTest.AmauiTest(options);
+                const onesyTest = new window.OnesyTest.OnesyTest(options);
 
                 to('a', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
-                group('@amaui/a1', () => {
+                group('@onesy/a1', () => {
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     throw new Error('a');
                   });
 
                   to('a2', async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
-                  group('@amaui/a3', () => {
+                  group('@onesy/a3', () => {
 
                     to('a3', async () => {
-                      window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                         [
                           1
                         ],
@@ -3113,21 +3113,21 @@ describe('AmauiTest', () => {
                     throw new Error('a');
                   });
 
-                  group('@amaui/a5', () => {
+                  group('@onesy/a5', () => {
                     let a;
 
                     pre(async () => {
-                      await window.AmauiUtils.wait(14);
+                      await window.OnesyUtils.wait(14);
                     });
 
                     preTo(async () => {
-                      await window.AmauiUtils.wait(140);
+                      await window.OnesyUtils.wait(140);
 
                       a = 4;
                     });
 
                     to('a5', async () => {
-                      await window.AmauiUtils.wait(74);
+                      await window.OnesyUtils.wait(74);
 
                       const error: any = new Error('a');
 
@@ -3142,57 +3142,57 @@ describe('AmauiTest', () => {
                   });
 
                   to('a6', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   to('a7', async () => {
-                    window.AmauiTest.assert(4).true;
+                    window.OnesyTest.assert(4).true;
                   });
 
                   to('a8', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   to('a9', async () => {
-                    await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                    await window.OnesyTest.assert(function a() { }).throwAsync(4);
                   });
 
                   to('a10', async () => {
-                    window.AmauiTest.assert(0).truthy;
+                    window.OnesyTest.assert(0).truthy;
                   });
 
                   to('a11', async () => {
                     const value = [
-                      'AmauiError',
-                      'AmauiAwsError',
-                      'AmauiTestError',
-                      'AmauiAmqpError',
+                      'OnesyError',
+                      'OnesyAwsError',
+                      'OnesyTestError',
+                      'OnesyAmqpError',
                       'AuthenticationError',
                       'AuthorizationError',
                       'AssertError',
                       'ValidationError',
                       'PermissionError',
-                      'AmauiMongoError',
+                      'OnesyMongoError',
                       'ConnectionError',
                       'NotFoundError',
                       'DeveloperError',
                     ];
                     const value1 = [
-                      'AmauiError',
-                      'AmauiAwsError',
-                      'AmauiTestError',
-                      'AmauiAmqpError',
+                      'OnesyError',
+                      'OnesyAwsError',
+                      'OnesyTestError',
+                      'OnesyAmqpError',
                       'AuthenticationError',
                       'AuthorizationError',
                       'ValidationError',
                       'PermissionError',
-                      'AmauiMongoError',
+                      'OnesyMongoError',
                       'ConnectionError',
                       'NotFoundError',
                       'DeveloperError',
                     ];
 
-                    window.AmauiTest.assert(value).eql(value1);
+                    window.OnesyTest.assert(value).eql(value1);
                   });
 
                   to('a12', async () => {
@@ -3219,32 +3219,32 @@ describe('AmauiTest', () => {
                       ab: [1, 2, 3, 4],
                     };
 
-                    window.AmauiTest.assert(value).eql(value1);
+                    window.OnesyTest.assert(value).eql(value1);
                   });
 
                   to('a13', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   post(async () => {
-                    await window.AmauiUtils.wait(40);
+                    await window.OnesyUtils.wait(40);
                   });
 
                 });
 
                 to('a14', async () => {
-                  window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                  window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
                 });
 
-                amauiTest.run();
+                onesyTest.run();
 
-                await window.AmauiUtils.wait(700);
+                await window.OnesyUtils.wait(700);
 
-                const partialArchives = amauiTest.archive.logs.length > 0;
+                const partialArchives = onesyTest.archive.logs.length > 0;
 
-                await window.AmauiUtils.wait(1400);
+                await window.OnesyUtils.wait(1400);
 
-                return partialArchives && amauiTest.archive.logs.length > 140;
+                return partialArchives && onesyTest.archive.logs.length > 140;
               });
               const values = [valueNode, ...valueBrowsers];
 
@@ -3267,43 +3267,43 @@ describe('AmauiTest', () => {
                   }
                 };
 
-                if (!window.document.getElementById('amaui-test')) {
+                if (!window.document.getElementById('onesy-test')) {
                   const div = window.document.createElement('div');
 
-                  div.id = 'amaui-test';
+                  div.id = 'onesy-test';
 
-                  div.innerHTML = `<div id='amaui-test-results'></div>`;
+                  div.innerHTML = `<div id='onesy-test-results'></div>`;
 
                   window.document.body.append(div);
                 }
                 else {
-                  window.document.getElementById('amaui-test').innerHTML = `<div id='amaui-test-results'></div>`;
+                  window.document.getElementById('onesy-test').innerHTML = `<div id='onesy-test-results'></div>`;
                 }
 
-                const amauiTest = new window.AmauiTest.AmauiTest(options);
+                const onesyTest = new window.OnesyTest.OnesyTest(options);
 
                 to('a', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
-                group('@amaui/a1', () => {
+                group('@onesy/a1', () => {
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     throw new Error('a');
                   });
 
                   to('a2', async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
-                  group('@amaui/a3', () => {
+                  group('@onesy/a3', () => {
 
                     to('a3', async () => {
-                      window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                         [
                           1
                         ],
@@ -3331,21 +3331,21 @@ describe('AmauiTest', () => {
                     throw new Error('a');
                   });
 
-                  group('@amaui/a5', () => {
+                  group('@onesy/a5', () => {
                     let a;
 
                     pre(async () => {
-                      await window.AmauiUtils.wait(14);
+                      await window.OnesyUtils.wait(14);
                     });
 
                     preTo(async () => {
-                      await window.AmauiUtils.wait(140);
+                      await window.OnesyUtils.wait(140);
 
                       a = 4;
                     });
 
                     to('a5', async () => {
-                      await window.AmauiUtils.wait(74);
+                      await window.OnesyUtils.wait(74);
 
                       const error: any = new Error('a');
 
@@ -3360,57 +3360,57 @@ describe('AmauiTest', () => {
                   });
 
                   to('a6', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   to('a7', async () => {
-                    window.AmauiTest.assert(4).true;
+                    window.OnesyTest.assert(4).true;
                   });
 
                   to('a8', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   to('a9', async () => {
-                    await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                    await window.OnesyTest.assert(function a() { }).throwAsync(4);
                   });
 
                   to('a10', async () => {
-                    window.AmauiTest.assert(0).truthy;
+                    window.OnesyTest.assert(0).truthy;
                   });
 
                   to('a11', async () => {
                     const value = [
-                      'AmauiError',
-                      'AmauiAwsError',
-                      'AmauiTestError',
-                      'AmauiAmqpError',
+                      'OnesyError',
+                      'OnesyAwsError',
+                      'OnesyTestError',
+                      'OnesyAmqpError',
                       'AuthenticationError',
                       'AuthorizationError',
                       'AssertError',
                       'ValidationError',
                       'PermissionError',
-                      'AmauiMongoError',
+                      'OnesyMongoError',
                       'ConnectionError',
                       'NotFoundError',
                       'DeveloperError',
                     ];
                     const value1 = [
-                      'AmauiError',
-                      'AmauiAwsError',
-                      'AmauiTestError',
-                      'AmauiAmqpError',
+                      'OnesyError',
+                      'OnesyAwsError',
+                      'OnesyTestError',
+                      'OnesyAmqpError',
                       'AuthenticationError',
                       'AuthorizationError',
                       'ValidationError',
                       'PermissionError',
-                      'AmauiMongoError',
+                      'OnesyMongoError',
                       'ConnectionError',
                       'NotFoundError',
                       'DeveloperError',
                     ];
 
-                    window.AmauiTest.assert(value).eql(value1);
+                    window.OnesyTest.assert(value).eql(value1);
                   });
 
                   to('a12', async () => {
@@ -3437,32 +3437,32 @@ describe('AmauiTest', () => {
                       ab: [1, 2, 3, 4],
                     };
 
-                    window.AmauiTest.assert(value).eql(value1);
+                    window.OnesyTest.assert(value).eql(value1);
                   });
 
                   to('a13', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   post(async () => {
-                    await window.AmauiUtils.wait(40);
+                    await window.OnesyUtils.wait(40);
                   });
 
                 });
 
                 to('a14', async () => {
-                  window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                  window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
                 });
 
-                amauiTest.run();
+                onesyTest.run();
 
-                await window.AmauiUtils.wait(700);
+                await window.OnesyUtils.wait(700);
 
-                const partialPrintHtml = window.document.getElementById('amaui-test').innerHTML.length > 140;
+                const partialPrintHtml = window.document.getElementById('onesy-test').innerHTML.length > 140;
 
-                await window.AmauiUtils.wait(1400);
+                await window.OnesyUtils.wait(1400);
 
-                return partialPrintHtml && window.document.getElementById('amaui-test').innerHTML.length > 7400;
+                return partialPrintHtml && window.document.getElementById('onesy-test').innerHTML.length > 7400;
               });
 
               valueBrowsers.forEach(value => expect(value).eq(true));
@@ -3495,19 +3495,19 @@ describe('AmauiTest', () => {
                 ]
               };
 
-              const amauiTest = new AmauiTest(options);
+              const onesyTest = new OnesyTest(options);
 
-              await amauiTest.init();
+              await onesyTest.init();
 
-              amauiTest.run();
+              onesyTest.run();
 
               await wait(700);
 
-              const archiveLogs = copy(amauiTest.archive.logs);
+              const archiveLogs = copy(onesyTest.archive.logs);
 
               await wait(1400);
 
-              const valueNode = !archiveLogs.length && amauiTest.archive.logs.length > 104;
+              const valueNode = !archiveLogs.length && onesyTest.archive.logs.length > 104;
 
               const valueBrowsers = await evaluate(async (window: any) => {
                 const options = {
@@ -3524,30 +3524,30 @@ describe('AmauiTest', () => {
                   }
                 };
 
-                const amauiTest = new window.AmauiTest.AmauiTest(options);
+                const onesyTest = new window.OnesyTest.OnesyTest(options);
 
                 to('a', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
-                group('@amaui/a1', () => {
+                group('@onesy/a1', () => {
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     throw new Error('a');
                   });
 
                   to('a2', async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
-                  group('@amaui/a3', () => {
+                  group('@onesy/a3', () => {
 
                     to('a3', async () => {
-                      window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                         [
                           1
                         ],
@@ -3575,21 +3575,21 @@ describe('AmauiTest', () => {
                     throw new Error('a');
                   });
 
-                  group('@amaui/a5', () => {
+                  group('@onesy/a5', () => {
                     let a;
 
                     pre(async () => {
-                      await window.AmauiUtils.wait(14);
+                      await window.OnesyUtils.wait(14);
                     });
 
                     preTo(async () => {
-                      await window.AmauiUtils.wait(140);
+                      await window.OnesyUtils.wait(140);
 
                       a = 4;
                     });
 
                     to('a5', async () => {
-                      await window.AmauiUtils.wait(74);
+                      await window.OnesyUtils.wait(74);
 
                       const error: any = new Error('a');
 
@@ -3604,57 +3604,57 @@ describe('AmauiTest', () => {
                   });
 
                   to('a6', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   to('a7', async () => {
-                    window.AmauiTest.assert(4).true;
+                    window.OnesyTest.assert(4).true;
                   });
 
                   to('a8', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   to('a9', async () => {
-                    await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                    await window.OnesyTest.assert(function a() { }).throwAsync(4);
                   });
 
                   to('a10', async () => {
-                    window.AmauiTest.assert(0).truthy;
+                    window.OnesyTest.assert(0).truthy;
                   });
 
                   to('a11', async () => {
                     const value = [
-                      'AmauiError',
-                      'AmauiAwsError',
-                      'AmauiTestError',
-                      'AmauiAmqpError',
+                      'OnesyError',
+                      'OnesyAwsError',
+                      'OnesyTestError',
+                      'OnesyAmqpError',
                       'AuthenticationError',
                       'AuthorizationError',
                       'AssertError',
                       'ValidationError',
                       'PermissionError',
-                      'AmauiMongoError',
+                      'OnesyMongoError',
                       'ConnectionError',
                       'NotFoundError',
                       'DeveloperError',
                     ];
                     const value1 = [
-                      'AmauiError',
-                      'AmauiAwsError',
-                      'AmauiTestError',
-                      'AmauiAmqpError',
+                      'OnesyError',
+                      'OnesyAwsError',
+                      'OnesyTestError',
+                      'OnesyAmqpError',
                       'AuthenticationError',
                       'AuthorizationError',
                       'ValidationError',
                       'PermissionError',
-                      'AmauiMongoError',
+                      'OnesyMongoError',
                       'ConnectionError',
                       'NotFoundError',
                       'DeveloperError',
                     ];
 
-                    window.AmauiTest.assert(value).eql(value1);
+                    window.OnesyTest.assert(value).eql(value1);
                   });
 
                   to('a12', async () => {
@@ -3681,32 +3681,32 @@ describe('AmauiTest', () => {
                       ab: [1, 2, 3, 4],
                     };
 
-                    window.AmauiTest.assert(value).eql(value1);
+                    window.OnesyTest.assert(value).eql(value1);
                   });
 
                   to('a13', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   post(async () => {
-                    await window.AmauiUtils.wait(40);
+                    await window.OnesyUtils.wait(40);
                   });
 
                 });
 
                 to('a14', async () => {
-                  window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                  window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
                 });
 
-                amauiTest.run();
+                onesyTest.run();
 
-                await window.AmauiUtils.wait(700);
+                await window.OnesyUtils.wait(700);
 
-                const archiveLogs = window.AmauiUtils.copy(amauiTest.archive.logs);
+                const archiveLogs = window.OnesyUtils.copy(onesyTest.archive.logs);
 
-                await window.AmauiUtils.wait(1400);
+                await window.OnesyUtils.wait(1400);
 
-                return !archiveLogs.length && amauiTest.archive.logs.length > 140;
+                return !archiveLogs.length && onesyTest.archive.logs.length > 140;
               });
               const values = [valueNode, ...valueBrowsers];
 
@@ -3729,43 +3729,43 @@ describe('AmauiTest', () => {
                   }
                 };
 
-                if (!window.document.getElementById('amaui-test')) {
+                if (!window.document.getElementById('onesy-test')) {
                   const div = window.document.createElement('div');
 
-                  div.id = 'amaui-test';
+                  div.id = 'onesy-test';
 
-                  div.innerHTML = `<div id='amaui-test-results'></div>`;
+                  div.innerHTML = `<div id='onesy-test-results'></div>`;
 
                   window.document.body.append(div);
                 }
                 else {
-                  window.document.getElementById('amaui-test').innerHTML = `<div id='amaui-test-results'></div>`;
+                  window.document.getElementById('onesy-test').innerHTML = `<div id='onesy-test-results'></div>`;
                 }
 
-                const amauiTest = new window.AmauiTest.AmauiTest(options);
+                const onesyTest = new window.OnesyTest.OnesyTest(options);
 
                 to('a', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
-                group('@amaui/a1', () => {
+                group('@onesy/a1', () => {
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     throw new Error('a');
                   });
 
                   to('a2', async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
-                  group('@amaui/a3', () => {
+                  group('@onesy/a3', () => {
 
                     to('a3', async () => {
-                      window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                         [
                           1
                         ],
@@ -3793,21 +3793,21 @@ describe('AmauiTest', () => {
                     throw new Error('a');
                   });
 
-                  group('@amaui/a5', () => {
+                  group('@onesy/a5', () => {
                     let a;
 
                     pre(async () => {
-                      await window.AmauiUtils.wait(14);
+                      await window.OnesyUtils.wait(14);
                     });
 
                     preTo(async () => {
-                      await window.AmauiUtils.wait(140);
+                      await window.OnesyUtils.wait(140);
 
                       a = 4;
                     });
 
                     to('a5', async () => {
-                      await window.AmauiUtils.wait(74);
+                      await window.OnesyUtils.wait(74);
 
                       const error: any = new Error('a');
 
@@ -3822,57 +3822,57 @@ describe('AmauiTest', () => {
                   });
 
                   to('a6', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   to('a7', async () => {
-                    window.AmauiTest.assert(4).true;
+                    window.OnesyTest.assert(4).true;
                   });
 
                   to('a8', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   to('a9', async () => {
-                    await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                    await window.OnesyTest.assert(function a() { }).throwAsync(4);
                   });
 
                   to('a10', async () => {
-                    window.AmauiTest.assert(0).truthy;
+                    window.OnesyTest.assert(0).truthy;
                   });
 
                   to('a11', async () => {
                     const value = [
-                      'AmauiError',
-                      'AmauiAwsError',
-                      'AmauiTestError',
-                      'AmauiAmqpError',
+                      'OnesyError',
+                      'OnesyAwsError',
+                      'OnesyTestError',
+                      'OnesyAmqpError',
                       'AuthenticationError',
                       'AuthorizationError',
                       'AssertError',
                       'ValidationError',
                       'PermissionError',
-                      'AmauiMongoError',
+                      'OnesyMongoError',
                       'ConnectionError',
                       'NotFoundError',
                       'DeveloperError',
                     ];
                     const value1 = [
-                      'AmauiError',
-                      'AmauiAwsError',
-                      'AmauiTestError',
-                      'AmauiAmqpError',
+                      'OnesyError',
+                      'OnesyAwsError',
+                      'OnesyTestError',
+                      'OnesyAmqpError',
                       'AuthenticationError',
                       'AuthorizationError',
                       'ValidationError',
                       'PermissionError',
-                      'AmauiMongoError',
+                      'OnesyMongoError',
                       'ConnectionError',
                       'NotFoundError',
                       'DeveloperError',
                     ];
 
-                    window.AmauiTest.assert(value).eql(value1);
+                    window.OnesyTest.assert(value).eql(value1);
                   });
 
                   to('a12', async () => {
@@ -3899,34 +3899,34 @@ describe('AmauiTest', () => {
                       ab: [1, 2, 3, 4],
                     };
 
-                    window.AmauiTest.assert(value).eql(value1);
+                    window.OnesyTest.assert(value).eql(value1);
                   });
 
                   to('a13', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   post(async () => {
-                    await window.AmauiUtils.wait(40);
+                    await window.OnesyUtils.wait(40);
                   });
 
                 });
 
                 to('a14', async () => {
-                  window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                  window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
                 });
 
-                window.document.getElementById('amaui-test').innerHTML = `<div id='amaui-test-results'></div>`;
+                window.document.getElementById('onesy-test').innerHTML = `<div id='onesy-test-results'></div>`;
 
-                amauiTest.run();
+                onesyTest.run();
 
-                await window.AmauiUtils.wait(700);
+                await window.OnesyUtils.wait(700);
 
-                const innerHTML = window.document.getElementById('amaui-test').innerHTML.length;
+                const innerHTML = window.document.getElementById('onesy-test').innerHTML.length;
 
-                await window.AmauiUtils.wait(1400);
+                await window.OnesyUtils.wait(1400);
 
-                return innerHTML < 44 && window.document.getElementById('amaui-test').innerHTML.length > 7400;
+                return innerHTML < 44 && window.document.getElementById('onesy-test').innerHTML.length > 7400;
               });
 
               const values = [...valueBrowsers];
@@ -3958,30 +3958,30 @@ describe('AmauiTest', () => {
 
                 window.document.body.id = 'a';
 
-                const amauiTest = new window.AmauiTest.AmauiTest(options);
+                const onesyTest = new window.OnesyTest.OnesyTest(options);
 
                 to('a', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
-                group('@amaui/a1', () => {
+                group('@onesy/a1', () => {
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     throw new Error('a');
                   });
 
                   to('a2', async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
-                  group('@amaui/a3', () => {
+                  group('@onesy/a3', () => {
 
                     to('a3', async () => {
-                      window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                      window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                         [
                           1
                         ],
@@ -4009,21 +4009,21 @@ describe('AmauiTest', () => {
                     throw new Error('a');
                   });
 
-                  group('@amaui/a5', () => {
+                  group('@onesy/a5', () => {
                     let a;
 
                     pre(async () => {
-                      await window.AmauiUtils.wait(14);
+                      await window.OnesyUtils.wait(14);
                     });
 
                     preTo(async () => {
-                      await window.AmauiUtils.wait(140);
+                      await window.OnesyUtils.wait(140);
 
                       a = 4;
                     });
 
                     to('a5', async () => {
-                      await window.AmauiUtils.wait(74);
+                      await window.OnesyUtils.wait(74);
 
                       const error: any = new Error('a');
 
@@ -4038,57 +4038,57 @@ describe('AmauiTest', () => {
                   });
 
                   to('a6', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   to('a7', async () => {
-                    window.AmauiTest.assert(4).true;
+                    window.OnesyTest.assert(4).true;
                   });
 
                   to('a8', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   to('a9', async () => {
-                    await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                    await window.OnesyTest.assert(function a() { }).throwAsync(4);
                   });
 
                   to('a10', async () => {
-                    window.AmauiTest.assert(0).truthy;
+                    window.OnesyTest.assert(0).truthy;
                   });
 
                   to('a11', async () => {
                     const value = [
-                      'AmauiError',
-                      'AmauiAwsError',
-                      'AmauiTestError',
-                      'AmauiAmqpError',
+                      'OnesyError',
+                      'OnesyAwsError',
+                      'OnesyTestError',
+                      'OnesyAmqpError',
                       'AuthenticationError',
                       'AuthorizationError',
                       'AssertError',
                       'ValidationError',
                       'PermissionError',
-                      'AmauiMongoError',
+                      'OnesyMongoError',
                       'ConnectionError',
                       'NotFoundError',
                       'DeveloperError',
                     ];
                     const value1 = [
-                      'AmauiError',
-                      'AmauiAwsError',
-                      'AmauiTestError',
-                      'AmauiAmqpError',
+                      'OnesyError',
+                      'OnesyAwsError',
+                      'OnesyTestError',
+                      'OnesyAmqpError',
                       'AuthenticationError',
                       'AuthorizationError',
                       'ValidationError',
                       'PermissionError',
-                      'AmauiMongoError',
+                      'OnesyMongoError',
                       'ConnectionError',
                       'NotFoundError',
                       'DeveloperError',
                     ];
 
-                    window.AmauiTest.assert(value).eql(value1);
+                    window.OnesyTest.assert(value).eql(value1);
                   });
 
                   to('a12', async () => {
@@ -4115,24 +4115,24 @@ describe('AmauiTest', () => {
                       ab: [1, 2, 3, 4],
                     };
 
-                    window.AmauiTest.assert(value).eql(value1);
+                    window.OnesyTest.assert(value).eql(value1);
                   });
 
                   to('a13', async () => {
-                    window.AmauiTest.assert(true).true;
+                    window.OnesyTest.assert(true).true;
                   });
 
                   post(async () => {
-                    await window.AmauiUtils.wait(40);
+                    await window.OnesyUtils.wait(40);
                   });
 
                 });
 
                 to('a14', async () => {
-                  window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                  window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
                 });
 
-                await amauiTest.run();
+                await onesyTest.run();
 
                 return window.document.body.innerHTML.length > 7400;
               });
@@ -4163,17 +4163,17 @@ describe('AmauiTest', () => {
               }
             };
 
-            const amauiTest = new AmauiTest(options);
+            const onesyTest = new OnesyTest(options);
 
-            await amauiTest.init();
+            await onesyTest.init();
 
             to('a1', () => {
               throw new Error('a');
             });
 
-            await amauiTest.run();
+            await onesyTest.run();
 
-            const valueNode = amauiTest.archive.logs.reduce((result, item) => result += item.length, 0) < 340;
+            const valueNode = onesyTest.archive.logs.reduce((result, item) => result += item.length, 0) < 340;
 
             const valueBrowsers = await evaluate(async (window: any) => {
               const options = {
@@ -4188,15 +4188,15 @@ describe('AmauiTest', () => {
                 }
               };
 
-              const amauiTest = new window.AmauiTest.AmauiTest(options);
+              const onesyTest = new window.OnesyTest.OnesyTest(options);
 
               to('a1', () => {
                 throw new Error('a');
               });
 
-              await amauiTest.run();
+              await onesyTest.run();
 
-              return amauiTest.archive.logs.reduce((result, item) => result += item.length, 0) < 340;
+              return onesyTest.archive.logs.reduce((result, item) => result += item.length, 0) < 340;
             });
             const values = [valueNode, ...valueBrowsers];
 
@@ -4217,15 +4217,15 @@ describe('AmauiTest', () => {
                 }
               };
 
-              const amauiTest = new window.AmauiTest.AmauiTest(options);
+              const onesyTest = new window.OnesyTest.OnesyTest(options);
 
               to('a1', () => {
                 throw new Error('a');
               });
 
-              await amauiTest.run();
+              await onesyTest.run();
 
-              return amauiTest.archive.logs.reduce((result, item) => result += item.length, 0) > 340;
+              return onesyTest.archive.logs.reduce((result, item) => result += item.length, 0) > 340;
             });
 
             const options: IOptions = {
@@ -4244,17 +4244,17 @@ describe('AmauiTest', () => {
               }
             };
 
-            const amauiTest = new AmauiTest(options);
+            const onesyTest = new OnesyTest(options);
 
-            await amauiTest.init();
+            await onesyTest.init();
 
             to('a1', () => {
               throw new Error('a');
             });
 
-            await amauiTest.run();
+            await onesyTest.run();
 
-            const valueNode = amauiTest.archive.logs.reduce((result, item) => result += item.length, 0) > 340;
+            const valueNode = onesyTest.archive.logs.reduce((result, item) => result += item.length, 0) > 340;
 
             const values = [valueNode, ...valueBrowsers];
 
@@ -4291,26 +4291,26 @@ describe('AmauiTest', () => {
               ]
             };
 
-            const amauiTest = new AmauiTest(options);
+            const onesyTest = new OnesyTest(options);
 
-            await amauiTest.init();
+            await onesyTest.init();
 
-            await amauiTest.run();
+            await onesyTest.run();
 
             const value = {
-              summary: amauiTest.mainGroup.summary,
+              summary: onesyTest.mainGroup.summary,
               tos: []
             };
 
             value.tos.push(
               [
-                amauiTest.mainGroup.tos[0].name,
-                amauiTest.mainGroup.tos[0].response.type,
+                onesyTest.mainGroup.tos[0].name,
+                onesyTest.mainGroup.tos[0].response.type,
               ],
               [
-                amauiTest.mainGroup.groups[0].tos[0].name,
-                amauiTest.mainGroup.groups[0].tos[0].response.type,
-                amauiTest.mainGroup.groups[0].tos[0].response.response.message
+                onesyTest.mainGroup.groups[0].tos[0].name,
+                onesyTest.mainGroup.groups[0].tos[0].response.type,
+                onesyTest.mainGroup.groups[0].tos[0].response.response.message
               ]
             );
 
@@ -4329,30 +4329,30 @@ describe('AmauiTest', () => {
                 }
               };
 
-              const amauiTest = new window.AmauiTest.AmauiTest(options);
+              const onesyTest = new window.OnesyTest.OnesyTest(options);
 
               to('a', async () => {
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
-              group('@amaui/a1', () => {
+              group('@onesy/a1', () => {
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   throw new Error('a');
                 });
 
                 to('a2', async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
-                group('@amaui/a3', () => {
+                group('@onesy/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                    window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                       [
                         1
                       ],
@@ -4380,15 +4380,15 @@ describe('AmauiTest', () => {
                   throw new Error('a');
                 });
 
-                group('@amaui/a5', () => {
+                group('@onesy/a5', () => {
                   let a: any;
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(14);
+                    await window.OnesyUtils.wait(14);
                   });
 
                   preTo(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     a = 4;
                   });
@@ -4407,59 +4407,59 @@ describe('AmauiTest', () => {
                 });
 
                 to('a6', async () => {
-                  await window.AmauiUtils.wait(74);
+                  await window.OnesyUtils.wait(74);
 
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 to('a7', async () => {
-                  window.AmauiTest.assert(4).true;
+                  window.OnesyTest.assert(4).true;
                 });
 
                 to('a8', async () => {
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 to('a9', async () => {
-                  await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                  await window.OnesyTest.assert(function a() { }).throwAsync(4);
                 });
 
                 to('a10', async () => {
-                  window.AmauiTest.assert(0).truthy;
+                  window.OnesyTest.assert(0).truthy;
                 });
 
                 to('a11', async () => {
                   const value = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
-                    'window.AmauiTest.AssertError',
+                    'window.OnesyTest.AssertError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
                   const value1 = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a12', async () => {
@@ -4486,39 +4486,39 @@ describe('AmauiTest', () => {
                     ab: [1, 2, 3, 4],
                   };
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a13', async () => {
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 post(async () => {
-                  await window.AmauiUtils.wait(40);
+                  await window.OnesyUtils.wait(40);
                 });
 
               });
 
               to('a14', async () => {
-                window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
               });
 
-              await amauiTest.run();
+              await onesyTest.run();
 
               const value = {
-                summary: amauiTest.mainGroup.summary,
+                summary: onesyTest.mainGroup.summary,
                 tos: []
               };
 
               value.tos.push(
                 [
-                  amauiTest.mainGroup.tos[0].name,
-                  amauiTest.mainGroup.tos[0].response.type,
+                  onesyTest.mainGroup.tos[0].name,
+                  onesyTest.mainGroup.tos[0].response.type,
                 ],
                 [
-                  amauiTest.mainGroup.groups[0].tos[0].name,
-                  amauiTest.mainGroup.groups[0].tos[0].response.type,
-                  amauiTest.mainGroup.groups[0].tos[0].response.response.message
+                  onesyTest.mainGroup.groups[0].tos[0].name,
+                  onesyTest.mainGroup.groups[0].tos[0].response.type,
+                  onesyTest.mainGroup.groups[0].tos[0].response.response.message
                 ]
               );
 
@@ -4573,24 +4573,24 @@ describe('AmauiTest', () => {
               ]
             };
 
-            const amauiTest = new AmauiTest(options);
+            const onesyTest = new OnesyTest(options);
 
-            await amauiTest.init();
+            await onesyTest.init();
 
-            await amauiTest.run();
+            await onesyTest.run();
 
             const value = {
-              summary: amauiTest.mainGroup.summary,
+              summary: onesyTest.mainGroup.summary,
               pres: []
             };
 
             value.pres.push(
               [
-                amauiTest.mainGroup.groups[0].pre[0].responses[0].type,
-                amauiTest.mainGroup.groups[0].pre[0].responses[0].response.message,
+                onesyTest.mainGroup.groups[0].pre[0].responses[0].type,
+                onesyTest.mainGroup.groups[0].pre[0].responses[0].response.message,
               ],
               [
-                amauiTest.mainGroup.groups[0].groups[1].pre[0].responses[0].type
+                onesyTest.mainGroup.groups[0].groups[1].pre[0].responses[0].type
               ]
             );
 
@@ -4609,27 +4609,27 @@ describe('AmauiTest', () => {
                 }
               };
 
-              const amauiTest = new window.AmauiTest.AmauiTest(options);
+              const onesyTest = new window.OnesyTest.OnesyTest(options);
 
               to('a', async () => {
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
-              group('@amaui/a1', () => {
+              group('@onesy/a1', () => {
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   throw new Error('a');
                 });
 
                 to('a2', async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
-                group('@amaui/a3', () => {
+                group('@onesy/a3', () => {
 
                   to('a3', async () => {
                     assert([1, 4, 3, 7]).any.eq([
@@ -4660,15 +4660,15 @@ describe('AmauiTest', () => {
                   throw new Error('a');
                 });
 
-                group('@amaui/a5', () => {
+                group('@onesy/a5', () => {
                   let a: any;
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(14);
+                    await window.OnesyUtils.wait(14);
                   });
 
                   preTo(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     a = 4;
                   });
@@ -4687,59 +4687,59 @@ describe('AmauiTest', () => {
                 });
 
                 to('a6', async () => {
-                  await window.AmauiUtils.wait(74);
+                  await window.OnesyUtils.wait(74);
 
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 to('a7', async () => {
-                  window.AmauiTest.assert(4).true;
+                  window.OnesyTest.assert(4).true;
                 });
 
                 to('a8', async () => {
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 to('a9', async () => {
-                  await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                  await window.OnesyTest.assert(function a() { }).throwAsync(4);
                 });
 
                 to('a10', async () => {
-                  window.AmauiTest.assert(0).truthy;
+                  window.OnesyTest.assert(0).truthy;
                 });
 
                 to('a11', async () => {
                   const value = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
-                    'window.AmauiTest.AssertError',
+                    'window.OnesyTest.AssertError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
                   const value1 = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a12', async () => {
@@ -4766,37 +4766,37 @@ describe('AmauiTest', () => {
                     ab: [1, 2, 3, 4],
                   };
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a13', async () => {
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 post(async () => {
-                  await window.AmauiUtils.wait(40);
+                  await window.OnesyUtils.wait(40);
                 });
 
               });
 
               to('a14', async () => {
-                window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
               });
 
-              await amauiTest.run();
+              await onesyTest.run();
 
               const value = {
-                summary: amauiTest.mainGroup.summary,
+                summary: onesyTest.mainGroup.summary,
                 pres: []
               };
 
               value.pres.push(
                 [
-                  amauiTest.mainGroup.groups[0].pre[0].responses[0].type,
-                  amauiTest.mainGroup.groups[0].pre[0].responses[0].response.message,
+                  onesyTest.mainGroup.groups[0].pre[0].responses[0].type,
+                  onesyTest.mainGroup.groups[0].pre[0].responses[0].response.message,
                 ],
                 [
-                  amauiTest.mainGroup.groups[0].groups[1].pre[0].responses[0].type
+                  onesyTest.mainGroup.groups[0].groups[1].pre[0].responses[0].type
                 ]
               );
 
@@ -4853,25 +4853,25 @@ describe('AmauiTest', () => {
               ]
             };
 
-            const amauiTest = new AmauiTest(options);
+            const onesyTest = new OnesyTest(options);
 
-            await amauiTest.init();
+            await onesyTest.init();
 
-            await amauiTest.run();
+            await onesyTest.run();
 
             const value = {
-              summary: amauiTest.mainGroup.summary,
+              summary: onesyTest.mainGroup.summary,
               tos: []
             };
 
             value.tos.push(
               [
-                amauiTest.mainGroup.tos[0].name,
-                amauiTest.mainGroup.tos[0].response.measurement,
+                onesyTest.mainGroup.tos[0].name,
+                onesyTest.mainGroup.tos[0].response.measurement,
               ],
               [
-                amauiTest.mainGroup.groups[0].tos[2].name,
-                amauiTest.mainGroup.groups[0].tos[2].response.measurement.slow
+                onesyTest.mainGroup.groups[0].tos[2].name,
+                onesyTest.mainGroup.groups[0].tos[2].response.measurement.slow
               ]
             );
 
@@ -4890,30 +4890,30 @@ describe('AmauiTest', () => {
                 }
               };
 
-              const amauiTest = new window.AmauiTest.AmauiTest(options);
+              const onesyTest = new window.OnesyTest.OnesyTest(options);
 
               to('a', async () => {
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
-              group('@amaui/a1', () => {
+              group('@onesy/a1', () => {
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   throw new Error('a');
                 });
 
                 to('a2', async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
-                group('@amaui/a3', () => {
+                group('@onesy/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                    window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                       [
                         1
                       ],
@@ -4941,15 +4941,15 @@ describe('AmauiTest', () => {
                   throw new Error('a');
                 });
 
-                group('@amaui/a5', () => {
+                group('@onesy/a5', () => {
                   let a: any;
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(14);
+                    await window.OnesyUtils.wait(14);
                   });
 
                   preTo(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     a = 4;
                   });
@@ -4968,59 +4968,59 @@ describe('AmauiTest', () => {
                 });
 
                 to('a6', async () => {
-                  await window.AmauiUtils.wait(74);
+                  await window.OnesyUtils.wait(74);
 
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 to('a7', async () => {
-                  window.AmauiTest.assert(4).true;
+                  window.OnesyTest.assert(4).true;
                 });
 
                 to('a8', async () => {
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 to('a9', async () => {
-                  await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                  await window.OnesyTest.assert(function a() { }).throwAsync(4);
                 });
 
                 to('a10', async () => {
-                  window.AmauiTest.assert(0).truthy;
+                  window.OnesyTest.assert(0).truthy;
                 });
 
                 to('a11', async () => {
                   const value = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
-                    'window.AmauiTest.AssertError',
+                    'window.OnesyTest.AssertError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
                   const value1 = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a12', async () => {
@@ -5047,38 +5047,38 @@ describe('AmauiTest', () => {
                     ab: [1, 2, 3, 4],
                   };
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a13', async () => {
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 post(async () => {
-                  await window.AmauiUtils.wait(40);
+                  await window.OnesyUtils.wait(40);
                 });
 
               });
 
               to('a14', async () => {
-                window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
               });
 
-              await amauiTest.run();
+              await onesyTest.run();
 
               const value = {
-                summary: amauiTest.mainGroup.summary,
+                summary: onesyTest.mainGroup.summary,
                 tos: []
               };
 
               value.tos.push(
                 [
-                  amauiTest.mainGroup.tos[0].name,
-                  amauiTest.mainGroup.tos[0].response.measurement,
+                  onesyTest.mainGroup.tos[0].name,
+                  onesyTest.mainGroup.tos[0].response.measurement,
                 ],
                 [
-                  amauiTest.mainGroup.groups[0].tos[2].name,
-                  amauiTest.mainGroup.groups[0].tos[2].response.measurement.slow
+                  onesyTest.mainGroup.groups[0].tos[2].name,
+                  onesyTest.mainGroup.groups[0].tos[2].response.measurement.slow
                 ]
               );
 
@@ -5132,29 +5132,29 @@ describe('AmauiTest', () => {
               ]
             };
 
-            const amauiTest = new AmauiTest(options);
+            const onesyTest = new OnesyTest(options);
 
-            await amauiTest.init();
+            await onesyTest.init();
 
-            await amauiTest.run();
+            await onesyTest.run();
 
             const value = {
-              summary: amauiTest.mainGroup.summary,
+              summary: onesyTest.mainGroup.summary,
               tos: []
             };
 
             value.tos.push(
               [
-                amauiTest.mainGroup.tos[0].name,
-                amauiTest.mainGroup.tos[0].response.measurement,
+                onesyTest.mainGroup.tos[0].name,
+                onesyTest.mainGroup.tos[0].response.measurement,
               ],
               [
-                amauiTest.mainGroup.groups[0].tos[0].name,
-                amauiTest.mainGroup.groups[0].tos[0].response.measurement.very_slow
+                onesyTest.mainGroup.groups[0].tos[0].name,
+                onesyTest.mainGroup.groups[0].tos[0].response.measurement.very_slow
               ],
               [
-                amauiTest.mainGroup.groups[0].tos[2].name,
-                amauiTest.mainGroup.groups[0].tos[2].response.measurement.very_slow
+                onesyTest.mainGroup.groups[0].tos[2].name,
+                onesyTest.mainGroup.groups[0].tos[2].response.measurement.very_slow
               ]
             );
 
@@ -5173,30 +5173,30 @@ describe('AmauiTest', () => {
                 }
               };
 
-              const amauiTest = new window.AmauiTest.AmauiTest(options);
+              const onesyTest = new window.OnesyTest.OnesyTest(options);
 
               to('a', async () => {
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
-              group('@amaui/a1', () => {
+              group('@onesy/a1', () => {
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   throw new Error('a');
                 });
 
                 to('a2', async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
-                group('@amaui/a3', () => {
+                group('@onesy/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                    window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                       [
                         1
                       ],
@@ -5224,15 +5224,15 @@ describe('AmauiTest', () => {
                   throw new Error('a');
                 });
 
-                group('@amaui/a5', () => {
+                group('@onesy/a5', () => {
                   let a: any;
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(14);
+                    await window.OnesyUtils.wait(14);
                   });
 
                   preTo(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     a = 4;
                   });
@@ -5251,59 +5251,59 @@ describe('AmauiTest', () => {
                 });
 
                 to('a6', async () => {
-                  await window.AmauiUtils.wait(74);
+                  await window.OnesyUtils.wait(74);
 
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 to('a7', async () => {
-                  window.AmauiTest.assert(4).true;
+                  window.OnesyTest.assert(4).true;
                 });
 
                 to('a8', async () => {
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 to('a9', async () => {
-                  await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                  await window.OnesyTest.assert(function a() { }).throwAsync(4);
                 });
 
                 to('a10', async () => {
-                  window.AmauiTest.assert(0).truthy;
+                  window.OnesyTest.assert(0).truthy;
                 });
 
                 to('a11', async () => {
                   const value = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
-                    'window.AmauiTest.AssertError',
+                    'window.OnesyTest.AssertError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
                   const value1 = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a12', async () => {
@@ -5330,42 +5330,42 @@ describe('AmauiTest', () => {
                     ab: [1, 2, 3, 4],
                   };
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a13', async () => {
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 post(async () => {
-                  await window.AmauiUtils.wait(40);
+                  await window.OnesyUtils.wait(40);
                 });
 
               });
 
               to('a14', async () => {
-                window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
               });
 
-              await amauiTest.run();
+              await onesyTest.run();
 
               const value = {
-                summary: amauiTest.mainGroup.summary,
+                summary: onesyTest.mainGroup.summary,
                 tos: []
               };
 
               value.tos.push(
                 [
-                  amauiTest.mainGroup.tos[0].name,
-                  amauiTest.mainGroup.tos[0].response.measurement,
+                  onesyTest.mainGroup.tos[0].name,
+                  onesyTest.mainGroup.tos[0].response.measurement,
                 ],
                 [
-                  amauiTest.mainGroup.groups[0].tos[0].name,
-                  amauiTest.mainGroup.groups[0].tos[0].response.measurement.very_slow
+                  onesyTest.mainGroup.groups[0].tos[0].name,
+                  onesyTest.mainGroup.groups[0].tos[0].response.measurement.very_slow
                 ],
                 [
-                  amauiTest.mainGroup.groups[0].tos[2].name,
-                  amauiTest.mainGroup.groups[0].tos[2].response.measurement.very_slow
+                  onesyTest.mainGroup.groups[0].tos[2].name,
+                  onesyTest.mainGroup.groups[0].tos[2].response.measurement.very_slow
                 ]
               );
 
@@ -5415,11 +5415,11 @@ describe('AmauiTest', () => {
               ]
             };
 
-            const amauiTest = new AmauiTest(options);
+            const onesyTest = new OnesyTest(options);
 
-            await amauiTest.init();
+            await onesyTest.init();
 
-            await amauiTest.run();
+            await onesyTest.run();
 
             const valueNode = true;
 
@@ -5436,72 +5436,72 @@ describe('AmauiTest', () => {
                 }
               };
 
-              const amauiTest = new window.AmauiTest.AmauiTest(options);
+              const onesyTest = new window.OnesyTest.OnesyTest(options);
 
               to('a', async () => {
-                window.AmauiTest.assert(true).true;
+                window.OnesyTest.assert(true).true;
               });
 
-              group('@amaui/a', () => {
+              group('@onesy/a', () => {
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   throw new Error('a');
                 });
 
                 to('a1', async () => {
-                  await window.AmauiUtils.wait(40);
+                  await window.OnesyUtils.wait(40);
 
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
-                group('@amaui/a11', () => {
+                group('@onesy/a11', () => {
 
                   to('a11', async () => {
-                    window.AmauiTest.assert('a').eq(4);
+                    window.OnesyTest.assert('a').eq(4);
                   });
 
                 });
 
                 to('a3', async () => {
-                  window.AmauiTest.assert(true).true;
+                  window.OnesyTest.assert(true).true;
                 });
 
-                group('@amaui/a14', () => {
+                group('@onesy/a14', () => {
                   let a;
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(14);
+                    await window.OnesyUtils.wait(14);
                   });
 
                   preTo(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     a = 4;
                   });
 
                   to('a14', async () => {
-                    window.AmauiTest.assert('a').eq(a);
+                    window.OnesyTest.assert('a').eq(a);
                   });
 
                 });
 
                 to('a4', async () => {
-                  window.AmauiTest.assert('a').eq(4);
+                  window.OnesyTest.assert('a').eq(4);
                 });
 
                 post(async () => {
-                  await window.AmauiUtils.wait(40);
+                  await window.OnesyUtils.wait(40);
                 });
 
               });
 
               to('a7', async () => {
-                window.AmauiTest.assert(true).true;
+                window.OnesyTest.assert(true).true;
               });
 
-              await amauiTest.run();
+              await onesyTest.run();
 
               return true;
             });
@@ -5532,20 +5532,20 @@ describe('AmauiTest', () => {
               ]
             };
 
-            const amauiTest = new AmauiTest(options);
+            const onesyTest = new OnesyTest(options);
 
-            await amauiTest.init();
+            await onesyTest.init();
 
             let value: any;
 
             try {
-              await amauiTest.run();
+              await onesyTest.run();
             }
             catch (error) {
               value = error;
             }
 
-            expect(value.name).eq('AmauiTestError');
+            expect(value.name).eq('OnesyTestError');
             expect(value.message).eq('exit');
           });
 
@@ -5568,14 +5568,14 @@ describe('AmauiTest', () => {
               ]
             };
 
-            const amauiTest = new AmauiTest(options);
+            const onesyTest = new OnesyTest(options);
 
-            await amauiTest.init();
+            await onesyTest.init();
 
             let valueNode: any;
 
             try {
-              await amauiTest.run();
+              await onesyTest.run();
             }
             catch (error) {
               valueNode = [
@@ -5593,30 +5593,30 @@ describe('AmauiTest', () => {
                 }
               };
 
-              const amauiTest = new window.AmauiTest.AmauiTest(options);
+              const onesyTest = new window.OnesyTest.OnesyTest(options);
 
               to('a', async () => {
-                window.AmauiTest.assert(4).eq(4);
+                window.OnesyTest.assert(4).eq(4);
               });
 
-              group('@amaui/a1', () => {
+              group('@onesy/a1', () => {
 
                 pre(async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
                   throw new Error('a');
                 });
 
                 to('a2', async () => {
-                  await window.AmauiUtils.wait(140);
+                  await window.OnesyUtils.wait(140);
 
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
-                group('@amaui/a3', () => {
+                group('@onesy/a3', () => {
 
                   to('a3', async () => {
-                    window.AmauiTest.assert([1, 4, 3, 7]).any.eq([
+                    window.OnesyTest.assert([1, 4, 3, 7]).any.eq([
                       [
                         1
                       ],
@@ -5644,15 +5644,15 @@ describe('AmauiTest', () => {
                   throw new Error('a');
                 });
 
-                group('@amaui/a5', () => {
+                group('@onesy/a5', () => {
                   let a: any;
 
                   pre(async () => {
-                    await window.AmauiUtils.wait(14);
+                    await window.OnesyUtils.wait(14);
                   });
 
                   preTo(async () => {
-                    await window.AmauiUtils.wait(140);
+                    await window.OnesyUtils.wait(140);
 
                     a = 4;
                   });
@@ -5671,59 +5671,59 @@ describe('AmauiTest', () => {
                 });
 
                 to('a6', async () => {
-                  await window.AmauiUtils.wait(74);
+                  await window.OnesyUtils.wait(74);
 
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 to('a7', async () => {
-                  window.AmauiTest.assert(4).true;
+                  window.OnesyTest.assert(4).true;
                 });
 
                 to('a8', async () => {
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 to('a9', async () => {
-                  await window.AmauiTest.assert(function a() { }).throwAsync(4);
+                  await window.OnesyTest.assert(function a() { }).throwAsync(4);
                 });
 
                 to('a10', async () => {
-                  window.AmauiTest.assert(0).truthy;
+                  window.OnesyTest.assert(0).truthy;
                 });
 
                 to('a11', async () => {
                   const value = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
-                    'window.AmauiTest.AssertError',
+                    'window.OnesyTest.AssertError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
                   const value1 = [
-                    'AmauiError',
-                    'AmauiAwsError',
-                    'AmauiTestError',
-                    'AmauiAmqpError',
+                    'OnesyError',
+                    'OnesyAwsError',
+                    'OnesyTestError',
+                    'OnesyAmqpError',
                     'AuthenticationError',
                     'AuthorizationError',
                     'ValidationError',
                     'PermissionError',
-                    'AmauiMongoError',
+                    'OnesyMongoError',
                     'ConnectionError',
                     'NotFoundError',
                     'DeveloperError',
                   ];
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a12', async () => {
@@ -5750,27 +5750,27 @@ describe('AmauiTest', () => {
                     ab: [1, 2, 3, 4],
                   };
 
-                  window.AmauiTest.assert(value).eql(value1);
+                  window.OnesyTest.assert(value).eql(value1);
                 });
 
                 to('a13', async () => {
-                  window.AmauiTest.assert(4).eq(4);
+                  window.OnesyTest.assert(4).eq(4);
                 });
 
                 post(async () => {
-                  await window.AmauiUtils.wait(40);
+                  await window.OnesyUtils.wait(40);
                 });
 
               });
 
               to('a14', async () => {
-                window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+                window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
               });
 
               let value: any;
 
               try {
-                await amauiTest.run();
+                await onesyTest.run();
               }
               catch (error) {
                 value = error;
@@ -5784,7 +5784,7 @@ describe('AmauiTest', () => {
             const values = [valueNode, ...valueBrowsers];
 
             values.forEach(value => expect(value).eql([
-              'AmauiTestError',
+              'OnesyTestError',
               '9 tests failed'
             ]));
           });
@@ -5814,15 +5814,15 @@ describe('AmauiTest', () => {
             files: 'test/example/test/**/a.test.ts'
           };
 
-          const amauiTest = new AmauiTest(options);
+          const onesyTest = new OnesyTest(options);
 
-          await amauiTest.init();
+          await onesyTest.init();
 
-          await amauiTest.run();
+          await onesyTest.run();
 
           const value = {
-            summary: amauiTest.mainGroup.summary,
-            options: amauiTest.options,
+            summary: onesyTest.mainGroup.summary,
+            options: onesyTest.options,
           };
 
           expect(value.options.files.indexOf('test/**/a.test.ts') > -1).true;
@@ -5849,7 +5849,7 @@ describe('AmauiTest', () => {
                 at: 'auto',
                 errors_minify: true,
                 html: {
-                  id: 'amaui-test-results'
+                  id: 'onesy-test-results'
                 }
               },
               response: {
@@ -5893,15 +5893,15 @@ describe('AmauiTest', () => {
             ]
           };
 
-          const amauiTest = new AmauiTest(options);
+          const onesyTest = new OnesyTest(options);
 
-          await amauiTest.init();
+          await onesyTest.init();
 
-          await amauiTest.run();
+          await onesyTest.run();
 
           const value = {
-            summary: amauiTest.mainGroup.summary,
-            options: amauiTest.options,
+            summary: onesyTest.mainGroup.summary,
+            options: onesyTest.options,
           };
 
           expect(value.options.files[0].indexOf('test/**/a.test.ts') > -1).true;
@@ -5928,7 +5928,7 @@ describe('AmauiTest', () => {
                 at: 'auto',
                 errors_minify: true,
                 html: {
-                  id: 'amaui-test-results'
+                  id: 'onesy-test-results'
                 }
               },
               response: {
@@ -5955,10 +5955,10 @@ describe('AmauiTest', () => {
 
       });
 
-      it('amaui-test.options.js', async () => {
-        // Create amaui-test.options.js
-        await AmauiNode.file.add(
-          path.join(process.cwd(), 'amaui-test.options.js'),
+      it('onesy-test.options.js', async () => {
+        // Create onesy-test.options.js
+        await OnesyNode.file.add(
+          path.join(process.cwd(), 'onesy-test.options.js'),
           `
                 module.exports = {
                   imports: [
@@ -5980,15 +5980,15 @@ describe('AmauiTest', () => {
 
         const options: IOptions = {};
 
-        const amauiTest = new AmauiTest(options);
+        const onesyTest = new OnesyTest(options);
 
-        await amauiTest.init();
+        await onesyTest.init();
 
-        await amauiTest.run();
+        await onesyTest.run();
 
         const value = {
-          summary: amauiTest.mainGroup.summary,
-          options: amauiTest.options,
+          summary: onesyTest.mainGroup.summary,
+          options: onesyTest.options,
         };
 
         expect(value.options.files.indexOf('test/example/test/**/a.test.ts') > -1).true;
@@ -6015,7 +6015,7 @@ describe('AmauiTest', () => {
               at: 'auto',
               errors_minify: true,
               html: {
-                id: 'amaui-test-results'
+                id: 'onesy-test-results'
               }
             },
             response: {
@@ -6040,15 +6040,15 @@ describe('AmauiTest', () => {
         });
 
         // Remove example/package.json
-        await AmauiNode.file.remove(path.join(process.cwd(), 'amaui-test.options.js'));
+        await OnesyNode.file.remove(path.join(process.cwd(), 'onesy-test.options.js'));
       });
 
       it('package', async () => {
         // Create package.json
-        await AmauiNode.file.add(
+        await OnesyNode.file.add(
           path.resolve('test/example/package.json'),
           JSON.stringify({
-            'amaui-test': {
+            'onesy-test': {
               imports: [
                 'ts-node/register/transpile-only'
               ],
@@ -6070,15 +6070,15 @@ describe('AmauiTest', () => {
           package: 'test/example/package.json'
         };
 
-        const amauiTest = new AmauiTest(options);
+        const onesyTest = new OnesyTest(options);
 
-        await amauiTest.init();
+        await onesyTest.init();
 
-        await amauiTest.run();
+        await onesyTest.run();
 
         const value = {
-          summary: amauiTest.mainGroup.summary,
-          options: amauiTest.options,
+          summary: onesyTest.mainGroup.summary,
+          options: onesyTest.options,
         };
 
         expect(value.options.package.indexOf('test/example/package.json') > -1).true;
@@ -6108,7 +6108,7 @@ describe('AmauiTest', () => {
               at: 'auto',
               errors_minify: true,
               html: {
-                id: 'amaui-test-results'
+                id: 'onesy-test-results'
               }
             },
             response: {
@@ -6133,13 +6133,13 @@ describe('AmauiTest', () => {
         });
 
         // Remove example/package.json
-        await AmauiNode.file.remove(path.resolve('test/example/package.json'));
+        await OnesyNode.file.remove(path.resolve('test/example/package.json'));
       });
 
-      it(`amaui-test.options.js priority over package.json 'amaui-test'`, async () => {
-        // Create amaui-test.options.js and package.json
-        await AmauiNode.file.add(
-          path.join(process.cwd(), 'amaui-test.options.js'),
+      it(`onesy-test.options.js priority over package.json 'onesy-test'`, async () => {
+        // Create onesy-test.options.js and package.json
+        await OnesyNode.file.add(
+          path.join(process.cwd(), 'onesy-test.options.js'),
           `
                 module.exports = {
                   imports: [
@@ -6158,10 +6158,10 @@ describe('AmauiTest', () => {
                 };
               `
         );
-        await AmauiNode.file.add(
+        await OnesyNode.file.add(
           path.resolve('test/example/package.json'),
           JSON.stringify({
-            'amaui-test': {
+            'onesy-test': {
               files: 'test/**/a1.test.ts',
             }
           })
@@ -6171,15 +6171,15 @@ describe('AmauiTest', () => {
           package: 'test/example/package.json'
         };
 
-        const amauiTest = new AmauiTest(options);
+        const onesyTest = new OnesyTest(options);
 
-        await amauiTest.init();
+        await onesyTest.init();
 
-        await amauiTest.run();
+        await onesyTest.run();
 
         const value = {
-          summary: amauiTest.mainGroup.summary,
-          options: amauiTest.options,
+          summary: onesyTest.mainGroup.summary,
+          options: onesyTest.options,
         };
 
         expect(value.options.package.indexOf('test/example/package.json') > -1).true;
@@ -6209,7 +6209,7 @@ describe('AmauiTest', () => {
               at: 'auto',
               errors_minify: true,
               html: {
-                id: 'amaui-test-results'
+                id: 'onesy-test-results'
               }
             },
             response: {
@@ -6233,9 +6233,9 @@ describe('AmauiTest', () => {
           }
         });
 
-        // Remove amaui-test.options.js and example/package.json
-        await AmauiNode.file.remove(path.join(process.cwd(), 'amaui-test.options.js'));
-        await AmauiNode.file.remove(path.resolve('test/example/package.json'));
+        // Remove onesy-test.options.js and example/package.json
+        await OnesyNode.file.remove(path.join(process.cwd(), 'onesy-test.options.js'));
+        await OnesyNode.file.remove(path.resolve('test/example/package.json'));
       });
 
     });
@@ -6260,15 +6260,15 @@ describe('AmauiTest', () => {
         ]
       };
 
-      const amauiTest = new AmauiTest(options);
+      const onesyTest = new OnesyTest(options);
 
       const values_ = [];
 
-      amauiTest.subscription.subscribe((name, value) => values_.push(name, value?.name ? [value.name, value.parent?.name] : value));
+      onesyTest.subscription.subscribe((name, value) => values_.push(name, value?.name ? [value.name, value.parent?.name] : value));
 
-      await amauiTest.init();
+      await onesyTest.init();
 
-      await amauiTest.run();
+      await onesyTest.run();
 
       const valueNode = values_.filter(Boolean);
 
@@ -6283,55 +6283,55 @@ describe('AmauiTest', () => {
           }
         };
 
-        const amauiTest = new window.AmauiTest.AmauiTest(options);
+        const onesyTest = new window.OnesyTest.OnesyTest(options);
 
         to('a', () => {
-          window.AmauiTest.assert(4).eq(4);
+          window.OnesyTest.assert(4).eq(4);
         });
 
-        group('@amaui/a1', () => {
+        group('@onesy/a1', () => {
 
           pre(async () => {
-            await window.AmauiUtils.wait(140);
+            await window.OnesyUtils.wait(140);
 
             throw new Error('a');
           });
 
           preEveryGroupTo(async () => {
-            await window.AmauiUtils.wait(14);
+            await window.OnesyUtils.wait(14);
           });
 
           to('a2', async () => {
-            await window.AmauiUtils.wait(140);
+            await window.OnesyUtils.wait(140);
 
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
-          group('@amaui/a3', () => {
+          group('@onesy/a3', () => {
 
             to('a3', async () => {
-              window.AmauiTest.assert(function a() { }).eq(undefined);
+              window.OnesyTest.assert(function a() { }).eq(undefined);
             });
 
           });
 
           to('a4', () => {
             [1, 2, 3, 4].forEach(value => {
-              window.AmauiTest.assert(typeof value === 'number').true;
+              window.OnesyTest.assert(typeof value === 'number').true;
 
               throw new Error('a');
             });
           });
 
-          group('@amaui/a5', () => {
+          group('@onesy/a5', () => {
             let a: any;
 
             pre(async () => {
-              await window.AmauiUtils.wait(14);
+              await window.OnesyUtils.wait(14);
             });
 
             preTo(async () => {
-              await window.AmauiUtils.wait(140);
+              await window.OnesyUtils.wait(140);
 
               a = 4;
             });
@@ -6350,31 +6350,31 @@ describe('AmauiTest', () => {
           });
 
           to('a6', async () => {
-            await window.AmauiUtils.wait(74);
+            await window.OnesyUtils.wait(74);
 
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           to('a7', async () => {
-            window.AmauiTest.assert(['padding-left', 'padding', 'padding-right']).eql(['padding', 'padding-left', 'padding-right']);
+            window.OnesyTest.assert(['padding-left', 'padding', 'padding-right']).eql(['padding', 'padding-left', 'padding-right']);
           });
 
           to('a8', async resolve => {
-            await window.AmauiUtils.wait(4);
+            await window.OnesyUtils.wait(4);
 
             resolve();
 
-            await window.AmauiUtils.wait(140);
+            await window.OnesyUtils.wait(140);
 
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           to('a9', async () => {
-            await window.AmauiTest.assert(function a() { }).throwAsync(4);
+            await window.OnesyTest.assert(function a() { }).throwAsync(4);
           });
 
           to('a10', async () => {
-            window.AmauiTest.assert({
+            window.OnesyTest.assert({
               "direction": "ltr",
               "preference": {
                 "background": {
@@ -6431,40 +6431,40 @@ describe('AmauiTest', () => {
 
           to('a11', async () => {
             const value = [
-              'AmauiError',
-              'AmauiError',
-              'AmauiAwsError',
-              'AmauiTestError',
-              'AmauiAmqpError',
+              'OnesyError',
+              'OnesyError',
+              'OnesyAwsError',
+              'OnesyTestError',
+              'OnesyAmqpError',
               'AuthenticationError',
               'AuthorizationError',
               'AssertError',
               'ValidationError',
               'PermissionError',
-              'AmauiMongoError',
+              'OnesyMongoError',
               'ConnectionError',
               'NotFoundError',
               'DeveloperError',
-              'AmauiError',
+              'OnesyError',
             ];
             const value1 = [
-              'AmauiError',
-              'AmauiError',
-              'AmauiAwsError',
-              'AmauiTestError',
-              'AmauiAmqpError',
+              'OnesyError',
+              'OnesyError',
+              'OnesyAwsError',
+              'OnesyTestError',
+              'OnesyAmqpError',
               'AuthenticationError',
               'AuthorizationError',
               'ValidationError',
               'PermissionError',
-              'AmauiMongoError',
+              'OnesyMongoError',
               'ConnectionError',
               'NotFoundError',
               'DeveloperError',
-              'AmauiError',
+              'OnesyError',
             ];
 
-            window.AmauiTest.assert(value).eql(value1);
+            window.OnesyTest.assert(value).eql(value1);
           });
 
           to('a12', async () => {
@@ -6491,31 +6491,31 @@ describe('AmauiTest', () => {
               ab: [1, 2, 3, 4],
             };
 
-            window.AmauiTest.assert(value).eql(value1);
+            window.OnesyTest.assert(value).eql(value1);
           });
 
           to('a13', async () => {
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           post(async () => {
-            await window.AmauiUtils.wait(40);
+            await window.OnesyUtils.wait(40);
           });
 
           postEveryGroupTo(async () => {
-            await window.AmauiUtils.wait(14);
+            await window.OnesyUtils.wait(14);
           });
         });
 
         to('a14', async () => {
-          window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+          window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
         });
 
         const values_ = [];
 
-        amauiTest.subscription.subscribe((name, value) => values_.push(name, value?.name ? [value.name, value.parent?.name] : value));
+        onesyTest.subscription.subscribe((name, value) => values_.push(name, value?.name ? [value.name, value.parent?.name] : value));
 
-        await amauiTest.run();
+        await onesyTest.run();
 
         return values_.filter(Boolean);
       });
@@ -6529,7 +6529,7 @@ describe('AmauiTest', () => {
       ]);
 
       valueBrowsers.forEach(value => expect(value).eql([
-        "running", "preAll", "group", ["main", undefined], "to", ["a", "main"], "to:end", ["a", "main"], "group", ["@amaui/a1", "main"], "middleware", ["pre", "@amaui/a1"], "middleware:end", ["pre", "@amaui/a1"], "to", ["a2", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a2", "@amaui/a1"], "group", ["@amaui/a3", "@amaui/a1"], "to", ["a3", "@amaui/a3"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a3", "@amaui/a3"], "group:end", ["@amaui/a3", "@amaui/a1"], "to", ["a4", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a4", "@amaui/a1"], "group", ["@amaui/a5", "@amaui/a1"], "middleware", ["pre", "@amaui/a5"], "middleware:end", ["pre", "@amaui/a5"], "to", ["a5", "@amaui/a5"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["preTo", "@amaui/a5"], "middleware:end", ["preTo", "@amaui/a5"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a5", "@amaui/a5"], "group:end", ["@amaui/a5", "@amaui/a1"], "to", ["a6", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a6", "@amaui/a1"], "to", ["a7", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a7", "@amaui/a1"], "to", ["a8", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a8", "@amaui/a1"], "to", ["a9", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a9", "@amaui/a1"], "to", ["a10", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a10", "@amaui/a1"], "to", ["a11", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a11", "@amaui/a1"], "to", ["a12", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a12", "@amaui/a1"], "to", ["a13", "@amaui/a1"], "middleware", ["preEveryGroupTo", "@amaui/a1"], "middleware:end", ["preEveryGroupTo", "@amaui/a1"], "middleware", ["postEveryGroupTo", "@amaui/a1"], "middleware:end", ["postEveryGroupTo", "@amaui/a1"], "to:end", ["a13", "@amaui/a1"], "middleware", ["post", "@amaui/a1"], "middleware:end", ["post", "@amaui/a1"], "group:end", ["@amaui/a1", "main"], "to", ["a14", "main"], "to:end", ["a14", "main"], "group:end", ["main", undefined], "postAll", "completed", "printed", "idle", "clear", "fail", "success"
+        "running", "preAll", "group", ["main", undefined], "to", ["a", "main"], "to:end", ["a", "main"], "group", ["@onesy/a1", "main"], "middleware", ["pre", "@onesy/a1"], "middleware:end", ["pre", "@onesy/a1"], "to", ["a2", "@onesy/a1"], "middleware", ["preEveryGroupTo", "@onesy/a1"], "middleware:end", ["preEveryGroupTo", "@onesy/a1"], "middleware", ["postEveryGroupTo", "@onesy/a1"], "middleware:end", ["postEveryGroupTo", "@onesy/a1"], "to:end", ["a2", "@onesy/a1"], "group", ["@onesy/a3", "@onesy/a1"], "to", ["a3", "@onesy/a3"], "middleware", ["preEveryGroupTo", "@onesy/a1"], "middleware:end", ["preEveryGroupTo", "@onesy/a1"], "middleware", ["postEveryGroupTo", "@onesy/a1"], "middleware:end", ["postEveryGroupTo", "@onesy/a1"], "to:end", ["a3", "@onesy/a3"], "group:end", ["@onesy/a3", "@onesy/a1"], "to", ["a4", "@onesy/a1"], "middleware", ["preEveryGroupTo", "@onesy/a1"], "middleware:end", ["preEveryGroupTo", "@onesy/a1"], "middleware", ["postEveryGroupTo", "@onesy/a1"], "middleware:end", ["postEveryGroupTo", "@onesy/a1"], "to:end", ["a4", "@onesy/a1"], "group", ["@onesy/a5", "@onesy/a1"], "middleware", ["pre", "@onesy/a5"], "middleware:end", ["pre", "@onesy/a5"], "to", ["a5", "@onesy/a5"], "middleware", ["preEveryGroupTo", "@onesy/a1"], "middleware:end", ["preEveryGroupTo", "@onesy/a1"], "middleware", ["preTo", "@onesy/a5"], "middleware:end", ["preTo", "@onesy/a5"], "middleware", ["postEveryGroupTo", "@onesy/a1"], "middleware:end", ["postEveryGroupTo", "@onesy/a1"], "to:end", ["a5", "@onesy/a5"], "group:end", ["@onesy/a5", "@onesy/a1"], "to", ["a6", "@onesy/a1"], "middleware", ["preEveryGroupTo", "@onesy/a1"], "middleware:end", ["preEveryGroupTo", "@onesy/a1"], "middleware", ["postEveryGroupTo", "@onesy/a1"], "middleware:end", ["postEveryGroupTo", "@onesy/a1"], "to:end", ["a6", "@onesy/a1"], "to", ["a7", "@onesy/a1"], "middleware", ["preEveryGroupTo", "@onesy/a1"], "middleware:end", ["preEveryGroupTo", "@onesy/a1"], "middleware", ["postEveryGroupTo", "@onesy/a1"], "middleware:end", ["postEveryGroupTo", "@onesy/a1"], "to:end", ["a7", "@onesy/a1"], "to", ["a8", "@onesy/a1"], "middleware", ["preEveryGroupTo", "@onesy/a1"], "middleware:end", ["preEveryGroupTo", "@onesy/a1"], "middleware", ["postEveryGroupTo", "@onesy/a1"], "middleware:end", ["postEveryGroupTo", "@onesy/a1"], "to:end", ["a8", "@onesy/a1"], "to", ["a9", "@onesy/a1"], "middleware", ["preEveryGroupTo", "@onesy/a1"], "middleware:end", ["preEveryGroupTo", "@onesy/a1"], "middleware", ["postEveryGroupTo", "@onesy/a1"], "middleware:end", ["postEveryGroupTo", "@onesy/a1"], "to:end", ["a9", "@onesy/a1"], "to", ["a10", "@onesy/a1"], "middleware", ["preEveryGroupTo", "@onesy/a1"], "middleware:end", ["preEveryGroupTo", "@onesy/a1"], "middleware", ["postEveryGroupTo", "@onesy/a1"], "middleware:end", ["postEveryGroupTo", "@onesy/a1"], "to:end", ["a10", "@onesy/a1"], "to", ["a11", "@onesy/a1"], "middleware", ["preEveryGroupTo", "@onesy/a1"], "middleware:end", ["preEveryGroupTo", "@onesy/a1"], "middleware", ["postEveryGroupTo", "@onesy/a1"], "middleware:end", ["postEveryGroupTo", "@onesy/a1"], "to:end", ["a11", "@onesy/a1"], "to", ["a12", "@onesy/a1"], "middleware", ["preEveryGroupTo", "@onesy/a1"], "middleware:end", ["preEveryGroupTo", "@onesy/a1"], "middleware", ["postEveryGroupTo", "@onesy/a1"], "middleware:end", ["postEveryGroupTo", "@onesy/a1"], "to:end", ["a12", "@onesy/a1"], "to", ["a13", "@onesy/a1"], "middleware", ["preEveryGroupTo", "@onesy/a1"], "middleware:end", ["preEveryGroupTo", "@onesy/a1"], "middleware", ["postEveryGroupTo", "@onesy/a1"], "middleware:end", ["postEveryGroupTo", "@onesy/a1"], "to:end", ["a13", "@onesy/a1"], "middleware", ["post", "@onesy/a1"], "middleware:end", ["post", "@onesy/a1"], "group:end", ["@onesy/a1", "main"], "to", ["a14", "main"], "to:end", ["a14", "main"], "group:end", ["main", undefined], "postAll", "completed", "printed", "idle", "clear", "fail", "success"
       ]));
     });
 
@@ -6552,15 +6552,15 @@ describe('AmauiTest', () => {
         ]
       };
 
-      const amauiTest = new AmauiTest(options);
+      const onesyTest = new OnesyTest(options);
 
       const values_ = [];
 
-      amauiTest.subscription.subscribe((name, value) => values_.push(name, value?.name ? [value.name, value.parent?.name] : value));
+      onesyTest.subscription.subscribe((name, value) => values_.push(name, value?.name ? [value.name, value.parent?.name] : value));
 
-      await amauiTest.init();
+      await onesyTest.init();
 
-      await amauiTest.run();
+      await onesyTest.run();
 
       const valueNode = values_.filter(Boolean);
 
@@ -6575,142 +6575,142 @@ describe('AmauiTest', () => {
           }
         };
 
-        const amauiTest = new window.AmauiTest.AmauiTest(options);
+        const onesyTest = new window.OnesyTest.OnesyTest(options);
 
         preAll(async () => {
-          await window.AmauiUtils.wait(40);
+          await window.OnesyUtils.wait(40);
         });
 
         preEveryGroup(async () => {
-          await window.AmauiUtils.wait(40);
+          await window.OnesyUtils.wait(40);
         });
 
         preEveryGroupGroup(async () => {
-          await window.AmauiUtils.wait(141);
+          await window.OnesyUtils.wait(141);
         });
 
         preEveryTo(async () => {
-          await window.AmauiUtils.wait(4);
+          await window.OnesyUtils.wait(4);
         });
 
         preEveryGroupTo(async () => {
-          await window.AmauiUtils.wait(14);
+          await window.OnesyUtils.wait(14);
         });
 
         to('a', async () => {
-          window.AmauiTest.assert(4).eq(4);
+          window.OnesyTest.assert(4).eq(4);
         });
 
-        group('@amaui/a', () => {
+        group('@onesy/a', () => {
 
           pre(async () => {
-            await window.AmauiUtils.wait(140);
+            await window.OnesyUtils.wait(140);
 
             throw new Error('a');
           });
 
           preEveryGroupGroup(async () => {
-            await window.AmauiUtils.wait(141);
+            await window.OnesyUtils.wait(141);
           });
 
           preTo(async () => {
-            await window.AmauiUtils.wait(40);
+            await window.OnesyUtils.wait(40);
           });
 
           preEveryGroupTo(async () => {
-            await window.AmauiUtils.wait(14);
+            await window.OnesyUtils.wait(14);
           });
 
           to('a1', async () => {
-            await window.AmauiUtils.wait(40);
+            await window.OnesyUtils.wait(40);
 
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
-          group('@amaui/a11', () => {
+          group('@onesy/a11', () => {
 
             to('a11', async () => {
-              window.AmauiTest.assert('a').eq(4);
+              window.OnesyTest.assert('a').eq(4);
             });
 
           });
 
           to('a3', async () => {
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
-          group('@amaui/a14', () => {
+          group('@onesy/a14', () => {
             let a: any;
 
             pre(async () => {
-              await window.AmauiUtils.wait(14);
+              await window.OnesyUtils.wait(14);
             });
 
             preTo(async () => {
-              await window.AmauiUtils.wait(140);
+              await window.OnesyUtils.wait(140);
 
               a = 4;
             });
 
             to('a14', async () => {
-              window.AmauiTest.assert('a').eq(a);
+              window.OnesyTest.assert('a').eq(a);
             });
 
           });
 
           to('a4', async () => {
-            window.AmauiTest.assert('a').eq(4);
+            window.OnesyTest.assert('a').eq(4);
           });
 
           post(async () => {
-            await window.AmauiUtils.wait(140);
+            await window.OnesyUtils.wait(140);
 
             throw new Error('a');
           });
 
           postEveryGroupGroup(async () => {
-            await window.AmauiUtils.wait(141);
+            await window.OnesyUtils.wait(141);
           });
 
           postTo(async () => {
-            await window.AmauiUtils.wait(40);
+            await window.OnesyUtils.wait(40);
           });
 
           postEveryGroupTo(async () => {
-            await window.AmauiUtils.wait(14);
+            await window.OnesyUtils.wait(14);
           });
 
         });
 
         to('a7', async () => {
-          window.AmauiTest.assert(4).eq(4);
+          window.OnesyTest.assert(4).eq(4);
         });
 
         postEveryGroup(async () => {
-          await window.AmauiUtils.wait(40);
+          await window.OnesyUtils.wait(40);
         });
 
         postEveryGroupGroup(async () => {
-          await window.AmauiUtils.wait(141);
+          await window.OnesyUtils.wait(141);
         });
 
         postEveryGroupTo(async () => {
-          await window.AmauiUtils.wait(14);
+          await window.OnesyUtils.wait(14);
         });
 
         postEveryTo(async () => {
-          await window.AmauiUtils.wait(4);
+          await window.OnesyUtils.wait(4);
         });
 
         postAll(async () => {
-          await window.AmauiUtils.wait(40);
+          await window.OnesyUtils.wait(40);
         });
 
         const values_ = [];
 
-        amauiTest.subscription.subscribe((name, value) => values_.push(name, value?.name ? [value.name, value.parent?.name] : value));
+        onesyTest.subscription.subscribe((name, value) => values_.push(name, value?.name ? [value.name, value.parent?.name] : value));
 
-        await amauiTest.run();
+        await onesyTest.run();
 
         return values_.filter(Boolean);
       });
@@ -6723,7 +6723,7 @@ describe('AmauiTest', () => {
         ...valueBrowsers[0],
       ]);
 
-      expect(valueBrowsers[0]).eql(["running", "middleware", ["preAll", "main"], "middleware:end", ["preAll", "main"], "preAll", "group", ["main", undefined], "middleware", ["preEveryGroup", "main"], "middleware:end", ["preEveryGroup", "main"], "to", ["a", "main"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "to:end", ["a", "main"], "group", ["@amaui/a", "main"], "middleware", ["preEveryGroup", "main"], "middleware:end", ["preEveryGroup", "main"], "middleware", ["preEveryGroupGroup", "main"], "middleware:end", ["preEveryGroupGroup", "main"], "middleware", ["pre", "@amaui/a"], "middleware:end", ["pre", "@amaui/a"], "to", ["a1", "@amaui/a"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@amaui/a"], "middleware:end", ["preEveryGroupTo", "@amaui/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["preTo", "@amaui/a"], "middleware:end", ["preTo", "@amaui/a"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@amaui/a"], "middleware:end", ["postEveryGroupTo", "@amaui/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "middleware", ["postTo", "@amaui/a"], "middleware:end", ["postTo", "@amaui/a"], "to:end", ["a1", "@amaui/a"], "group", ["@amaui/a11", "@amaui/a"], "middleware", ["preEveryGroup", "main"], "middleware:end", ["preEveryGroup", "main"], "middleware", ["preEveryGroupGroup", "@amaui/a"], "middleware:end", ["preEveryGroupGroup", "@amaui/a"], "middleware", ["preEveryGroupGroup", "main"], "middleware:end", ["preEveryGroupGroup", "main"], "to", ["a11", "@amaui/a11"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@amaui/a"], "middleware:end", ["preEveryGroupTo", "@amaui/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@amaui/a"], "middleware:end", ["postEveryGroupTo", "@amaui/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "to:end", ["a11", "@amaui/a11"], "middleware", ["postEveryGroup", "main"], "middleware:end", ["postEveryGroup", "main"], "middleware", ["postEveryGroupGroup", "@amaui/a"], "middleware:end", ["postEveryGroupGroup", "@amaui/a"], "middleware", ["postEveryGroupGroup", "main"], "middleware:end", ["postEveryGroupGroup", "main"], "group:end", ["@amaui/a11", "@amaui/a"], "to", ["a3", "@amaui/a"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@amaui/a"], "middleware:end", ["preEveryGroupTo", "@amaui/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["preTo", "@amaui/a"], "middleware:end", ["preTo", "@amaui/a"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@amaui/a"], "middleware:end", ["postEveryGroupTo", "@amaui/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "middleware", ["postTo", "@amaui/a"], "middleware:end", ["postTo", "@amaui/a"], "to:end", ["a3", "@amaui/a"], "group", ["@amaui/a14", "@amaui/a"], "middleware", ["preEveryGroup", "main"], "middleware:end", ["preEveryGroup", "main"], "middleware", ["preEveryGroupGroup", "@amaui/a"], "middleware:end", ["preEveryGroupGroup", "@amaui/a"], "middleware", ["preEveryGroupGroup", "main"], "middleware:end", ["preEveryGroupGroup", "main"], "middleware", ["pre", "@amaui/a14"], "middleware:end", ["pre", "@amaui/a14"], "to", ["a14", "@amaui/a14"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@amaui/a"], "middleware:end", ["preEveryGroupTo", "@amaui/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["preTo", "@amaui/a14"], "middleware:end", ["preTo", "@amaui/a14"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@amaui/a"], "middleware:end", ["postEveryGroupTo", "@amaui/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "to:end", ["a14", "@amaui/a14"], "middleware", ["postEveryGroup", "main"], "middleware:end", ["postEveryGroup", "main"], "middleware", ["postEveryGroupGroup", "@amaui/a"], "middleware:end", ["postEveryGroupGroup", "@amaui/a"], "middleware", ["postEveryGroupGroup", "main"], "middleware:end", ["postEveryGroupGroup", "main"], "group:end", ["@amaui/a14", "@amaui/a"], "to", ["a4", "@amaui/a"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@amaui/a"], "middleware:end", ["preEveryGroupTo", "@amaui/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["preTo", "@amaui/a"], "middleware:end", ["preTo", "@amaui/a"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@amaui/a"], "middleware:end", ["postEveryGroupTo", "@amaui/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "middleware", ["postTo", "@amaui/a"], "middleware:end", ["postTo", "@amaui/a"], "to:end", ["a4", "@amaui/a"], "middleware", ["postEveryGroup", "main"], "middleware:end", ["postEveryGroup", "main"], "middleware", ["postEveryGroupGroup", "main"], "middleware:end", ["postEveryGroupGroup", "main"], "middleware", ["post", "@amaui/a"], "middleware:end", ["post", "@amaui/a"], "group:end", ["@amaui/a", "main"], "to", ["a7", "main"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "to:end", ["a7", "main"], "middleware", ["postEveryGroup", "main"], "middleware:end", ["postEveryGroup", "main"], "group:end", ["main", undefined], "middleware", ["postAll", "main"], "middleware:end", ["postAll", "main"], "postAll", "completed", "printed", "idle", "clear", "fail", "success"]);
+      expect(valueBrowsers[0]).eql(["running", "middleware", ["preAll", "main"], "middleware:end", ["preAll", "main"], "preAll", "group", ["main", undefined], "middleware", ["preEveryGroup", "main"], "middleware:end", ["preEveryGroup", "main"], "to", ["a", "main"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "to:end", ["a", "main"], "group", ["@onesy/a", "main"], "middleware", ["preEveryGroup", "main"], "middleware:end", ["preEveryGroup", "main"], "middleware", ["preEveryGroupGroup", "main"], "middleware:end", ["preEveryGroupGroup", "main"], "middleware", ["pre", "@onesy/a"], "middleware:end", ["pre", "@onesy/a"], "to", ["a1", "@onesy/a"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@onesy/a"], "middleware:end", ["preEveryGroupTo", "@onesy/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["preTo", "@onesy/a"], "middleware:end", ["preTo", "@onesy/a"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@onesy/a"], "middleware:end", ["postEveryGroupTo", "@onesy/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "middleware", ["postTo", "@onesy/a"], "middleware:end", ["postTo", "@onesy/a"], "to:end", ["a1", "@onesy/a"], "group", ["@onesy/a11", "@onesy/a"], "middleware", ["preEveryGroup", "main"], "middleware:end", ["preEveryGroup", "main"], "middleware", ["preEveryGroupGroup", "@onesy/a"], "middleware:end", ["preEveryGroupGroup", "@onesy/a"], "middleware", ["preEveryGroupGroup", "main"], "middleware:end", ["preEveryGroupGroup", "main"], "to", ["a11", "@onesy/a11"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@onesy/a"], "middleware:end", ["preEveryGroupTo", "@onesy/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@onesy/a"], "middleware:end", ["postEveryGroupTo", "@onesy/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "to:end", ["a11", "@onesy/a11"], "middleware", ["postEveryGroup", "main"], "middleware:end", ["postEveryGroup", "main"], "middleware", ["postEveryGroupGroup", "@onesy/a"], "middleware:end", ["postEveryGroupGroup", "@onesy/a"], "middleware", ["postEveryGroupGroup", "main"], "middleware:end", ["postEveryGroupGroup", "main"], "group:end", ["@onesy/a11", "@onesy/a"], "to", ["a3", "@onesy/a"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@onesy/a"], "middleware:end", ["preEveryGroupTo", "@onesy/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["preTo", "@onesy/a"], "middleware:end", ["preTo", "@onesy/a"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@onesy/a"], "middleware:end", ["postEveryGroupTo", "@onesy/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "middleware", ["postTo", "@onesy/a"], "middleware:end", ["postTo", "@onesy/a"], "to:end", ["a3", "@onesy/a"], "group", ["@onesy/a14", "@onesy/a"], "middleware", ["preEveryGroup", "main"], "middleware:end", ["preEveryGroup", "main"], "middleware", ["preEveryGroupGroup", "@onesy/a"], "middleware:end", ["preEveryGroupGroup", "@onesy/a"], "middleware", ["preEveryGroupGroup", "main"], "middleware:end", ["preEveryGroupGroup", "main"], "middleware", ["pre", "@onesy/a14"], "middleware:end", ["pre", "@onesy/a14"], "to", ["a14", "@onesy/a14"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@onesy/a"], "middleware:end", ["preEveryGroupTo", "@onesy/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["preTo", "@onesy/a14"], "middleware:end", ["preTo", "@onesy/a14"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@onesy/a"], "middleware:end", ["postEveryGroupTo", "@onesy/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "to:end", ["a14", "@onesy/a14"], "middleware", ["postEveryGroup", "main"], "middleware:end", ["postEveryGroup", "main"], "middleware", ["postEveryGroupGroup", "@onesy/a"], "middleware:end", ["postEveryGroupGroup", "@onesy/a"], "middleware", ["postEveryGroupGroup", "main"], "middleware:end", ["postEveryGroupGroup", "main"], "group:end", ["@onesy/a14", "@onesy/a"], "to", ["a4", "@onesy/a"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "@onesy/a"], "middleware:end", ["preEveryGroupTo", "@onesy/a"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["preTo", "@onesy/a"], "middleware:end", ["preTo", "@onesy/a"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "@onesy/a"], "middleware:end", ["postEveryGroupTo", "@onesy/a"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "middleware", ["postTo", "@onesy/a"], "middleware:end", ["postTo", "@onesy/a"], "to:end", ["a4", "@onesy/a"], "middleware", ["postEveryGroup", "main"], "middleware:end", ["postEveryGroup", "main"], "middleware", ["postEveryGroupGroup", "main"], "middleware:end", ["postEveryGroupGroup", "main"], "middleware", ["post", "@onesy/a"], "middleware:end", ["post", "@onesy/a"], "group:end", ["@onesy/a", "main"], "to", ["a7", "main"], "middleware", ["preEveryTo", "main"], "middleware:end", ["preEveryTo", "main"], "middleware", ["preEveryGroupTo", "main"], "middleware:end", ["preEveryGroupTo", "main"], "middleware", ["postEveryTo", "main"], "middleware:end", ["postEveryTo", "main"], "middleware", ["postEveryGroupTo", "main"], "middleware:end", ["postEveryGroupTo", "main"], "to:end", ["a7", "main"], "middleware", ["postEveryGroup", "main"], "middleware:end", ["postEveryGroup", "main"], "group:end", ["main", undefined], "middleware", ["postAll", "main"], "middleware:end", ["postAll", "main"], "postAll", "completed", "printed", "idle", "clear", "fail", "success"]);
     });
 
     it('clear', async () => {
@@ -6746,27 +6746,27 @@ describe('AmauiTest', () => {
         ]
       };
 
-      const amauiTest = new AmauiTest(options);
+      const onesyTest = new OnesyTest(options);
 
       const values_ = [];
 
-      const amauiEvents = [];
+      const onesyEvents = [];
 
-      const amauiEventsMethod = () => amauiEvents.push(true);
+      const onesyEventsMethod = () => onesyEvents.push(true);
 
-      global.amauiEvents.on('amaui-test-clear', amauiEventsMethod);
+      global.onesyEvents.on('onesy-test-clear', onesyEventsMethod);
 
-      amauiTest.subscription.subscribe((name, value) => values_.push(name, value?.name ? [value.name, value.parent?.name] : value));
+      onesyTest.subscription.subscribe((name, value) => values_.push(name, value?.name ? [value.name, value.parent?.name] : value));
 
-      await amauiTest.init();
+      await onesyTest.init();
 
-      amauiTest.run();
+      onesyTest.run();
 
       await wait(440);
 
-      await amauiTest.clear(() => values_.push('clearMethod'));
+      await onesyTest.clear(() => values_.push('clearMethod'));
 
-      const valueNode = [amauiEvents, values_.filter(Boolean)];
+      const valueNode = [onesyEvents, values_.filter(Boolean)];
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const options = {
@@ -6779,30 +6779,30 @@ describe('AmauiTest', () => {
           }
         };
 
-        const amauiTest = new window.AmauiTest.AmauiTest(options);
+        const onesyTest = new window.OnesyTest.OnesyTest(options);
 
         to('a', () => {
-          window.AmauiTest.assert(4).eq(4);
+          window.OnesyTest.assert(4).eq(4);
         });
 
-        group('@amaui/a1', () => {
+        group('@onesy/a1', () => {
 
           pre(async () => {
-            await window.AmauiUtils.wait(140);
+            await window.OnesyUtils.wait(140);
 
             throw new Error('a');
           });
 
           to('a2', async () => {
-            await window.AmauiUtils.wait(140);
+            await window.OnesyUtils.wait(140);
 
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
-          group('@amaui/a3', () => {
+          group('@onesy/a3', () => {
 
             to('a3', async () => {
-              window.AmauiTest.assert(function a() { }).eq(undefined);
+              window.OnesyTest.assert(function a() { }).eq(undefined);
             });
 
           });
@@ -6811,15 +6811,15 @@ describe('AmauiTest', () => {
             throw new Error('a');
           });
 
-          group('@amaui/a5', () => {
+          group('@onesy/a5', () => {
             let a: any;
 
             pre(async () => {
-              await window.AmauiUtils.wait(14);
+              await window.OnesyUtils.wait(14);
             });
 
             preTo(async () => {
-              await window.AmauiUtils.wait(140);
+              await window.OnesyUtils.wait(140);
 
               a = 4;
             });
@@ -6838,63 +6838,63 @@ describe('AmauiTest', () => {
           });
 
           to('a6', async () => {
-            await window.AmauiUtils.wait(74);
+            await window.OnesyUtils.wait(74);
 
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           to('a7', async () => {
-            window.AmauiTest.assert(4).true;
+            window.OnesyTest.assert(4).true;
           });
 
           to('a8', async () => {
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           to('a9', async () => {
-            await window.AmauiTest.assert(function a() { }).throwAsync(4);
+            await window.OnesyTest.assert(function a() { }).throwAsync(4);
           });
 
           to('a10', async () => {
-            window.AmauiTest.assert(0).truthy;
+            window.OnesyTest.assert(0).truthy;
           });
 
           to('a11', async () => {
             const value = [
-              'AmauiError',
-              'AmauiError',
-              'AmauiAwsError',
-              'AmauiTestError',
-              'AmauiAmqpError',
+              'OnesyError',
+              'OnesyError',
+              'OnesyAwsError',
+              'OnesyTestError',
+              'OnesyAmqpError',
               'AuthenticationError',
               'AuthorizationError',
-              'window.AmauiTest.AssertError',
+              'window.OnesyTest.AssertError',
               'ValidationError',
               'PermissionError',
-              'AmauiMongoError',
+              'OnesyMongoError',
               'ConnectionError',
               'NotFoundError',
               'DeveloperError',
-              'AmauiError',
+              'OnesyError',
             ];
             const value1 = [
-              'AmauiError',
-              'AmauiError',
-              'AmauiAwsError',
-              'AmauiTestError',
-              'AmauiAmqpError',
+              'OnesyError',
+              'OnesyError',
+              'OnesyAwsError',
+              'OnesyTestError',
+              'OnesyAmqpError',
               'AuthenticationError',
               'AuthorizationError',
               'ValidationError',
               'PermissionError',
-              'AmauiMongoError',
+              'OnesyMongoError',
               'ConnectionError',
               'NotFoundError',
               'DeveloperError',
-              'AmauiError',
+              'OnesyError',
             ];
 
-            window.AmauiTest.assert(value).eql(value1);
+            window.OnesyTest.assert(value).eql(value1);
           });
 
           to('a12', async () => {
@@ -6921,42 +6921,42 @@ describe('AmauiTest', () => {
               ab: [1, 2, 3, 4],
             };
 
-            window.AmauiTest.assert(value).eql(value1);
+            window.OnesyTest.assert(value).eql(value1);
           });
 
           to('a13', async () => {
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           post(async () => {
-            await window.AmauiUtils.wait(40);
+            await window.OnesyUtils.wait(40);
           });
 
         });
 
         to('a14', async () => {
-          window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+          window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
         });
 
         const values_ = [];
 
-        const amauiEvents = [];
+        const onesyEvents = [];
 
-        const amauiEventsMethod = () => amauiEvents.push(true);
+        const onesyEventsMethod = () => onesyEvents.push(true);
 
-        window.addEventListener('amaui-test-clear', amauiEventsMethod);
+        window.addEventListener('onesy-test-clear', onesyEventsMethod);
 
-        amauiTest.subscription.subscribe((name, value) => values_.push(name, value?.name ? [value.name, value.parent?.name] : value));
+        onesyTest.subscription.subscribe((name, value) => values_.push(name, value?.name ? [value.name, value.parent?.name] : value));
 
-        amauiTest.run();
+        onesyTest.run();
 
-        await window.AmauiUtils.wait(440);
+        await window.OnesyUtils.wait(440);
 
-        await amauiTest.clear(() => values_.push('clearMethod'));
+        await onesyTest.clear(() => values_.push('clearMethod'));
 
-        window.removeEventListener('amaui-test-clear', amauiEventsMethod);
+        window.removeEventListener('onesy-test-clear', onesyEventsMethod);
 
-        return [amauiEvents, values_.filter(Boolean)];
+        return [onesyEvents, values_.filter(Boolean)];
       });
 
       expect(valueNode).eql([
@@ -6978,13 +6978,13 @@ describe('AmauiTest', () => {
           'group', ['main', undefined],
           'to', ['a', 'main'],
           'to:end', ['a', 'main'],
-          'group', ['@amaui/a1', 'main'],
-          'middleware', ['pre', '@amaui/a1'],
+          'group', ['@onesy/a1', 'main'],
+          'middleware', ['pre', '@onesy/a1'],
           'clearMethod'
         ]
       ]));
 
-      global.amauiEvents.off('amaui-test-clear', amauiEventsMethod);
+      global.onesyEvents.off('onesy-test-clear', onesyEventsMethod);
     });
 
     describe('printManual', () => {
@@ -7006,17 +7006,17 @@ describe('AmauiTest', () => {
           ]
         };
 
-        const amauiTest = new AmauiTest(options);
+        const onesyTest = new OnesyTest(options);
 
-        await amauiTest.init();
+        await onesyTest.init();
 
-        await amauiTest.run();
+        await onesyTest.run();
 
-        amauiTest.archive.logs = [];
+        onesyTest.archive.logs = [];
 
-        amauiTest.printManual();
+        onesyTest.printManual();
 
-        const valueNode = amauiTest.archive.logs.length > 104;
+        const valueNode = onesyTest.archive.logs.length > 104;
 
         const valueBrowsers = await evaluate(async (window: any) => {
           const options = {
@@ -7029,30 +7029,30 @@ describe('AmauiTest', () => {
             }
           };
 
-          const amauiTest = new window.AmauiTest.AmauiTest(options);
+          const onesyTest = new window.OnesyTest.OnesyTest(options);
 
           to('a', async () => {
-            window.AmauiTest.assert(true).true;
+            window.OnesyTest.assert(true).true;
           });
 
-          group('@amaui/a1', () => {
+          group('@onesy/a1', () => {
 
             pre(async () => {
-              await window.AmauiUtils.wait(140);
+              await window.OnesyUtils.wait(140);
 
               throw new Error('a');
             });
 
             to('a2', async () => {
-              await window.AmauiUtils.wait(140);
+              await window.OnesyUtils.wait(140);
 
-              window.AmauiTest.assert(true).true;
+              window.OnesyTest.assert(true).true;
             });
 
-            group('@amaui/a3', () => {
+            group('@onesy/a3', () => {
 
               to('a3', async () => {
-                window.AmauiTest.assert(function a() { }).eq(undefined);
+                window.OnesyTest.assert(function a() { }).eq(undefined);
               });
 
             });
@@ -7061,21 +7061,21 @@ describe('AmauiTest', () => {
               throw new Error('a');
             });
 
-            group('@amaui/a5', () => {
+            group('@onesy/a5', () => {
               let a;
 
               pre(async () => {
-                await window.AmauiUtils.wait(14);
+                await window.OnesyUtils.wait(14);
               });
 
               preTo(async () => {
-                await window.AmauiUtils.wait(140);
+                await window.OnesyUtils.wait(140);
 
                 a = 4;
               });
 
               to('a5', async () => {
-                await window.AmauiUtils.wait(74);
+                await window.OnesyUtils.wait(74);
 
                 const error: any = new Error('a');
 
@@ -7090,57 +7090,57 @@ describe('AmauiTest', () => {
             });
 
             to('a6', async () => {
-              window.AmauiTest.assert(true).true;
+              window.OnesyTest.assert(true).true;
             });
 
             to('a7', async () => {
-              window.AmauiTest.assert(4).true;
+              window.OnesyTest.assert(4).true;
             });
 
             to('a8', async () => {
-              window.AmauiTest.assert(true).true;
+              window.OnesyTest.assert(true).true;
             });
 
             to('a9', async () => {
-              await window.AmauiTest.assert(function a() { }).throwAsync(4);
+              await window.OnesyTest.assert(function a() { }).throwAsync(4);
             });
 
             to('a10', async () => {
-              window.AmauiTest.assert(0).truthy;
+              window.OnesyTest.assert(0).truthy;
             });
 
             to('a11', async () => {
               const value = [
-                'AmauiError',
-                'AmauiAwsError',
-                'AmauiTestError',
-                'AmauiAmqpError',
+                'OnesyError',
+                'OnesyAwsError',
+                'OnesyTestError',
+                'OnesyAmqpError',
                 'AuthenticationError',
                 'AuthorizationError',
                 'AssertError',
                 'ValidationError',
                 'PermissionError',
-                'AmauiMongoError',
+                'OnesyMongoError',
                 'ConnectionError',
                 'NotFoundError',
                 'DeveloperError',
               ];
               const value1 = [
-                'AmauiError',
-                'AmauiAwsError',
-                'AmauiTestError',
-                'AmauiAmqpError',
+                'OnesyError',
+                'OnesyAwsError',
+                'OnesyTestError',
+                'OnesyAmqpError',
                 'AuthenticationError',
                 'AuthorizationError',
                 'ValidationError',
                 'PermissionError',
-                'AmauiMongoError',
+                'OnesyMongoError',
                 'ConnectionError',
                 'NotFoundError',
                 'DeveloperError',
               ];
 
-              window.AmauiTest.assert(value).eql(value1);
+              window.OnesyTest.assert(value).eql(value1);
             });
 
             to('a12', async () => {
@@ -7167,30 +7167,30 @@ describe('AmauiTest', () => {
                 ab: [1, 2, 3, 4],
               };
 
-              window.AmauiTest.assert(value).eql(value1);
+              window.OnesyTest.assert(value).eql(value1);
             });
 
             to('a13', async () => {
-              window.AmauiTest.assert(true).true;
+              window.OnesyTest.assert(true).true;
             });
 
             post(async () => {
-              await window.AmauiUtils.wait(40);
+              await window.OnesyUtils.wait(40);
             });
 
           });
 
           to('a14', async () => {
-            window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+            window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
           });
 
-          await amauiTest.run();
+          await onesyTest.run();
 
-          amauiTest.archive.logs = [];
+          onesyTest.archive.logs = [];
 
-          amauiTest.printManual();
+          onesyTest.printManual();
 
-          return amauiTest.archive.logs.length > 140;
+          return onesyTest.archive.logs.length > 140;
         });
         const values = [valueNode, ...valueBrowsers];
 
@@ -7212,32 +7212,32 @@ describe('AmauiTest', () => {
             }
           };
 
-          if (!window.document.getElementById('amaui-test')) window.document.body.innerHTML = `<div id='amaui-test'><div id='amaui-test-results'></div></div>`;
+          if (!window.document.getElementById('onesy-test')) window.document.body.innerHTML = `<div id='onesy-test'><div id='onesy-test-results'></div></div>`;
 
-          const amauiTest = new window.AmauiTest.AmauiTest(options);
+          const onesyTest = new window.OnesyTest.OnesyTest(options);
 
           to('a', async () => {
-            window.AmauiTest.assert(true).true;
+            window.OnesyTest.assert(true).true;
           });
 
-          group('@amaui/a1', () => {
+          group('@onesy/a1', () => {
 
             pre(async () => {
-              await window.AmauiUtils.wait(140);
+              await window.OnesyUtils.wait(140);
 
               throw new Error('a');
             });
 
             to('a2', async () => {
-              await window.AmauiUtils.wait(140);
+              await window.OnesyUtils.wait(140);
 
-              window.AmauiTest.assert(true).true;
+              window.OnesyTest.assert(true).true;
             });
 
-            group('@amaui/a3', () => {
+            group('@onesy/a3', () => {
 
               to('a3', async () => {
-                window.AmauiTest.assert(function a() { }).eq(undefined);
+                window.OnesyTest.assert(function a() { }).eq(undefined);
               });
 
             });
@@ -7246,21 +7246,21 @@ describe('AmauiTest', () => {
               throw new Error('a');
             });
 
-            group('@amaui/a5', () => {
+            group('@onesy/a5', () => {
               let a;
 
               pre(async () => {
-                await window.AmauiUtils.wait(14);
+                await window.OnesyUtils.wait(14);
               });
 
               preTo(async () => {
-                await window.AmauiUtils.wait(140);
+                await window.OnesyUtils.wait(140);
 
                 a = 4;
               });
 
               to('a5', async () => {
-                await window.AmauiUtils.wait(74);
+                await window.OnesyUtils.wait(74);
 
                 const error: any = new Error('a');
 
@@ -7275,57 +7275,57 @@ describe('AmauiTest', () => {
             });
 
             to('a6', async () => {
-              window.AmauiTest.assert(true).true;
+              window.OnesyTest.assert(true).true;
             });
 
             to('a7', async () => {
-              window.AmauiTest.assert(4).true;
+              window.OnesyTest.assert(4).true;
             });
 
             to('a8', async () => {
-              window.AmauiTest.assert(true).true;
+              window.OnesyTest.assert(true).true;
             });
 
             to('a9', async () => {
-              await window.AmauiTest.assert(function a() { }).throwAsync(4);
+              await window.OnesyTest.assert(function a() { }).throwAsync(4);
             });
 
             to('a10', async () => {
-              window.AmauiTest.assert(0).truthy;
+              window.OnesyTest.assert(0).truthy;
             });
 
             to('a11', async () => {
               const value = [
-                'AmauiError',
-                'AmauiAwsError',
-                'AmauiTestError',
-                'AmauiAmqpError',
+                'OnesyError',
+                'OnesyAwsError',
+                'OnesyTestError',
+                'OnesyAmqpError',
                 'AuthenticationError',
                 'AuthorizationError',
                 'AssertError',
                 'ValidationError',
                 'PermissionError',
-                'AmauiMongoError',
+                'OnesyMongoError',
                 'ConnectionError',
                 'NotFoundError',
                 'DeveloperError',
               ];
               const value1 = [
-                'AmauiError',
-                'AmauiAwsError',
-                'AmauiTestError',
-                'AmauiAmqpError',
+                'OnesyError',
+                'OnesyAwsError',
+                'OnesyTestError',
+                'OnesyAmqpError',
                 'AuthenticationError',
                 'AuthorizationError',
                 'ValidationError',
                 'PermissionError',
-                'AmauiMongoError',
+                'OnesyMongoError',
                 'ConnectionError',
                 'NotFoundError',
                 'DeveloperError',
               ];
 
-              window.AmauiTest.assert(value).eql(value1);
+              window.OnesyTest.assert(value).eql(value1);
             });
 
             to('a12', async () => {
@@ -7352,30 +7352,30 @@ describe('AmauiTest', () => {
                 ab: [1, 2, 3, 4],
               };
 
-              window.AmauiTest.assert(value).eql(value1);
+              window.OnesyTest.assert(value).eql(value1);
             });
 
             to('a13', async () => {
-              window.AmauiTest.assert(true).true;
+              window.OnesyTest.assert(true).true;
             });
 
             post(async () => {
-              await window.AmauiUtils.wait(40);
+              await window.OnesyUtils.wait(40);
             });
 
           });
 
           to('a14', async () => {
-            window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+            window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
           });
 
-          await amauiTest.run();
+          await onesyTest.run();
 
-          window.document.getElementById('amaui-test-results').innerHTML = '';
+          window.document.getElementById('onesy-test-results').innerHTML = '';
 
-          amauiTest.printManual();
+          onesyTest.printManual();
 
-          return window.document.getElementById('amaui-test').innerHTML.length > 7400;
+          return window.document.getElementById('onesy-test').innerHTML.length > 7400;
         });
 
         valueBrowsers.forEach(value => expect(value).eq(true));
@@ -7403,11 +7403,11 @@ describe('AmauiTest', () => {
         ]
       };
 
-      const amauiTest = new AmauiTest(options);
+      const onesyTest = new OnesyTest(options);
 
-      await amauiTest.init();
+      await onesyTest.init();
 
-      const valueNode = amauiTest.mainGroup.tos.length === 2;
+      const valueNode = onesyTest.mainGroup.tos.length === 2;
 
       expect(valueNode).eql(true);
     });
@@ -7431,13 +7431,13 @@ describe('AmauiTest', () => {
         ]
       };
 
-      const amauiTest = new AmauiTest(options);
+      const onesyTest = new OnesyTest(options);
 
-      await amauiTest.init();
+      await onesyTest.init();
 
-      await amauiTest.run();
+      await onesyTest.run();
 
-      const valueNode = amauiTest.mainGroup.summary;
+      const valueNode = onesyTest.mainGroup.summary;
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const options = {
@@ -7449,30 +7449,30 @@ describe('AmauiTest', () => {
           }
         };
 
-        const amauiTest = new window.AmauiTest.AmauiTest(options);
+        const onesyTest = new window.OnesyTest.OnesyTest(options);
 
         to('a', () => {
-          window.AmauiTest.assert(4).eq(4);
+          window.OnesyTest.assert(4).eq(4);
         });
 
-        group('@amaui/a1', () => {
+        group('@onesy/a1', () => {
 
           pre(async () => {
-            await window.AmauiUtils.wait(140);
+            await window.OnesyUtils.wait(140);
 
             throw new Error('a');
           });
 
           to('a2', async () => {
-            await window.AmauiUtils.wait(140);
+            await window.OnesyUtils.wait(140);
 
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
-          group('@amaui/a3', () => {
+          group('@onesy/a3', () => {
 
             to('a3', async () => {
-              window.AmauiTest.assert(function a() { }).eq(undefined);
+              window.OnesyTest.assert(function a() { }).eq(undefined);
             });
 
           });
@@ -7481,15 +7481,15 @@ describe('AmauiTest', () => {
             throw new Error('a');
           });
 
-          group('@amaui/a5', () => {
+          group('@onesy/a5', () => {
             let a: any;
 
             pre(async () => {
-              await window.AmauiUtils.wait(14);
+              await window.OnesyUtils.wait(14);
             });
 
             preTo(async () => {
-              await window.AmauiUtils.wait(140);
+              await window.OnesyUtils.wait(140);
 
               a = 4;
             });
@@ -7508,63 +7508,63 @@ describe('AmauiTest', () => {
           });
 
           to('a6', async () => {
-            await window.AmauiUtils.wait(74);
+            await window.OnesyUtils.wait(74);
 
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           to('a7', async () => {
-            window.AmauiTest.assert(4).true;
+            window.OnesyTest.assert(4).true;
           });
 
           to('a8', async () => {
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           to('a9', async () => {
-            await window.AmauiTest.assert(function a() { }).throwAsync(4);
+            await window.OnesyTest.assert(function a() { }).throwAsync(4);
           });
 
           to('a10', async () => {
-            window.AmauiTest.assert(0).truthy;
+            window.OnesyTest.assert(0).truthy;
           });
 
           to('a11', async () => {
             const value = [
-              'AmauiError',
-              'AmauiError',
-              'AmauiAwsError',
-              'AmauiTestError',
-              'AmauiAmqpError',
+              'OnesyError',
+              'OnesyError',
+              'OnesyAwsError',
+              'OnesyTestError',
+              'OnesyAmqpError',
               'AuthenticationError',
               'AuthorizationError',
               'AssertError',
               'ValidationError',
               'PermissionError',
-              'AmauiMongoError',
+              'OnesyMongoError',
               'ConnectionError',
               'NotFoundError',
               'DeveloperError',
-              'AmauiError',
+              'OnesyError',
             ];
             const value1 = [
-              'AmauiError',
-              'AmauiError',
-              'AmauiAwsError',
-              'AmauiTestError',
-              'AmauiAmqpError',
+              'OnesyError',
+              'OnesyError',
+              'OnesyAwsError',
+              'OnesyTestError',
+              'OnesyAmqpError',
               'AuthenticationError',
               'AuthorizationError',
               'ValidationError',
               'PermissionError',
-              'AmauiMongoError',
+              'OnesyMongoError',
               'ConnectionError',
               'NotFoundError',
               'DeveloperError',
-              'AmauiError',
+              'OnesyError',
             ];
 
-            window.AmauiTest.assert(value).eql(value1);
+            window.OnesyTest.assert(value).eql(value1);
           });
 
           to('a12', async () => {
@@ -7591,26 +7591,26 @@ describe('AmauiTest', () => {
               ab: [1, 2, 3, 4],
             };
 
-            window.AmauiTest.assert(value).eql(value1);
+            window.OnesyTest.assert(value).eql(value1);
           });
 
           to('a13', async () => {
-            window.AmauiTest.assert(4).eq(4);
+            window.OnesyTest.assert(4).eq(4);
           });
 
           post(async () => {
-            await window.AmauiUtils.wait(40);
+            await window.OnesyUtils.wait(40);
           });
 
         });
 
         to('a14', async () => {
-          window.AmauiTest.assert(window.AmauiDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
+          window.OnesyTest.assert(window.OnesyDate.timezones).eql([{ a: [function a() { }, { a: 4 }, 4] }]);
         });
 
-        await amauiTest.run();
+        await onesyTest.run();
 
-        return amauiTest.mainGroup.summary;
+        return onesyTest.mainGroup.summary;
       });
 
       const values = [valueNode, ...valueBrowsers];
@@ -7640,9 +7640,9 @@ describe('AmauiTest', () => {
         }
       };
 
-      const amauiTest = new AmauiTest(options);
+      const onesyTest = new OnesyTest(options);
 
-      await amauiTest.init();
+      await onesyTest.init();
 
       to('a1', () => {
         throw new Error('a');
@@ -7670,9 +7670,9 @@ describe('AmauiTest', () => {
         throw error;
       });
 
-      await amauiTest.run();
+      await onesyTest.run();
 
-      const valueNode = amauiTest.archive.logs;
+      const valueNode = onesyTest.archive.logs;
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const options = {
@@ -7684,7 +7684,7 @@ describe('AmauiTest', () => {
           }
         };
 
-        const amauiTest = new window.AmauiTest.AmauiTest(options);
+        const onesyTest = new window.OnesyTest.OnesyTest(options);
 
         to('a1', () => {
           throw new Error('a');
@@ -7712,9 +7712,9 @@ describe('AmauiTest', () => {
           throw error;
         });
 
-        await amauiTest.run();
+        await onesyTest.run();
 
-        return amauiTest.archive.logs;
+        return onesyTest.archive.logs;
       });
 
       delete valueNode[8];
@@ -7723,7 +7723,7 @@ describe('AmauiTest', () => {
       delete valueNode[28];
 
       expect(valueNode.filter(Boolean)).eql([
-        "\n\n  Amaui test running",
+        "\n\n  Onesy test running",
         "  \u001b[90m3 tests\u001b[0m",
         "\n\n",
         "  \u001b[31m1) a1\u001b[0m",
@@ -7757,7 +7757,7 @@ describe('AmauiTest', () => {
       delete valueBrowsers[0][37];
 
       expect(valueBrowsers[0].filter(Boolean)).eql([
-        "\n\n  Amaui test running",
+        "\n\n  Onesy test running",
         "%c  3 tests",
         "color: #777",
         "\n\n\n",
@@ -7809,9 +7809,9 @@ describe('AmauiTest', () => {
         }
       };
 
-      const amauiTest = new AmauiTest(options);
+      const onesyTest = new OnesyTest(options);
 
-      await amauiTest.init();
+      await onesyTest.init();
 
       const m = () => new Promise(() => {
         throw new Error('m4');
@@ -7885,9 +7885,9 @@ describe('AmauiTest', () => {
         await m5();
       });
 
-      await amauiTest.run();
+      await onesyTest.run();
 
-      const valueNode = amauiTest.mainGroup.tos.map(to => [to.name, to.response.type, to.response.response instanceof Error ? to.response.response.message : to.response.response]);
+      const valueNode = onesyTest.mainGroup.tos.map(to => [to.name, to.response.type, to.response.response instanceof Error ? to.response.response.message : to.response.response]);
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const options = {
@@ -7899,7 +7899,7 @@ describe('AmauiTest', () => {
           }
         };
 
-        const amauiTest = new window.AmauiTest.AmauiTest(options);
+        const onesyTest = new window.OnesyTest.OnesyTest(options);
 
         const m = () => new Promise(() => {
           throw new Error('m4');
@@ -7928,7 +7928,7 @@ describe('AmauiTest', () => {
         });
 
         to('a', () => {
-          window.AmauiTest.assert(true).true;
+          window.OnesyTest.assert(true).true;
         });
 
         to('a1', resolve => {
@@ -7942,17 +7942,17 @@ describe('AmauiTest', () => {
         });
 
         to('a3', async resolve => {
-          await window.AmauiUtils.wait(4);
+          await window.OnesyUtils.wait(4);
 
           resolve('a3');
 
-          await window.AmauiUtils.wait(140);
+          await window.OnesyUtils.wait(140);
 
-          window.AmauiTest.assert(4).eq(4);
+          window.OnesyTest.assert(4).eq(4);
         });
 
         to('a4', async () => {
-          window.AmauiTest.assert(true).false;
+          window.OnesyTest.assert(true).false;
         });
 
         to('a5', (_, reject) => {
@@ -7973,9 +7973,9 @@ describe('AmauiTest', () => {
           await m5();
         });
 
-        await amauiTest.run();
+        await onesyTest.run();
 
-        return amauiTest.mainGroup.tos.map(to => [to.name, to.response.type, to.response.response instanceof Error ? to.response.response.message : to.response.response]);
+        return onesyTest.mainGroup.tos.map(to => [to.name, to.response.type, to.response.response instanceof Error ? to.response.response.message : to.response.response]);
       });
       const values = [valueNode, ...valueBrowsers];
 
@@ -8020,9 +8020,9 @@ describe('AmauiTest', () => {
         ]
       };
 
-      const amauiTest = new AmauiTest(options);
+      const onesyTest = new OnesyTest(options);
 
-      amauiTest.prepareEnvironment();
+      onesyTest.prepareEnvironment();
 
       const valueNode = [global.to, global.group, global.preAll, global.preEveryGroup, global.preEveryTo, global.pre, global.preTo, global.postAll, global.postEveryGroup, global.postEveryTo, global.post, global.postTo].map(item => !!item);
 
@@ -8039,9 +8039,9 @@ describe('AmauiTest', () => {
           }
         };
 
-        const amauiTest = new window.AmauiTest.AmauiTest(options);
+        const onesyTest = new window.OnesyTest.OnesyTest(options);
 
-        amauiTest.prepareEnvironment();
+        onesyTest.prepareEnvironment();
 
         return [window.to, window.group, window.preAll, window.preEveryGroup, window.preEveryTo, window.pre, window.preTo, window.postAll, window.postEveryGroup, window.postEveryTo, window.post, window.postTo].map(item => !!item);
       });

@@ -1,21 +1,21 @@
 /* tslint:disable: no-shadowed-variable */
 import { expect } from 'chai';
 
-import * as AmauiUtils from '@amaui/utils';
+import * as OnesyUtils from '@onesy/utils';
 
 import { evaluate } from '../utils/js/test/utils';
 
-import { AmauiMiddleware, AmauiGroup } from '../src';
+import { OnesyMiddleware, OnesyGroup } from '../src';
 
-describe('AmauiMiddleware', () => {
+describe('OnesyMiddleware', () => {
 
-  it('AmauiMiddleware', async () => {
-    const amauiMiddleware = new AmauiMiddleware('a', () => 4);
+  it('OnesyMiddleware', async () => {
+    const onesyMiddleware = new OnesyMiddleware('a', () => 4);
 
-    amauiMiddleware.parent = new AmauiGroup('a4');
-    amauiMiddleware.file = '/a';
-    amauiMiddleware.responses = [{
-      for: amauiMiddleware,
+    onesyMiddleware.parent = new OnesyGroup('a4');
+    onesyMiddleware.file = '/a';
+    onesyMiddleware.responses = [{
+      for: onesyMiddleware,
       start: 14,
       end: 41,
       duration: 41 - 14,
@@ -27,24 +27,24 @@ describe('AmauiMiddleware', () => {
     const values_ = [];
 
     values_.push(
-      amauiMiddleware.parent instanceof AmauiGroup,
-      amauiMiddleware.responses[0].for === amauiMiddleware,
-      AmauiUtils.is('function', amauiMiddleware.method),
+      onesyMiddleware.parent instanceof OnesyGroup,
+      onesyMiddleware.responses[0].for === onesyMiddleware,
+      OnesyUtils.is('function', onesyMiddleware.method),
     );
 
-    delete amauiMiddleware.parent;
-    delete amauiMiddleware.method;
-    delete amauiMiddleware.responses[0].for;
+    delete onesyMiddleware.parent;
+    delete onesyMiddleware.method;
+    delete onesyMiddleware.responses[0].for;
 
-    values_.push(amauiMiddleware);
+    values_.push(onesyMiddleware);
 
     const valueBrowsers = await evaluate((window: any) => {
-      const amauiMiddleware = new window.AmauiTest.AmauiMiddleware('a', () => 4);
+      const onesyMiddleware = new window.OnesyTest.OnesyMiddleware('a', () => 4);
 
-      amauiMiddleware.parent = new window.AmauiTest.AmauiGroup('a');
-      amauiMiddleware.file = '/a';
-      amauiMiddleware.responses = [{
-        for: amauiMiddleware,
+      onesyMiddleware.parent = new window.OnesyTest.OnesyGroup('a');
+      onesyMiddleware.file = '/a';
+      onesyMiddleware.responses = [{
+        for: onesyMiddleware,
         start: 14,
         end: 41,
         duration: 41 - 14,
@@ -56,16 +56,16 @@ describe('AmauiMiddleware', () => {
       const values_ = [];
 
       values_.push(
-        amauiMiddleware.parent instanceof window.AmauiTest.AmauiGroup,
-        amauiMiddleware.responses[0].for === amauiMiddleware,
-        AmauiUtils.is('function', amauiMiddleware.method),
+        onesyMiddleware.parent instanceof window.OnesyTest.OnesyGroup,
+        onesyMiddleware.responses[0].for === onesyMiddleware,
+        OnesyUtils.is('function', onesyMiddleware.method),
       );
 
-      delete amauiMiddleware.parent;
-      delete amauiMiddleware.method;
-      delete amauiMiddleware.responses[0].for;
+      delete onesyMiddleware.parent;
+      delete onesyMiddleware.method;
+      delete onesyMiddleware.responses[0].for;
 
-      values_.push(amauiMiddleware);
+      values_.push(onesyMiddleware);
 
       return values_;
     });

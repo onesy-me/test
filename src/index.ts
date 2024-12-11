@@ -1,11 +1,11 @@
-import { TMethod } from '@amaui/models';
+import { TMethod } from '@onesy/models';
 import assert from './assert';
 
-export * from './AmauiTest';
-export { default as AmauiTest } from './AmauiTest';
-export { default as AmauiTo } from './AmauiTo';
-export { default as AmauiGroup } from './AmauiGroup';
-export { default as AmauiMiddleware } from './AmauiMiddleware';
+export * from './OnesyTest';
+export { default as OnesyTest } from './OnesyTest';
+export { default as OnesyTo } from './OnesyTo';
+export { default as OnesyGroup } from './OnesyGroup';
+export { default as OnesyMiddleware } from './OnesyMiddleware';
 
 export { default as assert } from './assert';
 export * from './assert';

@@ -3,39 +3,39 @@ import url from 'url';
 import fg from 'fast-glob';
 import events from 'events';
 
-import is from '@amaui/utils/is';
-import isEnvironment from '@amaui/utils/isEnvironment';
-import merge from '@amaui/utils/merge';
-import getEnvironment from '@amaui/utils/getEnvironment';
-import arrayMoveItem from '@amaui/utils/arrayMoveItem';
-import Try from '@amaui/utils/try';
-import stringify from '@amaui/utils/stringify';
-import equalDeep from '@amaui/utils/equalDeep';
-import wait from '@amaui/utils/wait';
-import { TMethod } from '@amaui/models';
-import { AmauiTestError } from '@amaui/errors';
-import AmauiDate from '@amaui/date/AmauiDate';
-import duration from '@amaui/date/duration';
-import AmauiLog from '@amaui/log';
-import AmauiSubscription from '@amaui/subscription';
-import AmauiDiff from '@amaui/diff';
-import { IDiff } from '@amaui/diff/amaui-diff';
+import is from '@onesy/utils/is';
+import isEnvironment from '@onesy/utils/isEnvironment';
+import merge from '@onesy/utils/merge';
+import getEnvironment from '@onesy/utils/getEnvironment';
+import arrayMoveItem from '@onesy/utils/arrayMoveItem';
+import Try from '@onesy/utils/try';
+import stringify from '@onesy/utils/stringify';
+import equalDeep from '@onesy/utils/equalDeep';
+import wait from '@onesy/utils/wait';
+import { TMethod } from '@onesy/models';
+import { OnesyTestError } from '@onesy/errors';
+import OnesyDate from '@onesy/date/OnesyDate';
+import duration from '@onesy/date/duration';
+import OnesyLog from '@onesy/log';
+import OnesySubscription from '@onesy/subscription';
+import OnesyDiff from '@onesy/diff';
+import { IDiff } from '@onesy/diff/onesy-diff';
 
-import AmauiGroup from './AmauiGroup';
-import AmauiTo from './AmauiTo';
-import AmauiMiddleware from './AmauiMiddleware';
+import OnesyGroup from './OnesyGroup';
+import OnesyTo from './OnesyTo';
+import OnesyMiddleware from './OnesyMiddleware';
 import { IAssertError } from './assert';
 
-if (isEnvironment('nodejs') && !global.amauiEvents) global.amauiEvents = new events.EventEmitter();
+if (isEnvironment('nodejs') && !global.onesyEvents) global.onesyEvents = new events.EventEmitter();
 
-let mainAmauiGroup = new AmauiGroup('main');
+let mainOnesyGroup = new OnesyGroup('main');
 
 const groups = [
-  mainAmauiGroup,
+  mainOnesyGroup,
 ];
 
-export interface IAmauiResponse {
-  for?: AmauiTo | AmauiGroup | AmauiMiddleware;
+export interface IOnesyResponse {
+  for?: OnesyTo | OnesyGroup | OnesyMiddleware;
   start?: number;
   end?: number;
   duration?: number;
@@ -48,7 +48,7 @@ export interface IAmauiResponse {
   index?: number;
 }
 
-export type IAmauiTestStatus = 'IDLE' | 'RUNNING' | 'COMPLETED' | 'CLEAR';
+export type IOnesyTestStatus = 'IDLE' | 'RUNNING' | 'COMPLETED' | 'CLEAR';
 
 export interface IOptionsResponse {
   timeout?: {
@@ -107,7 +107,7 @@ export const optionsDefault: IOptions = {
     at: 'auto',
     errors_minify: true,
     html: {
-      id: 'amaui-test-results',
+      id: 'onesy-test-results',
     }
   },
 
@@ -129,32 +129,32 @@ export const optionsDefault: IOptions = {
   },
 };
 
-export class AmauiTest {
+export class OnesyTest {
   public options_: IOptions = {};
-  private amauilog: AmauiLog;
-  public status: IAmauiTestStatus = 'IDLE';
+  private onesylog: OnesyLog;
+  public status: IOnesyTestStatus = 'IDLE';
   private fileSource: string;
   private cleared: boolean;
-  public subscription: AmauiSubscription = new AmauiSubscription();
+  public subscription: OnesySubscription = new OnesySubscription();
   public previousLog;
   public archive = {
     logs: [],
   };
 
-  public static orderTos(group: AmauiGroup, order_: TOptionsOrder): Array<AmauiTo | AmauiGroup> {
+  public static orderTos(group: OnesyGroup, order_: TOptionsOrder): Array<OnesyTo | OnesyGroup> {
     const all = [];
 
-    const items = AmauiTest.order(group, order_);
+    const items = OnesyTest.order(group, order_);
 
     for (const item of items) {
-      if (item instanceof AmauiTo) all.push(item);
-      else all.push(...AmauiTest.orderTos(item, order_));
+      if (item instanceof OnesyTo) all.push(item);
+      else all.push(...OnesyTest.orderTos(item, order_));
     }
 
     return all;
   }
 
-  public static order(group: AmauiGroup, order_: TOptionsOrder): Array<AmauiTo | AmauiGroup> {
+  public static order(group: OnesyGroup, order_: TOptionsOrder): Array<OnesyTo | OnesyGroup> {
     const all = [];
 
     if (order_ === 'to-group') all.push(...group.tos, ...group.groups);
@@ -167,7 +167,7 @@ export class AmauiTest {
     return all;
   }
 
-  public get mainGroup() { return mainAmauiGroup; }
+  public get mainGroup() { return mainOnesyGroup; }
 
   public get options(): IOptions {
     return this.options_;
@@ -176,7 +176,7 @@ export class AmauiTest {
   public set options(options: IOptions) {
     const options_ = options || {};
 
-    // Priority: AmauiTest.js and then package.json
+    // Priority: OnesyTest.js and then package.json
     // only if to's a node environment
     if (isEnvironment('nodejs')) {
       const wd = process.cwd();
@@ -186,16 +186,16 @@ export class AmauiTest {
       const packagePath = options_.package || 'package.json';
 
       const pkg = Try(() => require(path.resolve(wd, packagePath))) || {};
-      const amauiTestOptions = Try(() => require(path.resolve(wd, 'amaui-test.options.js'))) || {};
+      const onesyTestOptions = Try(() => require(path.resolve(wd, 'onesy-test.options.js'))) || {};
 
-      if (amauiTestOptions?.files?.length) this.fileSource = wd;
-      else if (pkg['amaui-test']?.files?.length) this.fileSource = path.resolve(packagePath, '../');
+      if (onesyTestOptions?.files?.length) this.fileSource = wd;
+      else if (pkg['onesy-test']?.files?.length) this.fileSource = path.resolve(packagePath, '../');
       else this.fileSource = wd;
 
-      // amaui-test.options.js priority over package.json 'amaui-test'
-      const fileOptions = merge(amauiTestOptions, pkg['amaui-test'], { merge: { array: true } });
+      // onesy-test.options.js priority over package.json 'onesy-test'
+      const fileOptions = merge(onesyTestOptions, pkg['onesy-test'], { merge: { array: true } });
 
-      // amaui options priority over file options values
+      // onesy options priority over file options values
       this.options_ = merge(options_, fileOptions, { copy: true, merge: { array: true } });
     }
 
@@ -225,13 +225,13 @@ export class AmauiTest {
   public constructor(
     options?: IOptions
   ) {
-    this.amauilog = new AmauiLog({
+    this.onesylog = new OnesyLog({
       arguments: {
-        pre: ['AmauiTest'],
+        pre: ['OnesyTest'],
       },
     });
 
-    // Update the amaui options
+    // Update the onesy options
     this.options = options;
 
     // Add all the methods to the env
@@ -244,10 +244,10 @@ export class AmauiTest {
     this.cleared = false;
 
     // Reset the main group for a new run of tests
-    mainAmauiGroup = new AmauiGroup('main');
+    mainOnesyGroup = new OnesyGroup('main');
 
     // Update all the groups
-    groups[0] = mainAmauiGroup;
+    groups[0] = mainOnesyGroup;
 
     this.subscription.emit('new');
 
@@ -261,7 +261,7 @@ export class AmauiTest {
 
     this.subscription.emit('imports');
 
-    // Import all the files to setup the mainAmauiGroup
+    // Import all the files to setup the mainOnesyGroup
     await this.initNode();
 
     this.subscription.emit('init_node');
@@ -271,7 +271,7 @@ export class AmauiTest {
   public async run() {
     // A fix for user terminated process SIGINT where as an async
     // signal it gets delayed by init method above requiring potentially a lot of test files
-    // and without a SIGINT signal in time amaui-test starts printing to the console &
+    // and without a SIGINT signal in time onesy-test starts printing to the console &
     // after few moments it gets the signal, which triggers the clear method
     // which only then prevents the logging to the logs, with wait, an atm
     // arbitrary number of milliseconds provided to it
@@ -279,7 +279,7 @@ export class AmauiTest {
     // so clear method can do it's own job properly
     await wait(400);
 
-    if (!!mainAmauiGroup.summary.amount.tos) {
+    if (!!mainOnesyGroup.summary.amount.tos) {
       if (this.options.results.at === 'auto') this.printTestsHeader();
 
       this.status = 'RUNNING';
@@ -287,14 +287,14 @@ export class AmauiTest {
       this.subscription.emit('running');
 
       // preAll middlewares
-      await this.runMiddlewares(mainAmauiGroup.preAll, mainAmauiGroup);
+      await this.runMiddlewares(mainOnesyGroup.preAll, mainOnesyGroup);
 
       this.subscription.emit('preAll');
 
-      await this.runGroup(mainAmauiGroup);
+      await this.runGroup(mainOnesyGroup);
 
       // postAll middlewares
-      await this.runMiddlewares(mainAmauiGroup.postAll, mainAmauiGroup);
+      await this.runMiddlewares(mainOnesyGroup.postAll, mainOnesyGroup);
 
       this.subscription.emit('postAll');
 
@@ -316,7 +316,7 @@ export class AmauiTest {
       }
     }
     else {
-      this.amauilog.info(`No amaui to tests found`);
+      this.onesylog.info(`No onesy to tests found`);
 
       this.subscription.emit('no_tests');
     }
@@ -332,10 +332,10 @@ export class AmauiTest {
       this.subscription.emit('fail');
 
       if (isEnvironment('nodejs') && this.options.response?.on_fail?.exit) {
-        if (process.env.AMAUI_ENV === 'test') throw new AmauiTestError('exit');
+        if (process.env.AMAUI_ENV === 'test') throw new OnesyTestError('exit');
         else process.exit(1);
       }
-      if (this.options.response?.on_fail?.error) throw new AmauiTestError(`${this.mainGroup.summary.tos.fail} tests failed`);
+      if (this.options.response?.on_fail?.error) throw new OnesyTestError(`${this.mainGroup.summary.tos.fail} tests failed`);
     }
 
     this.subscription.emit('success');
@@ -343,7 +343,7 @@ export class AmauiTest {
     return !this.mainGroup.summary.tos.fail;
   }
 
-  public async runGroup(group: AmauiGroup) {
+  public async runGroup(group: OnesyGroup) {
     if (group) {
       this.subscription.emit('group', group);
 
@@ -365,24 +365,24 @@ export class AmauiTest {
       // pre middlewares
       await this.runMiddlewares(group.pre, group);
 
-      const response: IAmauiResponse = {
+      const response: IOnesyResponse = {
         for: group,
-        start: AmauiDate.milliseconds,
+        start: OnesyDate.milliseconds,
       };
 
-      const all = AmauiTest.order(group, this.options.order);
+      const all = OnesyTest.order(group, this.options.order);
 
       for (const item of all) {
         if (this.status === 'CLEAR') break;
 
-        if (item instanceof AmauiTo) await this.runTo(item);
-        else if (item instanceof AmauiGroup) await this.runGroup(item);
+        if (item instanceof OnesyTo) await this.runTo(item);
+        else if (item instanceof OnesyGroup) await this.runGroup(item);
       }
 
-      response.end = AmauiDate.milliseconds;
+      response.end = OnesyDate.milliseconds;
       response.duration = response.end - response.start;
 
-      // Add a response to the AmauiTo instance
+      // Add a response to the OnesyTo instance
       group.response = response;
 
       // Main group postEveryGroup middlewares
@@ -457,7 +457,7 @@ export class AmauiTest {
 
       // Timeout
       timeout = setTimeout(() => {
-        rejectMethod(new AmauiTestError(`Exceeded ${duration(this.options.response.timeout[type])}`, true, ''));
+        rejectMethod(new OnesyTestError(`Exceeded ${duration(this.options.response.timeout[type])}`, true, ''));
       }, this.options.response.timeout[type]);
 
       // Run method
@@ -473,7 +473,7 @@ export class AmauiTest {
     });
   }
 
-  public async runMiddlewares(middlewares: Array<AmauiMiddleware>, for_: AmauiGroup | AmauiTo) {
+  public async runMiddlewares(middlewares: Array<OnesyMiddleware>, for_: OnesyGroup | OnesyTo) {
     if (middlewares) for (const middleware of middlewares) {
       if (this.status === 'CLEAR') break;
 
@@ -481,13 +481,13 @@ export class AmauiTest {
     }
   }
 
-  public async runMiddleware(middleware: AmauiMiddleware, for_: AmauiGroup | AmauiTo) {
+  public async runMiddleware(middleware: OnesyMiddleware, for_: OnesyGroup | OnesyTo) {
     if (middleware) {
       this.subscription.emit('middleware', middleware);
 
-      const response: IAmauiResponse = {
+      const response: IOnesyResponse = {
         for: for_,
-        start: AmauiDate.milliseconds,
+        start: OnesyDate.milliseconds,
       };
 
       // Run as a promise
@@ -502,17 +502,17 @@ export class AmauiTest {
         response.type = 'error';
       }
 
-      response.end = AmauiDate.milliseconds;
+      response.end = OnesyDate.milliseconds;
       response.duration = response.end - response.start;
 
-      // Add a response to the AmauiTo instance
+      // Add a response to the OnesyTo instance
       middleware.responses.push(response);
 
       this.subscription.emit('middleware:end', middleware);
     }
   }
 
-  public async runTo(to: AmauiTo) {
+  public async runTo(to: OnesyTo) {
     if (to) {
       this.subscription.emit('to', to);
 
@@ -531,9 +531,9 @@ export class AmauiTest {
       // Parent group preTo middlewares
       await this.runMiddlewares(to.parent.preTo, to);
 
-      const response: IAmauiResponse = {
+      const response: IOnesyResponse = {
         for: to,
-        start: AmauiDate.milliseconds,
+        start: OnesyDate.milliseconds,
       };
 
       // Run as a promise
@@ -545,7 +545,7 @@ export class AmauiTest {
         // Summary for tos results
         to.parent.summary.tos.success++;
 
-        if (mainAmauiGroup !== to.parent) mainAmauiGroup.summary.tos.success++;
+        if (mainOnesyGroup !== to.parent) mainOnesyGroup.summary.tos.success++;
       }
       catch (error) {
         response.response = error;
@@ -555,12 +555,12 @@ export class AmauiTest {
         // Summary for tos results
         to.parent.summary.tos.fail++;
 
-        if (mainAmauiGroup !== to.parent) mainAmauiGroup.summary.tos.fail++;
+        if (mainOnesyGroup !== to.parent) mainOnesyGroup.summary.tos.fail++;
 
-        response.index = mainAmauiGroup.summary.tos.fail;
+        response.index = mainOnesyGroup.summary.tos.fail;
       }
 
-      response.end = AmauiDate.milliseconds;
+      response.end = OnesyDate.milliseconds;
       response.duration = response.end - response.start;
 
       response.measurement = {};
@@ -568,7 +568,7 @@ export class AmauiTest {
       if (response.duration >= this.options.response.measurement.slow && response.duration < this.options.response.measurement.very_slow) response.measurement.slow = true;
       else if (response.duration >= this.options.response.measurement.very_slow) response.measurement.very_slow = true;
 
-      // Add a response to the AmauiTo instance
+      // Add a response to the OnesyTo instance
       to.response = response;
 
       // Print to
@@ -658,7 +658,7 @@ export class AmauiTest {
         is('string', name) &&
         is('function', method)
       ) {
-        const group_ = new AmauiGroup(name);
+        const group_ = new OnesyGroup(name);
 
         const latestGroup = groups[0];
 
@@ -681,7 +681,7 @@ export class AmauiTest {
         // Summary
         group_.parent.summary.amount.groups++;
 
-        if (mainAmauiGroup !== group_.parent) mainAmauiGroup.summary.amount.groups++;
+        if (mainOnesyGroup !== group_.parent) mainOnesyGroup.summary.amount.groups++;
 
         // Add group to the parent groups
         latestGroup.groups.push(group_);
@@ -711,7 +711,7 @@ export class AmauiTest {
         is('string', name) &&
         is('function', method)
       ) {
-        const to_ = new AmauiTo(name, method);
+        const to_ = new OnesyTo(name, method);
 
         const latestGroup = groups[0];
 
@@ -731,7 +731,7 @@ export class AmauiTest {
         // Summary
         latestGroup.summary.amount.tos++;
 
-        if (mainAmauiGroup !== latestGroup) mainAmauiGroup.summary.amount.tos++;
+        if (mainOnesyGroup !== latestGroup) mainOnesyGroup.summary.amount.tos++;
 
         latestGroup.tos.push(to_);
       }
@@ -739,7 +739,7 @@ export class AmauiTest {
 
     env.preAll = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('preAll', method);
+        const middleware = new OnesyMiddleware('preAll', method);
 
         middleware.parent = this.mainGroup;
 
@@ -752,7 +752,7 @@ export class AmauiTest {
 
     env.preEveryGroup = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('preEveryGroup', method);
+        const middleware = new OnesyMiddleware('preEveryGroup', method);
 
         middleware.parent = this.mainGroup;
 
@@ -765,7 +765,7 @@ export class AmauiTest {
 
     env.preEveryTo = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('preEveryTo', method);
+        const middleware = new OnesyMiddleware('preEveryTo', method);
 
         middleware.parent = this.mainGroup;
 
@@ -778,7 +778,7 @@ export class AmauiTest {
 
     env.pre = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('pre', method);
+        const middleware = new OnesyMiddleware('pre', method);
 
         const latestGroup = groups[0];
 
@@ -793,7 +793,7 @@ export class AmauiTest {
 
     env.preEveryGroupGroup = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('preEveryGroupGroup', method);
+        const middleware = new OnesyMiddleware('preEveryGroupGroup', method);
 
         const latestGroup = groups[0];
 
@@ -808,7 +808,7 @@ export class AmauiTest {
 
     env.preTo = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('preTo', method);
+        const middleware = new OnesyMiddleware('preTo', method);
 
         const latestGroup = groups[0];
 
@@ -823,7 +823,7 @@ export class AmauiTest {
 
     env.preEveryGroupTo = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('preEveryGroupTo', method);
+        const middleware = new OnesyMiddleware('preEveryGroupTo', method);
 
         const latestGroup = groups[0];
 
@@ -838,7 +838,7 @@ export class AmauiTest {
 
     env.postAll = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('postAll', method);
+        const middleware = new OnesyMiddleware('postAll', method);
 
         middleware.parent = this.mainGroup;
 
@@ -851,7 +851,7 @@ export class AmauiTest {
 
     env.postEveryGroup = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('postEveryGroup', method);
+        const middleware = new OnesyMiddleware('postEveryGroup', method);
 
         middleware.parent = this.mainGroup;
 
@@ -864,7 +864,7 @@ export class AmauiTest {
 
     env.postEveryTo = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('postEveryTo', method);
+        const middleware = new OnesyMiddleware('postEveryTo', method);
 
         middleware.parent = this.mainGroup;
 
@@ -877,7 +877,7 @@ export class AmauiTest {
 
     env.post = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('post', method);
+        const middleware = new OnesyMiddleware('post', method);
 
         const latestGroup = groups[0];
 
@@ -892,7 +892,7 @@ export class AmauiTest {
 
     env.postEveryGroupGroup = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('postEveryGroupGroup', method);
+        const middleware = new OnesyMiddleware('postEveryGroupGroup', method);
 
         const latestGroup = groups[0];
 
@@ -907,7 +907,7 @@ export class AmauiTest {
 
     env.postTo = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('postTo', method);
+        const middleware = new OnesyMiddleware('postTo', method);
 
         const latestGroup = groups[0];
 
@@ -922,7 +922,7 @@ export class AmauiTest {
 
     env.postEveryGroupTo = (method: TMethod): void => {
       if (is('function', method)) {
-        const middleware = new AmauiMiddleware('postEveryGroupTo', method);
+        const middleware = new OnesyMiddleware('postEveryGroupTo', method);
 
         const latestGroup = groups[0];
 
@@ -940,16 +940,16 @@ export class AmauiTest {
     if (this.options.results.print) {
       // Log
       if (this.options.results.to.indexOf('log') > -1) {
-        let args = [`\n\n  Amaui test running`];
+        let args = [`\n\n  Onesy test running`];
 
-        // Print amaui test header
+        // Print onesy test header
         this.log(...args);
 
         // Duration
         args = [];
 
-        if (isEnvironment('browser')) args.push(`%c  ${mainAmauiGroup.summary.amount.tos} tests`, 'color: #777', '\n\n\n');
-        else args.push(`  \x1b[90m${mainAmauiGroup.summary.amount.tos} tests\x1b[0m`, '\n\n');
+        if (isEnvironment('browser')) args.push(`%c  ${mainOnesyGroup.summary.amount.tos} tests`, 'color: #777', '\n\n\n');
+        else args.push(`  \x1b[90m${mainOnesyGroup.summary.amount.tos} tests\x1b[0m`, '\n\n');
 
         this.log(...args);
       }
@@ -975,7 +975,7 @@ export class AmauiTest {
             --palette-fail: #e01327;
           }
 
-          #amaui-test-errors > div > * {
+          #onesy-test-errors > div > * {
             margin: 21px 0;
             font-size: 0.85rem;
             font-weight: 400;
@@ -995,14 +995,14 @@ export class AmauiTest {
 
         const title = window.document.createElement('h1');
 
-        title.textContent = 'Amaui test running';
+        title.textContent = 'Onesy test running';
 
         title.style.color = '#000';
         title.style.margin = '114px 0 14px';
 
         const subtitle = window.document.createElement('p');
 
-        subtitle.textContent = `${mainAmauiGroup.summary.amount.tos} tests`;
+        subtitle.textContent = `${mainOnesyGroup.summary.amount.tos} tests`;
 
         subtitle.style.color = 'var(--palette-grey)';
         subtitle.style.fontSize = '21px';
@@ -1018,14 +1018,14 @@ export class AmauiTest {
         // Tos
         const tos = window.document.createElement('section');
 
-        tos.id = 'amaui-test-tos';
+        tos.id = 'onesy-test-tos';
 
         root.append(tos);
 
         // Summary
         const summary = window.document.createElement('section');
 
-        summary.id = 'amaui-test-summary';
+        summary.id = 'onesy-test-summary';
 
         summary.style.margin = '54px 0';
         summary.style.fontSize = '0.91rem';
@@ -1035,15 +1035,15 @@ export class AmauiTest {
         // Errors
         const errors = window.document.createElement('section');
 
-        errors.id = 'amaui-test-errors';
+        errors.id = 'onesy-test-errors';
 
         root.append(errors);
       }
     }
   }
 
-  public printTo(value: IAmauiResponse): void {
-    const { name, level, parent, mainIndex, index } = value.for as AmauiTo | AmauiGroup;
+  public printTo(value: IOnesyResponse): void {
+    const { name, level, parent, mainIndex, index } = value.for as OnesyTo | OnesyGroup;
     const success = value.type === 'success';
 
     const order = this.options.order;
@@ -1101,7 +1101,7 @@ export class AmauiTest {
       window.document.getElementById(this.options.results.html.id) &&
       this.options.results.to.indexOf('html') > -1
     ) {
-      const tos = window.document.getElementById('amaui-test-tos');
+      const tos = window.document.getElementById('onesy-test-tos');
 
       if (tos) {
         const to = window.document.createElement('p');
@@ -1152,15 +1152,15 @@ export class AmauiTest {
 
     this.printTestsHeader();
 
-    this.printGroup(mainAmauiGroup);
+    this.printGroup(mainOnesyGroup);
 
     this.printSummary();
 
     this.printErrors();
   }
 
-  public printGroup(group: AmauiGroup): void {
-    const all = AmauiTest.order(group, this.options.order);
+  public printGroup(group: OnesyGroup): void {
+    const all = OnesyTest.order(group, this.options.order);
 
     // Print group name with indent
     const { name, level, parent, index } = group;
@@ -1186,7 +1186,7 @@ export class AmauiTest {
       window.document.getElementById(this.options.results.html.id) &&
       this.options.results.to.indexOf('html') > -1
     ) {
-      const tos = window.document.getElementById('amaui-test-tos');
+      const tos = window.document.getElementById('onesy-test-tos');
 
       if (tos) {
         if (level > 0) {
@@ -1208,18 +1208,18 @@ export class AmauiTest {
     this.previousLog = 'group';
 
     for (const item of all) {
-      if (item instanceof AmauiTo) this.printTo(item.response);
-      else if (item instanceof AmauiGroup) this.printGroup(item);
+      if (item instanceof OnesyTo) this.printTo(item.response);
+      else if (item instanceof OnesyGroup) this.printGroup(item);
     }
   }
 
-  public printAuto(value: IAmauiResponse | AmauiGroup): void {
+  public printAuto(value: IOnesyResponse | OnesyGroup): void {
     if (
       this.options.results.print &&
       ['log', 'html'].some((item: TOptionsResultsTo) => this.options.results.to.indexOf(item) > -1) &&
       this.options.results.at === 'auto'
     ) {
-      if (value instanceof AmauiGroup) {
+      if (value instanceof OnesyGroup) {
         // Print group name with indent
         const { name, level, parent, index } = value;
 
@@ -1244,7 +1244,7 @@ export class AmauiTest {
           window.document.getElementById(this.options.results.html.id) &&
           this.options.results.to.indexOf('html') > -1
         ) {
-          const tos = window.document.getElementById('amaui-test-tos');
+          const tos = window.document.getElementById('onesy-test-tos');
 
           if (tos) {
             if (level > 0) {
@@ -1285,26 +1285,26 @@ export class AmauiTest {
 
   // Errors
   public printErrors(): void {
-    this.printGroupErrors(mainAmauiGroup);
+    this.printGroupErrors(mainOnesyGroup);
   }
 
-  public printGroupErrors(group = mainAmauiGroup): void {
-    const all = AmauiTest.order(group, this.options.order);
+  public printGroupErrors(group = mainOnesyGroup): void {
+    const all = OnesyTest.order(group, this.options.order);
 
     for (const item of all) {
-      if (item instanceof AmauiTo && item.response.type === 'error') this.printError(item);
-      else if (item instanceof AmauiGroup) this.printGroupErrors(item);
+      if (item instanceof OnesyTo && item.response.type === 'error') this.printError(item);
+      else if (item instanceof OnesyGroup) this.printGroupErrors(item);
     }
   }
 
-  public printError(to: AmauiTo): void {
+  public printError(to: OnesyTo): void {
     const { name, parent } = to;
     const { index } = to.response;
     const response: IAssertError = to.response.response;
 
-    const getToName = (values_: string[], parent_: AmauiGroup) => {
-      if (parent_ && parent_ !== mainAmauiGroup) values_.unshift(parent_.name);
-      if (parent_.parent && parent_.parent !== mainAmauiGroup) getToName(values_, parent_.parent);
+    const getToName = (values_: string[], parent_: OnesyGroup) => {
+      if (parent_ && parent_ !== mainOnesyGroup) values_.unshift(parent_.name);
+      if (parent_.parent && parent_.parent !== mainOnesyGroup) getToName(values_, parent_.parent);
     };
 
     const values = [name];
@@ -1331,7 +1331,7 @@ export class AmauiTest {
     const responses = {
       expected: {
         short: response.hasOwnProperty('expected') && stringifyOutput(response.expected),
-        long: arrayOrObject && AmauiDiff.json.diff(response.expected, response.actual),
+        long: arrayOrObject && OnesyDiff.json.diff(response.expected, response.actual),
       },
       actual: {
         short: response.hasOwnProperty('actual') && stringifyOutput(response.actual, true),
@@ -1358,7 +1358,7 @@ export class AmauiTest {
     else items.push(response.actual);
 
     items.forEach(item => printInfoDiffs.push(
-      (arrayOrObject && responses.expected.long.items.length) ? this.printDiff(response.expected, item, AmauiDiff.json.diff(response.expected, item)) : []
+      (arrayOrObject && responses.expected.long.items.length) ? this.printDiff(response.expected, item, OnesyDiff.json.diff(response.expected, item)) : []
     ));
 
     const stack = this.printErrorStackCleanUp(response.stack);
@@ -1446,7 +1446,7 @@ export class AmauiTest {
       window.document.getElementById(this.options.results.html.id) &&
       this.options.results.to.indexOf('html') > -1
     ) {
-      const errors = window.document.getElementById('amaui-test-errors');
+      const errors = window.document.getElementById('onesy-test-errors');
 
       if (errors) {
         const error = window.document.createElement('div');
@@ -1539,9 +1539,9 @@ export class AmauiTest {
     // Error stack trace
     // Stack trace clean up
     const urlFilterOutStack = [
-      'umd/amaui-test',
-      'amaui-test.ts',
-      'amaui-test.js',
+      'umd/onesy-test',
+      'onesy-test.ts',
+      'onesy-test.js',
       'assert.ts',
       'assert.js',
 
@@ -1611,10 +1611,10 @@ export class AmauiTest {
   }
 
   private printDiff(expected: any, actual: any, diff: IDiff): any[] {
-    let value = AmauiDiff.json.options.itemize.method(AmauiDiff.json.options.init.method(actual));
-    const valueExpected = AmauiDiff.json.options.itemize.method(AmauiDiff.json.options.init.method(expected));
+    let value = OnesyDiff.json.options.itemize.method(OnesyDiff.json.options.init.method(actual));
+    const valueExpected = OnesyDiff.json.options.itemize.method(OnesyDiff.json.options.init.method(expected));
 
-    const updateGroups = AmauiDiff.updateGroups(diff);
+    const updateGroups = OnesyDiff.updateGroups(diff);
 
     // Mark all the added lines
     const added = updateGroups.flat().filter(item => item[0][0].indexOf('a') === 0);
@@ -1704,12 +1704,12 @@ export class AmauiTest {
 
   // Summary
   public printSummary(): void {
-    const { success, fail } = mainAmauiGroup.summary.tos;
+    const { success, fail } = mainOnesyGroup.summary.tos;
 
     const pre = ` `.repeat(1);
     const offset = `\n`.repeat(isEnvironment('browser') ? 2 : 1);
 
-    const mainGroupDuration = duration(mainAmauiGroup.response.duration, true, false, '');
+    const mainGroupDuration = duration(mainOnesyGroup.response.duration, true, false, '');
 
     // Log
     if (this.options.results.to.indexOf('log') > -1) {
@@ -1757,7 +1757,7 @@ export class AmauiTest {
       window.document.getElementById(this.options.results.html.id) &&
       this.options.results.to.indexOf('html') > -1
     ) {
-      const summary = window.document.getElementById('amaui-test-summary');
+      const summary = window.document.getElementById('onesy-test-summary');
 
       if (summary) {
         summary.innerHTML = `<p style='color: var(--palette-grey); font-weight: 300; margin-bottom: 21px'>${mainGroupDuration
@@ -1782,10 +1782,10 @@ export class AmauiTest {
 
     if (method) await method();
 
-    if (isEnvironment('nodejs')) global.amauiEvents.emit('amaui-test-clear');
-    if (isEnvironment('browser')) window.dispatchEvent(new Event('amaui-test-clear'));
+    if (isEnvironment('nodejs')) global.onesyEvents.emit('onesy-test-clear');
+    if (isEnvironment('browser')) window.dispatchEvent(new Event('onesy-test-clear'));
   }
 
 }
 
-export default AmauiTest;
+export default OnesyTest;

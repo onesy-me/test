@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import yargs from 'yargs';
 
-import parse from '@amaui/utils/parse';
+import parse from '@onesy/utils/parse';
 
-import AmauiTest, { IOptions } from './AmauiTest';
+import OnesyTest, { IOptions } from './OnesyTest';
 
 export async function run(argv: any) {
   const { _, imports, order, resultsPrint, resultsTo, resultsAt, responseTimeoutTo, responseTimeoutMiddleware, responseMeasurementSlow, responseMeasurementVeryslow, responseOnfailExit, responseOnfailError, files: files_, package: package_ } = argv;
@@ -38,22 +38,22 @@ export async function run(argv: any) {
 
   if (package_ !== undefined) options.package = package_;
 
-  // Make a new AmauiTest instance
-  const amauiTest = new AmauiTest(options);
+  // Make a new OnesyTest instance
+  const onesyTest = new OnesyTest(options);
 
   // On user cmdline cancel exit the process
   process.on('SIGINT', async () => {
-    await amauiTest.clear();
+    await onesyTest.clear();
 
     process.exit(1);
   });
 
   // Init
   try {
-    await amauiTest.init();
+    await onesyTest.init();
 
     // Run
-    await amauiTest.run();
+    await onesyTest.run();
   }
   catch (error) {
     console.error(error);
@@ -63,8 +63,8 @@ export async function run(argv: any) {
 
   // Used for testing only
   const value = {
-    summary: amauiTest.mainGroup.summary,
-    options: amauiTest.options,
+    summary: onesyTest.mainGroup.summary,
+    options: onesyTest.options,
   };
 
   if (process.send) process.send(value);
@@ -76,7 +76,7 @@ export async function run(argv: any) {
 yargs
   .command({
     command: '$0',
-    description: 'Amaui group and to tests',
+    description: 'Onesy group and to tests',
     builder: (command => command
       .options('imports', { type: 'array' })
 

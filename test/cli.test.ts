@@ -3,9 +3,9 @@ import path from 'path';
 import { fork } from 'child_process';
 import { expect } from 'chai';
 
-import AmauiNode from '@amaui/node';
+import OnesyNode from '@onesy/node';
 
-describe('@amaui/test/cli', () => {
+describe('@onesy/test/cli', () => {
 
   it('cli', done => {
     let response: any;
@@ -24,7 +24,7 @@ describe('@amaui/test/cli', () => {
     childProcess.on('message', data => {
       response = data;
 
-      expect(response.options.files.indexOf('/amaui/amaui-test/test/example/test/**/a.test.ts') > -1).true;
+      expect(response.options.files.indexOf('/onesy/onesy-test/test/example/test/**/a.test.ts') > -1).true;
 
       delete response.options.files;
 
@@ -48,7 +48,7 @@ describe('@amaui/test/cli', () => {
             at: 'auto',
             errors_minify: true,
             html: {
-              id: 'amaui-test-results'
+              id: 'onesy-test-results'
             }
           },
           response: {
@@ -126,7 +126,7 @@ describe('@amaui/test/cli', () => {
             at: 'end',
             errors_minify: true,
             html: {
-              id: 'amaui-test-results'
+              id: 'onesy-test-results'
             }
           },
           files: [
@@ -149,7 +149,7 @@ describe('@amaui/test/cli', () => {
           imports: [
             'ts-node/register/transpile-only'
           ],
-          package: '/Users/lazareric/amaui/amaui-test/a/package.json',
+          package: '/Users/lazareric/onesy/onesy-test/a/package.json',
           order: 'to-group'
         }
       });
@@ -158,11 +158,11 @@ describe('@amaui/test/cli', () => {
     });
   });
 
-  it('cli with amaui-test.options.js', async () => {
+  it('cli with onesy-test.options.js', async () => {
     const method = () => new Promise(async resolve => {
-      // Create amaui-test.options.js
-      await AmauiNode.file.add(
-        path.join(process.cwd(), 'amaui-test.options.js'),
+      // Create onesy-test.options.js
+      await OnesyNode.file.add(
+        path.join(process.cwd(), 'onesy-test.options.js'),
         `
         module.exports = {
           imports: [
@@ -229,7 +229,7 @@ describe('@amaui/test/cli', () => {
               at: 'end',
               errors_minify: true,
               html: {
-                id: 'amaui-test-results'
+                id: 'onesy-test-results'
               }
             },
             response: {
@@ -250,13 +250,13 @@ describe('@amaui/test/cli', () => {
               'ts-node/register/transpile-only'
             ],
             order: 'to-group',
-            package: '/Users/lazareric/amaui/amaui-test/a/package.json',
+            package: '/Users/lazareric/onesy/onesy-test/a/package.json',
             files: 'test/example/test/**/a.test.ts'
           }
         });
 
         // Remove example/package.json
-        await AmauiNode.file.remove(path.join(process.cwd(), 'amaui-test.options.js'));
+        await OnesyNode.file.remove(path.join(process.cwd(), 'onesy-test.options.js'));
 
         resolve(true);
       });

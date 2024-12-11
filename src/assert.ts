@@ -1,17 +1,17 @@
-import is, { IOptions as IIsOptions } from '@amaui/utils/is';
-import isValid from '@amaui/utils/isValid';
-import merge from '@amaui/utils/merge';
-import getObjectValue from '@amaui/utils/getObjectValue';
-import hasObjectProperty from '@amaui/utils/hasObjectProperty';
-import equalDeep from '@amaui/utils/equalDeep';
-import isState from '@amaui/utils/isState';
-import isEnvironment from '@amaui/utils/isEnvironment';
-import isExists from '@amaui/utils/isExists';
-import isOS from '@amaui/utils/isOS';
-import isBrowser from '@amaui/utils/isBrowser';
-import isResponsive from '@amaui/utils/isResponsive';
-import { TMethod } from '@amaui/models';
-import { AssertError } from '@amaui/errors';
+import is, { IOptions as IIsOptions } from '@onesy/utils/is';
+import isValid from '@onesy/utils/isValid';
+import merge from '@onesy/utils/merge';
+import getObjectValue from '@onesy/utils/getObjectValue';
+import hasObjectProperty from '@onesy/utils/hasObjectProperty';
+import equalDeep from '@onesy/utils/equalDeep';
+import isState from '@onesy/utils/isState';
+import isEnvironment from '@onesy/utils/isEnvironment';
+import isExists from '@onesy/utils/isExists';
+import isOS from '@onesy/utils/isOS';
+import isBrowser from '@onesy/utils/isBrowser';
+import isResponsive from '@onesy/utils/isResponsive';
+import { TMethod } from '@onesy/models';
+import { AssertError } from '@onesy/errors';
 
 export type TAssertOperator = 'a' | 'valid' | 'empty' | 'equal' | 'equal-deep' | 'include' | 'lt' | 'less-than' | 'lte' | 'less-than-equal' | 'gt' | 'greater-than' | 'gte' | 'greater-than-equal' | 'property' | 'properties' | 'truthy' | 'falsy' | 'true' | 'false' | 'undefined' | 'null' | 'NaN' | 'throw' | 'throw-async' | 'exist';
 

@@ -2,13 +2,13 @@
 import { expect } from 'chai';
 import React from 'react';
 
-import * as AmauiUtils from '@amaui/utils';
+import * as OnesyUtils from '@onesy/utils';
 
 import { evaluate } from '../utils/js/test/utils';
 
 import { assert } from '../src';
 
-describe('@amaui/test/assert', () => {
+describe('@onesy/test/assert', () => {
 
   it('aliases', async () => {
     const assertMethod = assert('a');
@@ -24,7 +24,7 @@ describe('@amaui/test/assert', () => {
     ];
 
     const valueBrowsers = await evaluate(async (window: any) => {
-      const assertMethod = window.AmauiTest.assert('a');
+      const assertMethod = window.OnesyTest.assert('a');
 
       const aliases = ['to', 'be', 'been', 'is', 'that', 'which', 'and', 'has', 'have', 'with', 'at', 'of', 'same', 'but', 'does', 'still', 'also'];
 
@@ -158,7 +158,7 @@ describe('@amaui/test/assert', () => {
         let resolve: any;
 
         try {
-          let assert_ = window.AmauiTest.assert(item[0]);
+          let assert_ = window.OnesyTest.assert(item[0]);
 
           for (const [index, item__] of item[1].entries()) {
             assert_ = assert_[item__];
@@ -440,7 +440,7 @@ describe('@amaui/test/assert', () => {
 
     const valueBrowsers = await evaluate(async (window: any) => {
       const values_ = [
-        !!window.AmauiTest.assert(4).a('number').lt(14).gte(4),
+        !!window.OnesyTest.assert(4).a('number').lt(14).gte(4),
       ];
 
       return values_;
@@ -462,7 +462,7 @@ describe('@amaui/test/assert', () => {
 
         const valueBrowsers = await evaluate(async (window: any) => {
           const values_ = [
-            !!window.AmauiTest.assert('a', { not: true }).eq(4),
+            !!window.OnesyTest.assert('a', { not: true }).eq(4),
           ];
 
           return values_;
@@ -480,7 +480,7 @@ describe('@amaui/test/assert', () => {
 
         const valueBrowsers = await evaluate(async (window: any) => {
           const values_ = [
-            !!window.AmauiTest.assert('a').not.eq(4),
+            !!window.OnesyTest.assert('a').not.eq(4),
           ];
 
           return values_;
@@ -498,7 +498,7 @@ describe('@amaui/test/assert', () => {
 
         const valueBrowsers = await evaluate(async (window: any) => {
           const values_ = [
-            !!window.AmauiTest.assert('a').eq(4, { not: true }),
+            !!window.OnesyTest.assert('a').eq(4, { not: true }),
           ];
 
           return values_;
@@ -512,8 +512,8 @@ describe('@amaui/test/assert', () => {
       it('all of em', async () => {
         const valueBrowsers = await evaluate(async (window: any) => {
           const values_ = [
-            !!window.AmauiTest.assert('a', { not: true }).not.eq('a'),
-            !!window.AmauiTest.assert('a', { not: true }).not.eq(4, { not: true }),
+            !!window.OnesyTest.assert('a', { not: true }).not.eq('a'),
+            !!window.OnesyTest.assert('a', { not: true }).not.eq(4, { not: true }),
           ];
 
           return values_;
@@ -553,7 +553,7 @@ describe('@amaui/test/assert', () => {
         const values_ = [];
 
         try {
-          window.AmauiTest.assert('a', { message: 'a' }).eq(4);
+          window.OnesyTest.assert('a', { message: 'a' }).eq(4);
         }
         catch (error) {
           delete error.added_at;
@@ -585,7 +585,7 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert('a', { not: true }).eq(4),
+          !!window.OnesyTest.assert('a', { not: true }).eq(4),
         ];
 
         return values_;
@@ -611,7 +611,7 @@ describe('@amaui/test/assert', () => {
         a.prototype.aa = { a: 'a' };
 
         const values_ = [
-          !!window.AmauiTest.assert(new a(), { own: true }).property('a'),
+          !!window.OnesyTest.assert(new a(), { own: true }).property('a'),
         ];
 
         return values_;
@@ -629,7 +629,7 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert('a', { any: true }).eq(['a', 4, 'a']),
+          !!window.OnesyTest.assert('a', { any: true }).eq(['a', 4, 'a']),
         ];
 
         return values_;
@@ -647,7 +647,7 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert('a', { one: true }).eq(['a', 4]),
+          !!window.OnesyTest.assert('a', { one: true }).eq(['a', 4]),
         ];
 
         return values_;
@@ -665,7 +665,7 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert('a', { all: true }).eq(['a', 'a']),
+          !!window.OnesyTest.assert('a', { all: true }).eq(['a', 'a']),
         ];
 
         return values_;
@@ -683,7 +683,7 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          window.AmauiTest.assert('a', { noError: true }).eq(4),
+          window.OnesyTest.assert('a', { noError: true }).eq(4),
         ];
 
         return values_;
@@ -707,9 +707,9 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert('a').not.eq(4),
+          !!window.OnesyTest.assert('a').not.eq(4),
 
-          window.AmauiTest.assert('a', { noError: true }).not.eq('a'),
+          window.OnesyTest.assert('a', { noError: true }).not.eq('a'),
         ];
 
         return values_;
@@ -737,9 +737,9 @@ describe('@amaui/test/assert', () => {
         a.prototype.aa = { a: 'a' };
 
         const values_ = [
-          !!window.AmauiTest.assert(new a()).own.property('a'),
+          !!window.OnesyTest.assert(new a()).own.property('a'),
 
-          window.AmauiTest.assert(new a(), { noError: true }).own.property('aa.a'),
+          window.OnesyTest.assert(new a(), { noError: true }).own.property('aa.a'),
         ];
 
         return values_;
@@ -761,7 +761,7 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert('a').any.eq(['a', 4, 'a']),
+          !!window.OnesyTest.assert('a').any.eq(['a', 4, 'a']),
         ];
 
         return values_;
@@ -779,7 +779,7 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert('a').one.eq(['a', 4]),
+          !!window.OnesyTest.assert('a').one.eq(['a', 4]),
         ];
 
         return values_;
@@ -797,7 +797,7 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert('a').all.eq(['a', 'a']),
+          !!window.OnesyTest.assert('a').all.eq(['a', 'a']),
         ];
 
         return values_;
@@ -821,9 +821,9 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert(true).true,
+          !!window.OnesyTest.assert(true).true,
 
-          window.AmauiTest.assert(4, { noError: true }).true,
+          window.OnesyTest.assert(4, { noError: true }).true,
         ];
 
         return values_;
@@ -843,9 +843,9 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert(false).false,
+          !!window.OnesyTest.assert(false).false,
 
-          window.AmauiTest.assert(4, { noError: true }).false,
+          window.OnesyTest.assert(4, { noError: true }).false,
         ];
 
         return values_;
@@ -865,9 +865,9 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert(undefined).undefined,
+          !!window.OnesyTest.assert(undefined).undefined,
 
-          window.AmauiTest.assert(4, { noError: true }).undefined,
+          window.OnesyTest.assert(4, { noError: true }).undefined,
         ];
 
         return values_;
@@ -887,9 +887,9 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert(null).null,
+          !!window.OnesyTest.assert(null).null,
 
-          window.AmauiTest.assert(4, { noError: true }).null,
+          window.OnesyTest.assert(4, { noError: true }).null,
         ];
 
         return values_;
@@ -909,9 +909,9 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert(NaN).NaN,
+          !!window.OnesyTest.assert(NaN).NaN,
 
-          window.AmauiTest.assert(4, { noError: true }).NaN,
+          window.OnesyTest.assert(4, { noError: true }).NaN,
         ];
 
         return values_;
@@ -937,15 +937,15 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert('').empty,
-          !!window.AmauiTest.assert([]).empty,
-          !!window.AmauiTest.assert(new Map()).empty,
-          !!window.AmauiTest.assert(new Set()).empty,
+          !!window.OnesyTest.assert('').empty,
+          !!window.OnesyTest.assert([]).empty,
+          !!window.OnesyTest.assert(new Map()).empty,
+          !!window.OnesyTest.assert(new Set()).empty,
 
-          window.AmauiTest.assert('4', { noError: true }).empty,
-          window.AmauiTest.assert([4], { noError: true }).empty,
-          window.AmauiTest.assert(new Map([[4, 4]]), { noError: true }).empty,
-          window.AmauiTest.assert(new Set([4]), { noError: true }).empty,
+          window.OnesyTest.assert('4', { noError: true }).empty,
+          window.OnesyTest.assert([4], { noError: true }).empty,
+          window.OnesyTest.assert(new Map([[4, 4]]), { noError: true }).empty,
+          window.OnesyTest.assert(new Set([4]), { noError: true }).empty,
         ];
 
         return values_;
@@ -972,13 +972,13 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert('').exist,
-          !!window.AmauiTest.assert([]).exist,
-          !!window.AmauiTest.assert(0).exist,
-          !!window.AmauiTest.assert(new Map()).exist,
+          !!window.OnesyTest.assert('').exist,
+          !!window.OnesyTest.assert([]).exist,
+          !!window.OnesyTest.assert(0).exist,
+          !!window.OnesyTest.assert(new Map()).exist,
 
-          window.AmauiTest.assert(undefined, { noError: true }).exist,
-          window.AmauiTest.assert(null, { noError: true }).exist,
+          window.OnesyTest.assert(undefined, { noError: true }).exist,
+          window.OnesyTest.assert(null, { noError: true }).exist,
         ];
 
         return values_;
@@ -1007,15 +1007,15 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert('a').truthy,
-          !!window.AmauiTest.assert(4).truthy,
-          !!window.AmauiTest.assert([]).truthy,
-          !!window.AmauiTest.assert(new Map()).truthy,
+          !!window.OnesyTest.assert('a').truthy,
+          !!window.OnesyTest.assert(4).truthy,
+          !!window.OnesyTest.assert([]).truthy,
+          !!window.OnesyTest.assert(new Map()).truthy,
 
-          window.AmauiTest.assert('', { noError: true }).truthy,
-          window.AmauiTest.assert(0, { noError: true }).truthy,
-          window.AmauiTest.assert(undefined, { noError: true }).truthy,
-          window.AmauiTest.assert(null, { noError: true }).truthy,
+          window.OnesyTest.assert('', { noError: true }).truthy,
+          window.OnesyTest.assert(0, { noError: true }).truthy,
+          window.OnesyTest.assert(undefined, { noError: true }).truthy,
+          window.OnesyTest.assert(null, { noError: true }).truthy,
         ];
 
         return values_;
@@ -1044,15 +1044,15 @@ describe('@amaui/test/assert', () => {
 
       const valueBrowsers = await evaluate(async (window: any) => {
         const values_ = [
-          !!window.AmauiTest.assert('').falsy,
-          !!window.AmauiTest.assert(0).falsy,
-          !!window.AmauiTest.assert(undefined).falsy,
-          !!window.AmauiTest.assert(null).falsy,
+          !!window.OnesyTest.assert('').falsy,
+          !!window.OnesyTest.assert(0).falsy,
+          !!window.OnesyTest.assert(undefined).falsy,
+          !!window.OnesyTest.assert(null).falsy,
 
-          window.AmauiTest.assert('a', { noError: true }).falsy,
-          window.AmauiTest.assert(4, { noError: true }).falsy,
-          window.AmauiTest.assert([], { noError: true }).falsy,
-          window.AmauiTest.assert(new Map(), { noError: true }).falsy,
+          window.OnesyTest.assert('a', { noError: true }).falsy,
+          window.OnesyTest.assert(4, { noError: true }).falsy,
+          window.OnesyTest.assert([], { noError: true }).falsy,
+          window.OnesyTest.assert(new Map(), { noError: true }).falsy,
         ];
 
         return values_;
@@ -1072,7 +1072,7 @@ describe('@amaui/test/assert', () => {
     const valueNode = [
       !!assert(new Date()).va('date'),
       !!assert(new Date()).valid('date'),
-      !!assert(AmauiUtils.getID()).va('uuid'),
+      !!assert(OnesyUtils.getID()).va('uuid'),
       !!assert('110101').va('binary-string'),
       !!assert('abcdef').va('hexadecimal-string'),
       !!assert('https://a.com/a').va('url'),
@@ -1133,65 +1133,65 @@ describe('@amaui/test/assert', () => {
 
     const valueBrowsers = await evaluate(async (window: any) => {
       const values_ = [
-        !!window.AmauiTest.assert(new Date()).va('date'),
-        !!window.AmauiTest.assert(new Date()).valid('date'),
-        !!window.AmauiTest.assert(window.AmauiUtils.getID()).va('uuid'),
-        !!window.AmauiTest.assert('110101').va('binary-string'),
-        !!window.AmauiTest.assert('abcdef').va('hexadecimal-string'),
-        !!window.AmauiTest.assert('https://a.com/a').va('url'),
-        !!window.AmauiTest.assert('/a').va('url-path'),
-        !!window.AmauiTest.assert().va('compare', { valueA: 14, valueB: 4, operator: 'greater-than-equal' }),
-        !!window.AmauiTest.assert().valid('compare', { valueA: 14, valueB: 4, operator: 'greater-than-equal' }),
-        !!window.AmauiTest.assert.va('compare', { valueA: 14, valueB: 4, operator: 'greater-than-equal' }),
-        !!window.AmauiTest.assert.valid('compare', { valueA: 14, valueB: 4, operator: 'greater-than-equal' }),
-        !!window.AmauiTest.assert('1.4.1-a').va('semver'),
-        !!window.AmauiTest.assert.va('semver-compare', { valueA: '1.4.3', valueB: '1.4.4', operator: 'less-than' }),
-        !!window.AmauiTest.assert(1638223021).va('timestamp'),
-        !!window.AmauiTest.assert('+381611234123').va('mobile'),
-        !!window.AmauiTest.assert('a@a.com').va('email'),
-        !!window.AmauiTest.assert('0xaa7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad').va('hash'),
-        !!window.AmauiTest.assert('rgb(1, 144, 144)').va('color-rgb'),
-        !!window.AmauiTest.assert('#ff44ff').va('color-hex'),
-        !!window.AmauiTest.assert('hsl(1, 40%, 40%)').va('color-hsl'),
-        !!window.AmauiTest.assert('{"a":4,"c":4}').va('json'),
-        !!window.AmauiTest.assert(4).va('min', { min: 1 }),
-        !!window.AmauiTest.assert(4).va('max', { max: 14 }),
-        !!window.AmauiTest.assert(4).va('max', { min: 1, max: 14 }),
-        !!window.AmauiTest.assert('https://localhost:4000/a').va('same-origin'),
-        !!window.AmauiTest.assert({ __esModule: true, default: () => 4, }).va('js-chunk'),
-        !!window.AmauiTest.assert('get').va('http-method'),
-        !!window.AmauiTest.assert('aGVsbG8sIFdvcmxkIQ==').va('base64'),
-        !!window.AmauiTest.assert('data:,A%20brief%20note').va('datauri'),
+        !!window.OnesyTest.assert(new Date()).va('date'),
+        !!window.OnesyTest.assert(new Date()).valid('date'),
+        !!window.OnesyTest.assert(window.OnesyUtils.getID()).va('uuid'),
+        !!window.OnesyTest.assert('110101').va('binary-string'),
+        !!window.OnesyTest.assert('abcdef').va('hexadecimal-string'),
+        !!window.OnesyTest.assert('https://a.com/a').va('url'),
+        !!window.OnesyTest.assert('/a').va('url-path'),
+        !!window.OnesyTest.assert().va('compare', { valueA: 14, valueB: 4, operator: 'greater-than-equal' }),
+        !!window.OnesyTest.assert().valid('compare', { valueA: 14, valueB: 4, operator: 'greater-than-equal' }),
+        !!window.OnesyTest.assert.va('compare', { valueA: 14, valueB: 4, operator: 'greater-than-equal' }),
+        !!window.OnesyTest.assert.valid('compare', { valueA: 14, valueB: 4, operator: 'greater-than-equal' }),
+        !!window.OnesyTest.assert('1.4.1-a').va('semver'),
+        !!window.OnesyTest.assert.va('semver-compare', { valueA: '1.4.3', valueB: '1.4.4', operator: 'less-than' }),
+        !!window.OnesyTest.assert(1638223021).va('timestamp'),
+        !!window.OnesyTest.assert('+381611234123').va('mobile'),
+        !!window.OnesyTest.assert('a@a.com').va('email'),
+        !!window.OnesyTest.assert('0xaa7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad').va('hash'),
+        !!window.OnesyTest.assert('rgb(1, 144, 144)').va('color-rgb'),
+        !!window.OnesyTest.assert('#ff44ff').va('color-hex'),
+        !!window.OnesyTest.assert('hsl(1, 40%, 40%)').va('color-hsl'),
+        !!window.OnesyTest.assert('{"a":4,"c":4}').va('json'),
+        !!window.OnesyTest.assert(4).va('min', { min: 1 }),
+        !!window.OnesyTest.assert(4).va('max', { max: 14 }),
+        !!window.OnesyTest.assert(4).va('max', { min: 1, max: 14 }),
+        !!window.OnesyTest.assert('https://localhost:4000/a').va('same-origin'),
+        !!window.OnesyTest.assert({ __esModule: true, default: () => 4, }).va('js-chunk'),
+        !!window.OnesyTest.assert('get').va('http-method'),
+        !!window.OnesyTest.assert('aGVsbG8sIFdvcmxkIQ==').va('base64'),
+        !!window.OnesyTest.assert('data:,A%20brief%20note').va('datauri'),
 
-        window.AmauiTest.assert(4, { noError: true }).va('date'),
-        window.AmauiTest.assert(4, { noError: true }).valid('date'),
-        window.AmauiTest.assert(4, { noError: true }).va('uuid'),
-        window.AmauiTest.assert(4, { noError: true }).va('binary-string'),
-        window.AmauiTest.assert(4, { noError: true }).va('hexadecimal-string'),
-        window.AmauiTest.assert(4, { noError: true }).va('url'),
-        window.AmauiTest.assert(4, { noError: true }).va('url-path'),
-        window.AmauiTest.assert(undefined, { noError: true }).va('compare', { valueA: 14, valueB: 4, operator: 'less-than' }),
-        window.AmauiTest.assert(undefined, { noError: true }).valid('compare', { valueA: 14, valueB: 4, operator: 'less-than' }),
-        window.AmauiTest.assert.va('compare', { valueA: 14, valueB: 4, operator: 'less-than', noError: true }),
-        window.AmauiTest.assert.valid('compare', { valueA: 14, valueB: 4, operator: 'less-than', noError: true }),
-        window.AmauiTest.assert(4, { noError: true }).va('semver'),
-        window.AmauiTest.assert.va('semver-compare', { valueA: '1.4.3', valueB: '1.4.4', operator: 'greater-than', noError: true }),
-        window.AmauiTest.assert(4, { noError: true }).va('timestamp'),
-        window.AmauiTest.assert(4, { noError: true }).va('mobile'),
-        window.AmauiTest.assert(4, { noError: true }).va('email'),
-        window.AmauiTest.assert(4, { noError: true }).va('hash'),
-        window.AmauiTest.assert(4, { noError: true }).va('color-rgb'),
-        window.AmauiTest.assert(4, { noError: true }).va('color-hex'),
-        window.AmauiTest.assert(4, { noError: true }).va('color-hsl'),
-        window.AmauiTest.assert(4, { noError: true }).va('json'),
-        window.AmauiTest.assert(4, { noError: true }).va('min', { min: 14 }),
-        window.AmauiTest.assert(4, { noError: true }).va('max', { max: 1 }),
-        window.AmauiTest.assert(140, { noError: true }).va('max', { min: 1, max: 14 }),
-        window.AmauiTest.assert(4, { noError: true }).va('same-origin'),
-        window.AmauiTest.assert(4, { noError: true }).va('js-chunk'),
-        window.AmauiTest.assert(4, { noError: true }).va('http-method'),
-        window.AmauiTest.assert(4, { noError: true }).va('base64'),
-        window.AmauiTest.assert(4, { noError: true }).va('datauri'),
+        window.OnesyTest.assert(4, { noError: true }).va('date'),
+        window.OnesyTest.assert(4, { noError: true }).valid('date'),
+        window.OnesyTest.assert(4, { noError: true }).va('uuid'),
+        window.OnesyTest.assert(4, { noError: true }).va('binary-string'),
+        window.OnesyTest.assert(4, { noError: true }).va('hexadecimal-string'),
+        window.OnesyTest.assert(4, { noError: true }).va('url'),
+        window.OnesyTest.assert(4, { noError: true }).va('url-path'),
+        window.OnesyTest.assert(undefined, { noError: true }).va('compare', { valueA: 14, valueB: 4, operator: 'less-than' }),
+        window.OnesyTest.assert(undefined, { noError: true }).valid('compare', { valueA: 14, valueB: 4, operator: 'less-than' }),
+        window.OnesyTest.assert.va('compare', { valueA: 14, valueB: 4, operator: 'less-than', noError: true }),
+        window.OnesyTest.assert.valid('compare', { valueA: 14, valueB: 4, operator: 'less-than', noError: true }),
+        window.OnesyTest.assert(4, { noError: true }).va('semver'),
+        window.OnesyTest.assert.va('semver-compare', { valueA: '1.4.3', valueB: '1.4.4', operator: 'greater-than', noError: true }),
+        window.OnesyTest.assert(4, { noError: true }).va('timestamp'),
+        window.OnesyTest.assert(4, { noError: true }).va('mobile'),
+        window.OnesyTest.assert(4, { noError: true }).va('email'),
+        window.OnesyTest.assert(4, { noError: true }).va('hash'),
+        window.OnesyTest.assert(4, { noError: true }).va('color-rgb'),
+        window.OnesyTest.assert(4, { noError: true }).va('color-hex'),
+        window.OnesyTest.assert(4, { noError: true }).va('color-hsl'),
+        window.OnesyTest.assert(4, { noError: true }).va('json'),
+        window.OnesyTest.assert(4, { noError: true }).va('min', { min: 14 }),
+        window.OnesyTest.assert(4, { noError: true }).va('max', { max: 1 }),
+        window.OnesyTest.assert(140, { noError: true }).va('max', { min: 1, max: 14 }),
+        window.OnesyTest.assert(4, { noError: true }).va('same-origin'),
+        window.OnesyTest.assert(4, { noError: true }).va('js-chunk'),
+        window.OnesyTest.assert(4, { noError: true }).va('http-method'),
+        window.OnesyTest.assert(4, { noError: true }).va('base64'),
+        window.OnesyTest.assert(4, { noError: true }).va('datauri'),
       ];
 
       return values_;
@@ -1367,61 +1367,61 @@ describe('@amaui/test/assert', () => {
       const Aa = window.React.createElement('a');
 
       const values_ = [
-        !!window.AmauiTest.assert('').a('string'),
-        !!window.AmauiTest.assert(4).a('number'),
-        !!window.AmauiTest.assert(true).a('boolean'),
-        !!window.AmauiTest.assert([]).an('array'),
-        !!window.AmauiTest.assert({}).an('object'),
-        !!window.AmauiTest.assert(new Map()).a('object-like'),
-        !!window.AmauiTest.assert(new A()).a('class'),
-        !!window.AmauiTest.assert(a).a('function'),
-        !!window.AmauiTest.assert(async function ay() { }).an('async'),
-        !!window.AmauiTest.assert(new Map()).a('map'),
-        !!window.AmauiTest.assert(new WeakMap()).a('weakmap'),
-        !!window.AmauiTest.assert(new Set()).a('set'),
-        !!window.AmauiTest.assert(new WeakSet()).a('weakset'),
-        !!window.AmauiTest.assert(new Promise(resolve => resolve(4))).a('promise'),
-        !!window.AmauiTest.assert(new Int8Array()).an('int8array'),
-        !!window.AmauiTest.assert(new Uint8Array()).an('uint8array'),
-        !!window.AmauiTest.assert(new Uint8ClampedArray()).a('uint8clampedarray'),
-        !!window.AmauiTest.assert(new Int16Array()).an('int16array'),
-        !!window.AmauiTest.assert(new Uint16Array()).an('uint16array'),
-        !!window.AmauiTest.assert(new Int32Array()).an('int32array'),
-        !!window.AmauiTest.assert(new Uint32Array()).an('uint32array'),
-        !!window.AmauiTest.assert(new Float32Array()).a('float32array'),
-        !!window.AmauiTest.assert(new Float64Array()).a('float64array'),
-        !!window.AmauiTest.assert(new BigInt64Array()).a('bigint64array'),
-        !!window.AmauiTest.assert(new BigUint64Array()).a('biguint64array'),
-        !!window.AmauiTest.assert(new Int8Array()).a('typedarray'),
-        !!window.AmauiTest.assert(new DataView(new ArrayBuffer(4))).a('dataview'),
-        !!window.AmauiTest.assert(new ArrayBuffer(4)).an('arraybuffer'),
-        !!window.AmauiTest.assert(Symbol(4)).a('symbol'),
-        !!window.AmauiTest.assert(new Error()).an('error'),
-        !!window.AmauiTest.assert(new Date()).a('date'),
-        !!window.AmauiTest.assert(/a+/gi).a('regexp'),
-        !!window.AmauiTest.assert((function a() { return arguments; })()).an('arguments'),
-        !!window.AmauiTest.assert(null).a('null'),
-        !!window.AmauiTest.assert(undefined).an('undefined'),
-        !!window.AmauiTest.assert(new Blob()).a('blob'),
-        !!window.AmauiTest.assert(window.document.createElement('div')).an('element'),
-        !!window.AmauiTest.assert(window.document.createElement('div')).an('element', { variant: 'html' }),
-        !!window.AmauiTest.assert(window.document.createElement('div')).an('element', { variant: 'element' }),
-        !!window.AmauiTest.assert(window.document.createTextNode('a')).an('element', { variant: 'node' }),
-        !!window.AmauiTest.assert(Aa).an('element', { variant: 'react' }),
-        !!window.AmauiTest.assert('a').a('simple'),
-        !!window.AmauiTest.assert(4).a('simple'),
-        !!window.AmauiTest.assert(4).a('not-array-object'),
-        !!window.AmauiTest.assert().an('online'),
-        !!window.AmauiTest.assert.an('online'),
-        !window.AmauiTest.assert.an('offline', { noError: true }),
-        !!window.AmauiTest.assert.a([
+        !!window.OnesyTest.assert('').a('string'),
+        !!window.OnesyTest.assert(4).a('number'),
+        !!window.OnesyTest.assert(true).a('boolean'),
+        !!window.OnesyTest.assert([]).an('array'),
+        !!window.OnesyTest.assert({}).an('object'),
+        !!window.OnesyTest.assert(new Map()).a('object-like'),
+        !!window.OnesyTest.assert(new A()).a('class'),
+        !!window.OnesyTest.assert(a).a('function'),
+        !!window.OnesyTest.assert(async function ay() { }).an('async'),
+        !!window.OnesyTest.assert(new Map()).a('map'),
+        !!window.OnesyTest.assert(new WeakMap()).a('weakmap'),
+        !!window.OnesyTest.assert(new Set()).a('set'),
+        !!window.OnesyTest.assert(new WeakSet()).a('weakset'),
+        !!window.OnesyTest.assert(new Promise(resolve => resolve(4))).a('promise'),
+        !!window.OnesyTest.assert(new Int8Array()).an('int8array'),
+        !!window.OnesyTest.assert(new Uint8Array()).an('uint8array'),
+        !!window.OnesyTest.assert(new Uint8ClampedArray()).a('uint8clampedarray'),
+        !!window.OnesyTest.assert(new Int16Array()).an('int16array'),
+        !!window.OnesyTest.assert(new Uint16Array()).an('uint16array'),
+        !!window.OnesyTest.assert(new Int32Array()).an('int32array'),
+        !!window.OnesyTest.assert(new Uint32Array()).an('uint32array'),
+        !!window.OnesyTest.assert(new Float32Array()).a('float32array'),
+        !!window.OnesyTest.assert(new Float64Array()).a('float64array'),
+        !!window.OnesyTest.assert(new BigInt64Array()).a('bigint64array'),
+        !!window.OnesyTest.assert(new BigUint64Array()).a('biguint64array'),
+        !!window.OnesyTest.assert(new Int8Array()).a('typedarray'),
+        !!window.OnesyTest.assert(new DataView(new ArrayBuffer(4))).a('dataview'),
+        !!window.OnesyTest.assert(new ArrayBuffer(4)).an('arraybuffer'),
+        !!window.OnesyTest.assert(Symbol(4)).a('symbol'),
+        !!window.OnesyTest.assert(new Error()).an('error'),
+        !!window.OnesyTest.assert(new Date()).a('date'),
+        !!window.OnesyTest.assert(/a+/gi).a('regexp'),
+        !!window.OnesyTest.assert((function a() { return arguments; })()).an('arguments'),
+        !!window.OnesyTest.assert(null).a('null'),
+        !!window.OnesyTest.assert(undefined).an('undefined'),
+        !!window.OnesyTest.assert(new Blob()).a('blob'),
+        !!window.OnesyTest.assert(window.document.createElement('div')).an('element'),
+        !!window.OnesyTest.assert(window.document.createElement('div')).an('element', { variant: 'html' }),
+        !!window.OnesyTest.assert(window.document.createElement('div')).an('element', { variant: 'element' }),
+        !!window.OnesyTest.assert(window.document.createTextNode('a')).an('element', { variant: 'node' }),
+        !!window.OnesyTest.assert(Aa).an('element', { variant: 'react' }),
+        !!window.OnesyTest.assert('a').a('simple'),
+        !!window.OnesyTest.assert(4).a('simple'),
+        !!window.OnesyTest.assert(4).a('not-array-object'),
+        !!window.OnesyTest.assert().an('online'),
+        !!window.OnesyTest.assert.an('online'),
+        !window.OnesyTest.assert.an('offline', { noError: true }),
+        !!window.OnesyTest.assert.a([
           'browser',
           'worker',
           'nodejs',
           'localhost'
         ], { any: true }),
-        !!window.AmauiTest.assert.an('Intl'),
-        !!window.AmauiTest.assert.a([
+        !!window.OnesyTest.assert.an('Intl'),
+        !!window.OnesyTest.assert.a([
           'mac',
           'mobile',
           'android',
@@ -1429,7 +1429,7 @@ describe('@amaui/test/assert', () => {
           'windows',
           'linux'
         ], { any: true }),
-        !!window.AmauiTest.assert.a([
+        !!window.OnesyTest.assert.a([
           'chrome',
           'opera',
           'firefox',
@@ -1438,7 +1438,7 @@ describe('@amaui/test/assert', () => {
           'edge',
           'ie'
         ], { any: true }),
-        !!window.AmauiTest.assert.a([
+        !!window.OnesyTest.assert.a([
           'mobile',
           'tablet',
           'laptop',
@@ -1446,55 +1446,55 @@ describe('@amaui/test/assert', () => {
           'tv'
         ], { any: true }),
 
-        window.AmauiTest.assert(4, { noError: true }).a('string'),
-        window.AmauiTest.assert('4', { noError: true }).a('number'),
-        window.AmauiTest.assert(4, { noError: true }).a('boolean'),
-        window.AmauiTest.assert(4, { noError: true }).an('array'),
-        window.AmauiTest.assert(4, { noError: true }).an('object'),
-        window.AmauiTest.assert(4, { noError: true }).a('object-like'),
-        window.AmauiTest.assert(4, { noError: true }).a('class'),
-        window.AmauiTest.assert(4, { noError: true }).a('function'),
-        window.AmauiTest.assert(4, { noError: true }).an('async'),
-        window.AmauiTest.assert(4, { noError: true }).a('map'),
-        window.AmauiTest.assert(4, { noError: true }).a('weakmap'),
-        window.AmauiTest.assert(4, { noError: true }).a('set'),
-        window.AmauiTest.assert(4, { noError: true }).a('weakset'),
-        window.AmauiTest.assert(4, { noError: true }).a('promise'),
-        window.AmauiTest.assert(4, { noError: true }).an('int8array'),
-        window.AmauiTest.assert(4, { noError: true }).an('uint8array'),
-        window.AmauiTest.assert(4, { noError: true }).a('uint8clampedarray'),
-        window.AmauiTest.assert(4, { noError: true }).an('int16array'),
-        window.AmauiTest.assert(4, { noError: true }).an('uint16array'),
-        window.AmauiTest.assert(4, { noError: true }).an('int32array'),
-        window.AmauiTest.assert(4, { noError: true }).an('uint32array'),
-        window.AmauiTest.assert(4, { noError: true }).a('float32array'),
-        window.AmauiTest.assert(4, { noError: true }).a('float64array'),
-        window.AmauiTest.assert(4, { noError: true }).a('bigint64array'),
-        window.AmauiTest.assert(4, { noError: true }).a('biguint64array'),
-        window.AmauiTest.assert(4, { noError: true }).a('typedarray'),
-        window.AmauiTest.assert(4, { noError: true }).a('dataview'),
-        window.AmauiTest.assert(4, { noError: true }).an('arraybuffer'),
-        window.AmauiTest.assert(4, { noError: true }).a('symbol'),
-        window.AmauiTest.assert(4, { noError: true }).an('error'),
-        window.AmauiTest.assert(4, { noError: true }).a('date'),
-        window.AmauiTest.assert(4, { noError: true }).a('regexp'),
-        window.AmauiTest.assert(4, { noError: true }).an('arguments'),
-        window.AmauiTest.assert(4, { noError: true }).a('null'),
-        window.AmauiTest.assert(4, { noError: true }).an('undefined'),
-        window.AmauiTest.assert(4, { noError: true }).a('blob'),
-        window.AmauiTest.assert(4, { noError: true }).an('element'),
-        window.AmauiTest.assert([], { noError: true }).a('simple'),
-        window.AmauiTest.assert([], { noError: true }).a('simple'),
-        window.AmauiTest.assert([], { noError: true }).a('not-array-object'),
-        window.AmauiTest.assert.an('offline', { noError: true }),
-        !window.AmauiTest.assert.a([
+        window.OnesyTest.assert(4, { noError: true }).a('string'),
+        window.OnesyTest.assert('4', { noError: true }).a('number'),
+        window.OnesyTest.assert(4, { noError: true }).a('boolean'),
+        window.OnesyTest.assert(4, { noError: true }).an('array'),
+        window.OnesyTest.assert(4, { noError: true }).an('object'),
+        window.OnesyTest.assert(4, { noError: true }).a('object-like'),
+        window.OnesyTest.assert(4, { noError: true }).a('class'),
+        window.OnesyTest.assert(4, { noError: true }).a('function'),
+        window.OnesyTest.assert(4, { noError: true }).an('async'),
+        window.OnesyTest.assert(4, { noError: true }).a('map'),
+        window.OnesyTest.assert(4, { noError: true }).a('weakmap'),
+        window.OnesyTest.assert(4, { noError: true }).a('set'),
+        window.OnesyTest.assert(4, { noError: true }).a('weakset'),
+        window.OnesyTest.assert(4, { noError: true }).a('promise'),
+        window.OnesyTest.assert(4, { noError: true }).an('int8array'),
+        window.OnesyTest.assert(4, { noError: true }).an('uint8array'),
+        window.OnesyTest.assert(4, { noError: true }).a('uint8clampedarray'),
+        window.OnesyTest.assert(4, { noError: true }).an('int16array'),
+        window.OnesyTest.assert(4, { noError: true }).an('uint16array'),
+        window.OnesyTest.assert(4, { noError: true }).an('int32array'),
+        window.OnesyTest.assert(4, { noError: true }).an('uint32array'),
+        window.OnesyTest.assert(4, { noError: true }).a('float32array'),
+        window.OnesyTest.assert(4, { noError: true }).a('float64array'),
+        window.OnesyTest.assert(4, { noError: true }).a('bigint64array'),
+        window.OnesyTest.assert(4, { noError: true }).a('biguint64array'),
+        window.OnesyTest.assert(4, { noError: true }).a('typedarray'),
+        window.OnesyTest.assert(4, { noError: true }).a('dataview'),
+        window.OnesyTest.assert(4, { noError: true }).an('arraybuffer'),
+        window.OnesyTest.assert(4, { noError: true }).a('symbol'),
+        window.OnesyTest.assert(4, { noError: true }).an('error'),
+        window.OnesyTest.assert(4, { noError: true }).a('date'),
+        window.OnesyTest.assert(4, { noError: true }).a('regexp'),
+        window.OnesyTest.assert(4, { noError: true }).an('arguments'),
+        window.OnesyTest.assert(4, { noError: true }).a('null'),
+        window.OnesyTest.assert(4, { noError: true }).an('undefined'),
+        window.OnesyTest.assert(4, { noError: true }).a('blob'),
+        window.OnesyTest.assert(4, { noError: true }).an('element'),
+        window.OnesyTest.assert([], { noError: true }).a('simple'),
+        window.OnesyTest.assert([], { noError: true }).a('simple'),
+        window.OnesyTest.assert([], { noError: true }).a('not-array-object'),
+        window.OnesyTest.assert.an('offline', { noError: true }),
+        !window.OnesyTest.assert.a([
           'browser',
           'worker',
           'nodejs',
           'localhost'
         ], { any: true }),
-        !window.AmauiTest.assert.an('Intl'),
-        !window.AmauiTest.assert.a([
+        !window.OnesyTest.assert.an('Intl'),
+        !window.OnesyTest.assert.a([
           'mac',
           'mobile',
           'android',
@@ -1502,7 +1502,7 @@ describe('@amaui/test/assert', () => {
           'windows',
           'linux'
         ], { any: true }),
-        !window.AmauiTest.assert.a([
+        !window.OnesyTest.assert.a([
           'chrome',
           'opera',
           'firefox',
@@ -1511,7 +1511,7 @@ describe('@amaui/test/assert', () => {
           'edge',
           'ie'
         ], { any: true }),
-        !window.AmauiTest.assert.a([
+        !window.OnesyTest.assert.a([
           'mobile',
           'tablet',
           'laptop',
@@ -1549,13 +1549,13 @@ describe('@amaui/test/assert', () => {
 
     const valueBrowsers = await evaluate(async (window: any) => {
       const values_ = [
-        !!window.AmauiTest.assert('a').eq('a'),
-        !!window.AmauiTest.assert('a').equal('a'),
-        !!window.AmauiTest.assert('a').equals('a'),
+        !!window.OnesyTest.assert('a').eq('a'),
+        !!window.OnesyTest.assert('a').equal('a'),
+        !!window.OnesyTest.assert('a').equals('a'),
 
-        window.AmauiTest.assert('a', { noError: true }).eq(4),
-        window.AmauiTest.assert('a', { noError: true }).equal(4),
-        window.AmauiTest.assert('a', { noError: true }).equals(4),
+        window.OnesyTest.assert('a', { noError: true }).eq(4),
+        window.OnesyTest.assert('a', { noError: true }).equal(4),
+        window.OnesyTest.assert('a', { noError: true }).equals(4),
       ];
 
       return values_;
@@ -1591,14 +1591,14 @@ describe('@amaui/test/assert', () => {
       }
 
       const values_ = [
-        !!window.AmauiTest.assert({ a: 4, aa: { a: 4 } }).eql({ a: 4, aa: { a: 4 } }),
-        !!window.AmauiTest.assert({ a: 4, aa: { a: 4 } }).equalDeep({ a: 4, aa: { a: 4 } }),
-        !!window.AmauiTest.assert({ a: 4, aa: { a: 4 } }).equalsDeep({ a: 4, aa: { a: 4 } }),
-        !!window.AmauiTest.assert([new A()]).equalsDeep([{ a: 4 }]),
+        !!window.OnesyTest.assert({ a: 4, aa: { a: 4 } }).eql({ a: 4, aa: { a: 4 } }),
+        !!window.OnesyTest.assert({ a: 4, aa: { a: 4 } }).equalDeep({ a: 4, aa: { a: 4 } }),
+        !!window.OnesyTest.assert({ a: 4, aa: { a: 4 } }).equalsDeep({ a: 4, aa: { a: 4 } }),
+        !!window.OnesyTest.assert([new A()]).equalsDeep([{ a: 4 }]),
 
-        window.AmauiTest.assert({ a: 4, aa: { a: 4 } }, { noError: true }).eql({ a: 4, aa: { a: '4' } }),
-        window.AmauiTest.assert({ a: 4, aa: { a: 4 } }, { noError: true }).equalDeep({ a: 4, aa: { a: '4' } }),
-        window.AmauiTest.assert({ a: 4, aa: { a: 4 } }, { noError: true }).equalsDeep({ a: 4, aa: { a: '4' } }),
+        window.OnesyTest.assert({ a: 4, aa: { a: 4 } }, { noError: true }).eql({ a: 4, aa: { a: '4' } }),
+        window.OnesyTest.assert({ a: 4, aa: { a: 4 } }, { noError: true }).equalDeep({ a: 4, aa: { a: '4' } }),
+        window.OnesyTest.assert({ a: 4, aa: { a: 4 } }, { noError: true }).equalsDeep({ a: 4, aa: { a: '4' } }),
       ];
 
       return values_;
@@ -1623,11 +1623,11 @@ describe('@amaui/test/assert', () => {
 
     const valueBrowsers = await evaluate(async (window: any) => {
       const values_ = [
-        !!window.AmauiTest.assert(4).lt(14),
-        !!window.AmauiTest.assert(4).lessThan(14),
+        !!window.OnesyTest.assert(4).lt(14),
+        !!window.OnesyTest.assert(4).lessThan(14),
 
-        window.AmauiTest.assert(4, { noError: true }).lt(1),
-        window.AmauiTest.assert(4, { noError: true }).lessThan(1),
+        window.OnesyTest.assert(4, { noError: true }).lt(1),
+        window.OnesyTest.assert(4, { noError: true }).lessThan(1),
       ];
 
       return values_;
@@ -1652,11 +1652,11 @@ describe('@amaui/test/assert', () => {
 
     const valueBrowsers = await evaluate(async (window: any) => {
       const values_ = [
-        !!window.AmauiTest.assert(4).lte(14),
-        !!window.AmauiTest.assert(4).lessThanEqual(4),
+        !!window.OnesyTest.assert(4).lte(14),
+        !!window.OnesyTest.assert(4).lessThanEqual(4),
 
-        window.AmauiTest.assert(4, { noError: true }).lte(1),
-        window.AmauiTest.assert(4, { noError: true }).lessThanEqual(1),
+        window.OnesyTest.assert(4, { noError: true }).lte(1),
+        window.OnesyTest.assert(4, { noError: true }).lessThanEqual(1),
       ];
 
       return values_;
@@ -1681,11 +1681,11 @@ describe('@amaui/test/assert', () => {
 
     const valueBrowsers = await evaluate(async (window: any) => {
       const values_ = [
-        !!window.AmauiTest.assert(14).gt(4),
-        !!window.AmauiTest.assert(14).greaterThan(1),
+        !!window.OnesyTest.assert(14).gt(4),
+        !!window.OnesyTest.assert(14).greaterThan(1),
 
-        window.AmauiTest.assert(14, { noError: true }).gt(40),
-        window.AmauiTest.assert(14, { noError: true }).greaterThan(40),
+        window.OnesyTest.assert(14, { noError: true }).gt(40),
+        window.OnesyTest.assert(14, { noError: true }).greaterThan(40),
       ];
 
       return values_;
@@ -1710,11 +1710,11 @@ describe('@amaui/test/assert', () => {
 
     const valueBrowsers = await evaluate(async (window: any) => {
       const values_ = [
-        !!window.AmauiTest.assert(14).gte(4),
-        !!window.AmauiTest.assert(14).greaterThanEqual(14),
+        !!window.OnesyTest.assert(14).gte(4),
+        !!window.OnesyTest.assert(14).greaterThanEqual(14),
 
-        window.AmauiTest.assert(4, { noError: true }).gt(14),
-        window.AmauiTest.assert(4, { noError: true }).greaterThan(14),
+        window.OnesyTest.assert(4, { noError: true }).gt(14),
+        window.OnesyTest.assert(4, { noError: true }).greaterThan(14),
       ];
 
       return values_;
@@ -1750,22 +1750,22 @@ describe('@amaui/test/assert', () => {
 
     const valueBrowsers = await evaluate(async (window: any) => {
       const values_ = [
-        !!window.AmauiTest.assert('aa4').in('4'),
-        !!window.AmauiTest.assert('aa14').in('14'),
-        !!window.AmauiTest.assert(['a', { a: { a: 4 } }]).include('a'),
-        !!window.AmauiTest.assert(['a', { a: { a: 4 } }]).in({ a: { a: 4 } }),
-        !!window.AmauiTest.assert(new Map([['a', 4]])).in(4),
-        !!window.AmauiTest.assert(new Map([['a', { a: 4 }]])).in({ a: 4 }),
-        !!window.AmauiTest.assert(new Set([4])).in(4),
-        !!window.AmauiTest.assert(new Set([4, { a: 4 }])).in({ a: 4 }),
-        !!window.AmauiTest.assert({ a: { a: 4 }, ab: 4 }).in({ a: { a: 4 } }),
-        !!window.AmauiTest.assert({ a: { a: 4 }, ab: 4 }).in({ a: { a: 4 }, ab: 4 }),
+        !!window.OnesyTest.assert('aa4').in('4'),
+        !!window.OnesyTest.assert('aa14').in('14'),
+        !!window.OnesyTest.assert(['a', { a: { a: 4 } }]).include('a'),
+        !!window.OnesyTest.assert(['a', { a: { a: 4 } }]).in({ a: { a: 4 } }),
+        !!window.OnesyTest.assert(new Map([['a', 4]])).in(4),
+        !!window.OnesyTest.assert(new Map([['a', { a: 4 }]])).in({ a: 4 }),
+        !!window.OnesyTest.assert(new Set([4])).in(4),
+        !!window.OnesyTest.assert(new Set([4, { a: 4 }])).in({ a: 4 }),
+        !!window.OnesyTest.assert({ a: { a: 4 }, ab: 4 }).in({ a: { a: 4 } }),
+        !!window.OnesyTest.assert({ a: { a: 4 }, ab: 4 }).in({ a: { a: 4 }, ab: 4 }),
 
-        window.AmauiTest.assert('aa4', { noError: true }).in(40),
-        window.AmauiTest.assert(['a', 4], { noError: true }).include(1),
-        window.AmauiTest.assert(new Map([['a', 4]]), { noError: true }).in(1),
-        window.AmauiTest.assert(new Set([4]), { noError: true }).in(1),
-        window.AmauiTest.assert({ a: { a: 4 }, ab: 4 }, { noError: true }).in(1),
+        window.OnesyTest.assert('aa4', { noError: true }).in(40),
+        window.OnesyTest.assert(['a', 4], { noError: true }).include(1),
+        window.OnesyTest.assert(new Map([['a', 4]]), { noError: true }).in(1),
+        window.OnesyTest.assert(new Set([4]), { noError: true }).in(1),
+        window.OnesyTest.assert({ a: { a: 4 }, ab: 4 }, { noError: true }).in(1),
       ];
 
       return values_;
@@ -1800,21 +1800,21 @@ describe('@amaui/test/assert', () => {
 
     const valueBrowsers = await evaluate(async (window: any) => {
       const values_ = [
-        !!window.AmauiTest.assert({ a: { a: 4 }, ab: 4 }).prop('a.a'),
-        !!window.AmauiTest.assert([4, { a: 4 }]).prop('1.a'),
-        !!window.AmauiTest.assert([4, { a: 4 }]).prop('1', { a: 4 }),
-        !!window.AmauiTest.assert([4, { a: 4 }]).prop('1.a', 4),
-        !!window.AmauiTest.assert({ a: { a: 4 }, ab: 4 }).property('a.a', 4),
-        !!window.AmauiTest.assert({ a: { a: 4 }, ab: 4 }).prop('a.a', 4),
-        !!window.AmauiTest.assert({ a: { a: 4 }, ab: 4 }).prop('toString'),
+        !!window.OnesyTest.assert({ a: { a: 4 }, ab: 4 }).prop('a.a'),
+        !!window.OnesyTest.assert([4, { a: 4 }]).prop('1.a'),
+        !!window.OnesyTest.assert([4, { a: 4 }]).prop('1', { a: 4 }),
+        !!window.OnesyTest.assert([4, { a: 4 }]).prop('1.a', 4),
+        !!window.OnesyTest.assert({ a: { a: 4 }, ab: 4 }).property('a.a', 4),
+        !!window.OnesyTest.assert({ a: { a: 4 }, ab: 4 }).prop('a.a', 4),
+        !!window.OnesyTest.assert({ a: { a: 4 }, ab: 4 }).prop('toString'),
 
-        window.AmauiTest.assert({ a: { a: 4 }, ab: 4 }, { noError: true }).prop('a.ab'),
-        window.AmauiTest.assert([4, { a: 4 }], { noError: true }).prop('4'),
-        window.AmauiTest.assert([4, { a: 4 }], { noError: true }).prop('1.ab'),
-        window.AmauiTest.assert([4, { a: 4 }], { noError: true }).prop('1.a', 14),
-        window.AmauiTest.assert({ a: { a: 4 }, ab: 4 }, { noError: true }).property('a.a', 14),
-        window.AmauiTest.assert({ a: { a: 4 }, ab: 4 }, { noError: true }).prop('ad'),
-        window.AmauiTest.assert({ a: { a: 4 }, ab: 4 }, { noError: true }).prop('toString1'),
+        window.OnesyTest.assert({ a: { a: 4 }, ab: 4 }, { noError: true }).prop('a.ab'),
+        window.OnesyTest.assert([4, { a: 4 }], { noError: true }).prop('4'),
+        window.OnesyTest.assert([4, { a: 4 }], { noError: true }).prop('1.ab'),
+        window.OnesyTest.assert([4, { a: 4 }], { noError: true }).prop('1.a', 14),
+        window.OnesyTest.assert({ a: { a: 4 }, ab: 4 }, { noError: true }).property('a.a', 14),
+        window.OnesyTest.assert({ a: { a: 4 }, ab: 4 }, { noError: true }).prop('ad'),
+        window.OnesyTest.assert({ a: { a: 4 }, ab: 4 }, { noError: true }).prop('toString1'),
       ];
 
       return values_;
@@ -1843,15 +1843,15 @@ describe('@amaui/test/assert', () => {
 
     const valueBrowsers = await evaluate(async (window: any) => {
       const values_ = [
-        !!window.AmauiTest.assert({ a: { a: 4 }, ab: 4, ad: 4 }).props({ a: { a: 4 }, ab: 4 }),
-        !!window.AmauiTest.assert({ a: { a: 4 }, ab: 4, ad: 4 }).properties({ a: { a: 4 }, ad: 4 }),
-        !!window.AmauiTest.assert([14, { a: 4 }, true]).props([14, true]),
-        !!window.AmauiTest.assert([14, { a: 4 }, true]).props([14, { a: 4 }]),
+        !!window.OnesyTest.assert({ a: { a: 4 }, ab: 4, ad: 4 }).props({ a: { a: 4 }, ab: 4 }),
+        !!window.OnesyTest.assert({ a: { a: 4 }, ab: 4, ad: 4 }).properties({ a: { a: 4 }, ad: 4 }),
+        !!window.OnesyTest.assert([14, { a: 4 }, true]).props([14, true]),
+        !!window.OnesyTest.assert([14, { a: 4 }, true]).props([14, { a: 4 }]),
 
-        window.AmauiTest.assert({ a: { a: 4 }, ab: 4, ad: 4 }, { noError: true }).props({ a: { a: 4 }, aa: 4 }),
-        window.AmauiTest.assert({ a: { a: 4 }, ab: 4, ad: 4 }, { noError: true }).properties({ a: { a: 14 }, ab: 4 }),
-        window.AmauiTest.assert([14, { a: 4 }, true], { noError: true }).props([41, true]),
-        window.AmauiTest.assert([14, { a: 4 }, true], { noError: true }).props([14, { a: 14 }]),
+        window.OnesyTest.assert({ a: { a: 4 }, ab: 4, ad: 4 }, { noError: true }).props({ a: { a: 4 }, aa: 4 }),
+        window.OnesyTest.assert({ a: { a: 4 }, ab: 4, ad: 4 }, { noError: true }).properties({ a: { a: 14 }, ab: 4 }),
+        window.OnesyTest.assert([14, { a: 4 }, true], { noError: true }).props([41, true]),
+        window.OnesyTest.assert([14, { a: 4 }, true], { noError: true }).props([14, { a: 14 }]),
       ];
 
       return values_;
@@ -1882,11 +1882,11 @@ describe('@amaui/test/assert', () => {
       function a1() { }
 
       const values_ = [
-        !!window.AmauiTest.assert(a).th(),
-        !!window.AmauiTest.assert(a).throw(String(new Error())),
+        !!window.OnesyTest.assert(a).th(),
+        !!window.OnesyTest.assert(a).throw(String(new Error())),
 
-        window.AmauiTest.assert(a1, { noError: true }).th(),
-        window.AmauiTest.assert(a, { noError: true }).th(4),
+        window.OnesyTest.assert(a1, { noError: true }).th(),
+        window.OnesyTest.assert(a, { noError: true }).th(4),
       ];
 
       return values_;
@@ -1902,7 +1902,7 @@ describe('@amaui/test/assert', () => {
 
   it('throw async', async () => {
     async function a() {
-      await AmauiUtils.wait(140);
+      await OnesyUtils.wait(140);
 
       throw new Error();
     }
@@ -1918,18 +1918,18 @@ describe('@amaui/test/assert', () => {
 
     const valueBrowsers = await evaluate(async (window: any) => {
       async function a() {
-        await window.AmauiUtils.wait(140);
+        await window.OnesyUtils.wait(140);
 
         throw new Error();
       }
       async function a1() { }
 
       const values_ = [
-        !!(await window.AmauiTest.assert(a).tha()),
-        !!(await window.AmauiTest.assert(a).throwAsync(String(new Error()))),
+        !!(await window.OnesyTest.assert(a).tha()),
+        !!(await window.OnesyTest.assert(a).throwAsync(String(new Error()))),
 
-        await window.AmauiTest.assert(a1, { noError: true }).tha(),
-        await window.AmauiTest.assert(a, { noError: true }).tha(4),
+        await window.OnesyTest.assert(a1, { noError: true }).tha(),
+        await window.OnesyTest.assert(a, { noError: true }).tha(4),
       ];
 
       return values_;

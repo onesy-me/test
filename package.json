@@ -1,14 +1,14 @@
 {
-  "name": "@amaui/test",
+  "name": "@onesy/test",
   "version": "1.1.3",
   "description": "Test suite for front end and back end",
-  "repository": "https://github.com/amaui-org/amaui-test.git",
+  "repository": "https://github.com/onesy-org/onesy-test.git",
   "author": "Lazar <lazareric.com@gmail.com>",
   "license": "MIT",
   "private": false,
   "main": "./src/index.ts",
   "bin": {
-    "amaui-test": "./cli.js"
+    "onesy-test": "./cli.js"
   },
   "keywords": [
     "test",
@@ -35,7 +35,7 @@
     "nodejs",
     "node",
     "library",
-    "amaui",
+    "onesy",
     "utils"
   ],
   "scripts": {
@@ -50,21 +50,21 @@
     "test": "yarn lint && yarn type && yarn build && yarn test:pre && yarn cov && yarn test:post"
   },
   "dependencies": {
-    "@amaui/date": "^1.1.11",
-    "@amaui/diff": "^1.0.11141",
-    "@amaui/errors": "^1.0.111",
-    "@amaui/log": "^1.0.16",
-    "@amaui/request": "^1.1.7",
-    "@amaui/subscription": "^1.0.5",
-    "@amaui/utils": "^1.1.18",
+    "@onesy/date": "^1.1.11",
+    "@onesy/diff": "^1.0.11141",
+    "@onesy/errors": "^1.0.111",
+    "@onesy/log": "^1.0.16",
+    "@onesy/request": "^1.1.7",
+    "@onesy/subscription": "^1.0.5",
+    "@onesy/utils": "^1.1.18",
     "@babel/runtime": "^7.23.5",
     "fast-glob": "^3.3.2",
     "fs-extra": "^11.2.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@amaui/models": "^1.0.11114",
-    "@amaui/node": "^1.0.11117",
+    "@onesy/models": "^1.0.11114",
+    "@onesy/node": "^1.0.11117",
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.0",
     "@babel/plugin-proposal-class-properties": "^7.17.12",

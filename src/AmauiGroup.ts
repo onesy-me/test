@@ -1,13 +1,13 @@
-import { TMethod } from '@amaui/models';
+import { TMethod } from '@onesy/models';
 
-import AmauiTo from './AmauiTo';
-import AmauiMiddleware from './AmauiMiddleware';
-import { IAmauiResponse } from './AmauiTest';
+import OnesyTo from './OnesyTo';
+import OnesyMiddleware from './OnesyMiddleware';
+import { IOnesyResponse } from './OnesyTest';
 
-export interface IAmauiGroup {
+export interface IOnesyGroup {
   name: string;
   method?: TMethod;
-  parent: AmauiGroup;
+  parent: OnesyGroup;
   file?: string;
   level: number;
   levels: number;
@@ -15,24 +15,24 @@ export interface IAmauiGroup {
   mainIndex: number;
   latestIndex: number;
 
-  groups: Array<AmauiGroup>;
-  tos: Array<AmauiTo>;
+  groups: Array<OnesyGroup>;
+  tos: Array<OnesyTo>;
 
-  preAll: Array<AmauiMiddleware>;
-  preEveryGroup: Array<AmauiMiddleware>;
-  preEveryTo: Array<AmauiMiddleware>;
-  pre: Array<AmauiMiddleware>;
-  preEveryGroupGroup: Array<AmauiMiddleware>;
-  preTo: Array<AmauiMiddleware>;
-  preEveryGroupTo: Array<AmauiMiddleware>;
+  preAll: Array<OnesyMiddleware>;
+  preEveryGroup: Array<OnesyMiddleware>;
+  preEveryTo: Array<OnesyMiddleware>;
+  pre: Array<OnesyMiddleware>;
+  preEveryGroupGroup: Array<OnesyMiddleware>;
+  preTo: Array<OnesyMiddleware>;
+  preEveryGroupTo: Array<OnesyMiddleware>;
 
-  postAll: Array<AmauiMiddleware>;
-  postEveryGroup: Array<AmauiMiddleware>;
-  postEveryTo: Array<AmauiMiddleware>;
-  post: Array<AmauiMiddleware>;
-  postEveryGroupGroup: Array<AmauiMiddleware>;
-  postTo: Array<AmauiMiddleware>;
-  postEveryGroupTo: Array<AmauiMiddleware>;
+  postAll: Array<OnesyMiddleware>;
+  postEveryGroup: Array<OnesyMiddleware>;
+  postEveryTo: Array<OnesyMiddleware>;
+  post: Array<OnesyMiddleware>;
+  postEveryGroupGroup: Array<OnesyMiddleware>;
+  postTo: Array<OnesyMiddleware>;
+  postEveryGroupTo: Array<OnesyMiddleware>;
 
   summary: {
     amount: {
@@ -45,11 +45,11 @@ export interface IAmauiGroup {
     };
   };
 
-  response?: IAmauiResponse;
+  response?: IOnesyResponse;
 }
 
-class AmauiGroup implements IAmauiGroup {
-  public parent: AmauiGroup;
+class OnesyGroup implements IOnesyGroup {
+  public parent: OnesyGroup;
   public file?: string;
   public level = 0;
   public levels = 0;
@@ -66,26 +66,26 @@ class AmauiGroup implements IAmauiGroup {
       fail: 0,
     },
   };
-  public response: IAmauiResponse = {};
+  public response: IOnesyResponse = {};
 
-  public groups: Array<AmauiGroup> = [];
-  public tos: Array<AmauiTo> = [];
+  public groups: Array<OnesyGroup> = [];
+  public tos: Array<OnesyTo> = [];
 
-  public preAll: Array<AmauiMiddleware> = [];
-  public preEveryGroup: Array<AmauiMiddleware> = [];
-  public preEveryTo: Array<AmauiMiddleware> = [];
-  public pre: Array<AmauiMiddleware> = [];
-  public preEveryGroupGroup: Array<AmauiMiddleware> = [];
-  public preTo: Array<AmauiMiddleware> = [];
-  public preEveryGroupTo: Array<AmauiMiddleware> = [];
+  public preAll: Array<OnesyMiddleware> = [];
+  public preEveryGroup: Array<OnesyMiddleware> = [];
+  public preEveryTo: Array<OnesyMiddleware> = [];
+  public pre: Array<OnesyMiddleware> = [];
+  public preEveryGroupGroup: Array<OnesyMiddleware> = [];
+  public preTo: Array<OnesyMiddleware> = [];
+  public preEveryGroupTo: Array<OnesyMiddleware> = [];
 
-  public postAll: Array<AmauiMiddleware> = [];
-  public postEveryGroup: Array<AmauiMiddleware> = [];
-  public postEveryTo: Array<AmauiMiddleware> = [];
-  public post: Array<AmauiMiddleware> = [];
-  public postEveryGroupGroup: Array<AmauiMiddleware> = [];
-  public postTo: Array<AmauiMiddleware> = [];
-  public postEveryGroupTo: Array<AmauiMiddleware> = [];
+  public postAll: Array<OnesyMiddleware> = [];
+  public postEveryGroup: Array<OnesyMiddleware> = [];
+  public postEveryTo: Array<OnesyMiddleware> = [];
+  public post: Array<OnesyMiddleware> = [];
+  public postEveryGroupGroup: Array<OnesyMiddleware> = [];
+  public postTo: Array<OnesyMiddleware> = [];
+  public postEveryGroupTo: Array<OnesyMiddleware> = [];
 
   constructor(
     public name: string,
@@ -94,4 +94,4 @@ class AmauiGroup implements IAmauiGroup {
 
 }
 
-export default AmauiGroup;
+export default OnesyGroup;

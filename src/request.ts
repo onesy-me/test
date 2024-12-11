@@ -4,25 +4,25 @@ import https from 'https';
 import net from 'net';
 import events from 'events';
 
-import merge from '@amaui/utils/merge';
-import promisify from '@amaui/utils/promisify';
-import isValid from '@amaui/utils/isValid';
-import isEnvironment from '@amaui/utils/isEnvironment';
-import AmauiRequest from '@amaui/request';
-import { IAmauiRequestResponse, IOptionsRequest, TMethodType } from '@amaui/request/AmauiRequest';
+import merge from '@onesy/utils/merge';
+import promisify from '@onesy/utils/promisify';
+import isValid from '@onesy/utils/isValid';
+import isEnvironment from '@onesy/utils/isEnvironment';
+import OnesyRequest from '@onesy/request';
+import { IOnesyRequestResponse, IOptionsRequest, TMethodType } from '@onesy/request/OnesyRequest';
 
 import assert, { IAssertObject, IAssertOptions } from './assert';
 
-if (isEnvironment('nodejs') && !global.amauiEvents) global.amauiEvents = new events.EventEmitter();
+if (isEnvironment('nodejs') && !global.onesyEvents) global.onesyEvents = new events.EventEmitter();
 
 interface IOptions {
   keepOpen?: boolean;
 }
 
-export type IAmauiTestRequestStatusOperator = 'eq' | 'equal' | 'lt' | 'less-than' | 'lte' | 'less-than-equal' | 'gt' | 'greater-than' | 'gte' | 'greater-than-equal';
+export type IOnesyTestRequestStatusOperator = 'eq' | 'equal' | 'lt' | 'less-than' | 'lte' | 'less-than-equal' | 'gt' | 'greater-than' | 'gte' | 'greater-than-equal';
 
-export interface IAmauiTestRequestResponse {
-  value?: IAmauiRequestResponse;
+export interface IOnesyTestRequestResponse {
+  value?: IOnesyRequestResponse;
 
   response?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
   meta?: (value: Array<any> | any, options?: IAssertOptions) => IAssertObject;
@@ -33,25 +33,25 @@ export interface IAmauiTestRequestResponse {
   request?: (value: string, value1: any, options?: IAssertOptions) => IAssertObject;
   headers?: (value: string, value1: any, options?: IAssertOptions) => IAssertObject;
 
-  status?: (value: Array<number> | number, operator?: IAmauiTestRequestStatusOperator, options?: IAssertOptions) => IAssertObject;
+  status?: (value: Array<number> | number, operator?: IOnesyTestRequestStatusOperator, options?: IAssertOptions) => IAssertObject;
 }
 
-export interface IAmauiTestRequest {
-  request: (url: string, options?: IOptionsRequest) => Promise<IAmauiTestRequestResponse>;
-  get: (url: string, options?: IOptionsRequest) => Promise<IAmauiTestRequestResponse>;
-  post: (url: string, options?: IOptionsRequest) => Promise<IAmauiTestRequestResponse>;
-  put: (url: string, options?: IOptionsRequest) => Promise<IAmauiTestRequestResponse>;
-  delete: (url: string, options?: IOptionsRequest) => Promise<IAmauiTestRequestResponse>;
-  head: (url: string, options?: IOptionsRequest) => Promise<IAmauiTestRequestResponse>;
-  options: (url: string, options?: IOptionsRequest) => Promise<IAmauiTestRequestResponse>;
-  patch: (url: string, options?: IOptionsRequest) => Promise<IAmauiTestRequestResponse>;
+export interface IOnesyTestRequest {
+  request: (url: string, options?: IOptionsRequest) => Promise<IOnesyTestRequestResponse>;
+  get: (url: string, options?: IOptionsRequest) => Promise<IOnesyTestRequestResponse>;
+  post: (url: string, options?: IOptionsRequest) => Promise<IOnesyTestRequestResponse>;
+  put: (url: string, options?: IOptionsRequest) => Promise<IOnesyTestRequestResponse>;
+  delete: (url: string, options?: IOptionsRequest) => Promise<IOnesyTestRequestResponse>;
+  head: (url: string, options?: IOptionsRequest) => Promise<IOnesyTestRequestResponse>;
+  options: (url: string, options?: IOptionsRequest) => Promise<IOnesyTestRequestResponse>;
+  patch: (url: string, options?: IOptionsRequest) => Promise<IOnesyTestRequestResponse>;
 }
 
 const optionsDefault: IOptions = {
   keepOpen: true,
 };
 
-export async function request(app?: express.Application | http.Server | https.Server | string, options_: IOptions = optionsDefault): Promise<IAmauiTestRequest> {
+export async function request(app?: express.Application | http.Server | https.Server | string, options_: IOptions = optionsDefault): Promise<IOnesyTestRequest> {
   const options = merge(options_, optionsDefault);
   let server: http.Server | https.Server;
   let port: number;
@@ -61,9 +61,9 @@ export async function request(app?: express.Application | http.Server | https.Se
       await promisify(server.close.bind(server))();
 
       // For testing purposes
-      global.amauiEvents.emit('amaui-test-app-end');
+      global.onesyEvents.emit('onesy-test-app-end');
 
-      global.amauiEvents.off('amaui-test-clear', appClose);
+      global.onesyEvents.off('onesy-test-clear', appClose);
     }
   };
 
@@ -77,9 +77,9 @@ export async function request(app?: express.Application | http.Server | https.Se
         port = (server.address() as net.AddressInfo).port;
 
         // For testing purposes
-        global.amauiEvents.emit('amaui-test-app-start');
+        global.onesyEvents.emit('onesy-test-app-start');
 
-        global.amauiEvents.on('amaui-test-clear', appClose);
+        global.onesyEvents.on('onesy-test-clear', appClose);
       }
       catch (error) { }
     }
@@ -92,29 +92,29 @@ export async function request(app?: express.Application | http.Server | https.Se
 
   // Methods
   const requestObject = {
-    request: async (url: string, amauiRequestOptions: IOptionsRequest = {}): Promise<IAmauiTestRequestResponse> => {
+    request: async (url: string, onesyRequestOptions: IOptionsRequest = {}): Promise<IOnesyTestRequestResponse> => {
       if (!options.keepOpen) {
         await appStart();
 
-        AmauiRequest.interceptors.request.post.subscribe(appClose);
+        OnesyRequest.interceptors.request.post.subscribe(appClose);
       }
 
-      if (!amauiRequestOptions.request) amauiRequestOptions.request = {};
+      if (!onesyRequestOptions.request) onesyRequestOptions.request = {};
 
-      const url_ = url || amauiRequestOptions.url;
+      const url_ = url || onesyRequestOptions.url;
 
-      amauiRequestOptions.url = (app && isValid('url-path', url_)) ? `http://localhost:${port}${url_}` : url_;
+      onesyRequestOptions.url = (app && isValid('url-path', url_)) ? `http://localhost:${port}${url_}` : url_;
 
-      let response: IAmauiRequestResponse;
+      let response: IOnesyRequestResponse;
 
       try {
-        response = await AmauiRequest.request(amauiRequestOptions);
+        response = await OnesyRequest.request(onesyRequestOptions);
       }
       catch (error) {
         response = error;
       }
 
-      const assertResponse: IAmauiTestRequestResponse = {
+      const assertResponse: IOnesyTestRequestResponse = {
         value: response,
 
         response: (...args: [Array<any> | any, IAssertOptions]) => assert(response.response).eql(...args),
@@ -135,13 +135,13 @@ export async function request(app?: express.Application | http.Server | https.Se
 
   const METHODS: Array<TMethodType> = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'OPTIONS', 'PATCH'];
 
-  METHODS.forEach(method => requestObject[method.toLowerCase()] = (url: string, amauiRequestOptions: IOptionsRequest = {}): Promise<IAmauiTestRequestResponse> => {
-    amauiRequestOptions.method = method;
+  METHODS.forEach(method => requestObject[method.toLowerCase()] = (url: string, onesyRequestOptions: IOptionsRequest = {}): Promise<IOnesyTestRequestResponse> => {
+    onesyRequestOptions.method = method;
 
-    return requestObject.request(url, amauiRequestOptions);
+    return requestObject.request(url, onesyRequestOptions);
   });
 
-  return requestObject as IAmauiTestRequest;
+  return requestObject as IOnesyTestRequest;
 }
 
 export default request;

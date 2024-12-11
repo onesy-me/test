@@ -1,45 +1,45 @@
 /* tslint:disable: no-shadowed-variable */
 import { expect } from 'chai';
 
-import * as AmauiUtils from '@amaui/utils';
+import * as OnesyUtils from '@onesy/utils';
 
 import { evaluate } from '../utils/js/test/utils';
 
-import { AmauiTo, AmauiMiddleware, AmauiGroup } from '../src';
+import { OnesyTo, OnesyMiddleware, OnesyGroup } from '../src';
 
-describe('AmauiGroup', () => {
+describe('OnesyGroup', () => {
 
-  it('AmauiGroup', async () => {
-    const amauiGroup = new AmauiGroup('a', () => 4);
+  it('OnesyGroup', async () => {
+    const onesyGroup = new OnesyGroup('a', () => 4);
 
-    amauiGroup.parent = new AmauiGroup('a');
-    amauiGroup.file = '/a';
-    amauiGroup.level = 1;
-    amauiGroup.levels = 4;
-    amauiGroup.index = 14;
-    amauiGroup.mainIndex = 41;
-    amauiGroup.latestIndex = 40;
+    onesyGroup.parent = new OnesyGroup('a');
+    onesyGroup.file = '/a';
+    onesyGroup.level = 1;
+    onesyGroup.levels = 4;
+    onesyGroup.index = 14;
+    onesyGroup.mainIndex = 41;
+    onesyGroup.latestIndex = 40;
 
-    amauiGroup.groups = [new AmauiGroup('a')];
-    amauiGroup.tos = [new AmauiTo('a', () => 4)];
+    onesyGroup.groups = [new OnesyGroup('a')];
+    onesyGroup.tos = [new OnesyTo('a', () => 4)];
 
-    amauiGroup.preAll = [new AmauiMiddleware('a', () => 4)];
-    amauiGroup.preEveryGroup = [new AmauiMiddleware('a', () => 4)];
-    amauiGroup.preEveryTo = [new AmauiMiddleware('a', () => 4)];
-    amauiGroup.pre = [new AmauiMiddleware('a', () => 4)];
-    amauiGroup.preEveryGroupGroup = [new AmauiMiddleware('a', () => 4)];
-    amauiGroup.preTo = [new AmauiMiddleware('a', () => 4)];
-    amauiGroup.preEveryGroupTo = [new AmauiMiddleware('a', () => 4)];
+    onesyGroup.preAll = [new OnesyMiddleware('a', () => 4)];
+    onesyGroup.preEveryGroup = [new OnesyMiddleware('a', () => 4)];
+    onesyGroup.preEveryTo = [new OnesyMiddleware('a', () => 4)];
+    onesyGroup.pre = [new OnesyMiddleware('a', () => 4)];
+    onesyGroup.preEveryGroupGroup = [new OnesyMiddleware('a', () => 4)];
+    onesyGroup.preTo = [new OnesyMiddleware('a', () => 4)];
+    onesyGroup.preEveryGroupTo = [new OnesyMiddleware('a', () => 4)];
 
-    amauiGroup.postAll = [new AmauiMiddleware('a', () => 4)];
-    amauiGroup.postEveryGroup = [new AmauiMiddleware('a', () => 4)];
-    amauiGroup.postEveryTo = [new AmauiMiddleware('a', () => 4)];
-    amauiGroup.post = [new AmauiMiddleware('a', () => 4)];
-    amauiGroup.postEveryGroupGroup = [new AmauiMiddleware('a', () => 4)];
-    amauiGroup.postTo = [new AmauiMiddleware('a', () => 4)];
-    amauiGroup.postEveryGroupTo = [new AmauiMiddleware('a', () => 4)];
+    onesyGroup.postAll = [new OnesyMiddleware('a', () => 4)];
+    onesyGroup.postEveryGroup = [new OnesyMiddleware('a', () => 4)];
+    onesyGroup.postEveryTo = [new OnesyMiddleware('a', () => 4)];
+    onesyGroup.post = [new OnesyMiddleware('a', () => 4)];
+    onesyGroup.postEveryGroupGroup = [new OnesyMiddleware('a', () => 4)];
+    onesyGroup.postTo = [new OnesyMiddleware('a', () => 4)];
+    onesyGroup.postEveryGroupTo = [new OnesyMiddleware('a', () => 4)];
 
-    amauiGroup.summary = {
+    onesyGroup.summary = {
       amount: {
         tos: 15,
         groups: 4,
@@ -50,8 +50,8 @@ describe('AmauiGroup', () => {
       },
     };
 
-    amauiGroup.response = {
-      for: amauiGroup,
+    onesyGroup.response = {
+      for: onesyGroup,
       start: 14,
       end: 41,
       duration: 41 - 14,
@@ -63,86 +63,86 @@ describe('AmauiGroup', () => {
     const values_ = [];
 
     values_.push(
-      amauiGroup.parent instanceof AmauiGroup,
-      amauiGroup.response.for === amauiGroup,
-      AmauiUtils.is('function', amauiGroup.method),
+      onesyGroup.parent instanceof OnesyGroup,
+      onesyGroup.response.for === onesyGroup,
+      OnesyUtils.is('function', onesyGroup.method),
 
-      amauiGroup.groups[0] instanceof AmauiGroup,
-      amauiGroup.tos[0] instanceof AmauiTo,
+      onesyGroup.groups[0] instanceof OnesyGroup,
+      onesyGroup.tos[0] instanceof OnesyTo,
 
-      amauiGroup.preAll[0] instanceof AmauiMiddleware,
-      amauiGroup.preEveryGroup[0] instanceof AmauiMiddleware,
-      amauiGroup.preEveryTo[0] instanceof AmauiMiddleware,
-      amauiGroup.pre[0] instanceof AmauiMiddleware,
-      amauiGroup.preEveryGroupGroup[0] instanceof AmauiMiddleware,
-      amauiGroup.preTo[0] instanceof AmauiMiddleware,
-      amauiGroup.preEveryGroupTo[0] instanceof AmauiMiddleware,
+      onesyGroup.preAll[0] instanceof OnesyMiddleware,
+      onesyGroup.preEveryGroup[0] instanceof OnesyMiddleware,
+      onesyGroup.preEveryTo[0] instanceof OnesyMiddleware,
+      onesyGroup.pre[0] instanceof OnesyMiddleware,
+      onesyGroup.preEveryGroupGroup[0] instanceof OnesyMiddleware,
+      onesyGroup.preTo[0] instanceof OnesyMiddleware,
+      onesyGroup.preEveryGroupTo[0] instanceof OnesyMiddleware,
 
-      amauiGroup.postAll[0] instanceof AmauiMiddleware,
-      amauiGroup.postEveryGroup[0] instanceof AmauiMiddleware,
-      amauiGroup.postEveryTo[0] instanceof AmauiMiddleware,
-      amauiGroup.post[0] instanceof AmauiMiddleware,
-      amauiGroup.postEveryGroupGroup[0] instanceof AmauiMiddleware,
-      amauiGroup.postTo[0] instanceof AmauiMiddleware,
-      amauiGroup.postEveryGroupTo[0] instanceof AmauiMiddleware,
+      onesyGroup.postAll[0] instanceof OnesyMiddleware,
+      onesyGroup.postEveryGroup[0] instanceof OnesyMiddleware,
+      onesyGroup.postEveryTo[0] instanceof OnesyMiddleware,
+      onesyGroup.post[0] instanceof OnesyMiddleware,
+      onesyGroup.postEveryGroupGroup[0] instanceof OnesyMiddleware,
+      onesyGroup.postTo[0] instanceof OnesyMiddleware,
+      onesyGroup.postEveryGroupTo[0] instanceof OnesyMiddleware,
     );
 
-    delete amauiGroup.parent;
-    delete amauiGroup.method;
-    delete amauiGroup.response.for;
+    delete onesyGroup.parent;
+    delete onesyGroup.method;
+    delete onesyGroup.response.for;
 
-    delete amauiGroup.groups;
-    delete amauiGroup.tos;
+    delete onesyGroup.groups;
+    delete onesyGroup.tos;
 
-    delete amauiGroup.preAll;
-    delete amauiGroup.preEveryGroup;
-    delete amauiGroup.preEveryTo;
-    delete amauiGroup.pre;
-    delete amauiGroup.preEveryGroupGroup;
-    delete amauiGroup.preTo;
-    delete amauiGroup.preEveryGroupTo;
+    delete onesyGroup.preAll;
+    delete onesyGroup.preEveryGroup;
+    delete onesyGroup.preEveryTo;
+    delete onesyGroup.pre;
+    delete onesyGroup.preEveryGroupGroup;
+    delete onesyGroup.preTo;
+    delete onesyGroup.preEveryGroupTo;
 
-    delete amauiGroup.postAll;
-    delete amauiGroup.postEveryGroup;
-    delete amauiGroup.postEveryTo;
-    delete amauiGroup.post;
-    delete amauiGroup.postEveryGroupGroup;
-    delete amauiGroup.postTo;
-    delete amauiGroup.postEveryGroupTo;
+    delete onesyGroup.postAll;
+    delete onesyGroup.postEveryGroup;
+    delete onesyGroup.postEveryTo;
+    delete onesyGroup.post;
+    delete onesyGroup.postEveryGroupGroup;
+    delete onesyGroup.postTo;
+    delete onesyGroup.postEveryGroupTo;
 
-    values_.push(amauiGroup);
+    values_.push(onesyGroup);
 
     const valueBrowsers = await evaluate((window: any) => {
-      const amauiGroup = new window.AmauiTest.AmauiGroup('a', () => 4);
+      const onesyGroup = new window.OnesyTest.OnesyGroup('a', () => 4);
 
-      amauiGroup.parent = new window.AmauiTest.AmauiGroup('a');
-      amauiGroup.file = '/a';
-      amauiGroup.level = 1;
-      amauiGroup.levels = 4;
-      amauiGroup.index = 14;
-      amauiGroup.mainIndex = 41;
-      amauiGroup.latestIndex = 40;
+      onesyGroup.parent = new window.OnesyTest.OnesyGroup('a');
+      onesyGroup.file = '/a';
+      onesyGroup.level = 1;
+      onesyGroup.levels = 4;
+      onesyGroup.index = 14;
+      onesyGroup.mainIndex = 41;
+      onesyGroup.latestIndex = 40;
 
-      amauiGroup.groups = [new window.AmauiTest.AmauiGroup('a')];
-      amauiGroup.tos = [new window.AmauiTest.AmauiTo('a', () => 4)];
+      onesyGroup.groups = [new window.OnesyTest.OnesyGroup('a')];
+      onesyGroup.tos = [new window.OnesyTest.OnesyTo('a', () => 4)];
 
-      amauiGroup.preAll = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
-      amauiGroup.preEveryGroup = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
-      amauiGroup.preEveryTo = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
-      amauiGroup.pre = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
-      amauiGroup.preEveryGroupGroup = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
-      amauiGroup.preTo = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
-      amauiGroup.preEveryGroupTo = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      onesyGroup.preAll = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
+      onesyGroup.preEveryGroup = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
+      onesyGroup.preEveryTo = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
+      onesyGroup.pre = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
+      onesyGroup.preEveryGroupGroup = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
+      onesyGroup.preTo = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
+      onesyGroup.preEveryGroupTo = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
 
-      amauiGroup.postAll = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
-      amauiGroup.postEveryGroup = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
-      amauiGroup.postEveryTo = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
-      amauiGroup.post = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
-      amauiGroup.postEveryGroupGroup = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
-      amauiGroup.postTo = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
-      amauiGroup.postEveryGroupTo = [new window.AmauiTest.AmauiMiddleware('a', () => 4)];
+      onesyGroup.postAll = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
+      onesyGroup.postEveryGroup = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
+      onesyGroup.postEveryTo = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
+      onesyGroup.post = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
+      onesyGroup.postEveryGroupGroup = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
+      onesyGroup.postTo = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
+      onesyGroup.postEveryGroupTo = [new window.OnesyTest.OnesyMiddleware('a', () => 4)];
 
-      amauiGroup.summary = {
+      onesyGroup.summary = {
         amount: {
           tos: 15,
           groups: 4,
@@ -153,8 +153,8 @@ describe('AmauiGroup', () => {
         },
       };
 
-      amauiGroup.response = {
-        for: amauiGroup,
+      onesyGroup.response = {
+        for: onesyGroup,
         start: 14,
         end: 41,
         duration: 41 - 14,
@@ -166,54 +166,54 @@ describe('AmauiGroup', () => {
       const values_ = [];
 
       values_.push(
-        amauiGroup.parent instanceof window.AmauiTest.AmauiGroup,
-        amauiGroup.response.for === amauiGroup,
-        AmauiUtils.is('function', amauiGroup.method),
+        onesyGroup.parent instanceof window.OnesyTest.OnesyGroup,
+        onesyGroup.response.for === onesyGroup,
+        OnesyUtils.is('function', onesyGroup.method),
 
-        amauiGroup.groups[0] instanceof window.AmauiTest.AmauiGroup,
-        amauiGroup.tos[0] instanceof window.AmauiTest.AmauiTo,
+        onesyGroup.groups[0] instanceof window.OnesyTest.OnesyGroup,
+        onesyGroup.tos[0] instanceof window.OnesyTest.OnesyTo,
 
-        amauiGroup.preAll[0] instanceof window.AmauiTest.AmauiMiddleware,
-        amauiGroup.preEveryGroup[0] instanceof window.AmauiTest.AmauiMiddleware,
-        amauiGroup.preEveryTo[0] instanceof window.AmauiTest.AmauiMiddleware,
-        amauiGroup.pre[0] instanceof window.AmauiTest.AmauiMiddleware,
-        amauiGroup.preEveryGroupGroup[0] instanceof window.AmauiTest.AmauiMiddleware,
-        amauiGroup.preTo[0] instanceof window.AmauiTest.AmauiMiddleware,
-        amauiGroup.preEveryGroupTo[0] instanceof window.AmauiTest.AmauiMiddleware,
+        onesyGroup.preAll[0] instanceof window.OnesyTest.OnesyMiddleware,
+        onesyGroup.preEveryGroup[0] instanceof window.OnesyTest.OnesyMiddleware,
+        onesyGroup.preEveryTo[0] instanceof window.OnesyTest.OnesyMiddleware,
+        onesyGroup.pre[0] instanceof window.OnesyTest.OnesyMiddleware,
+        onesyGroup.preEveryGroupGroup[0] instanceof window.OnesyTest.OnesyMiddleware,
+        onesyGroup.preTo[0] instanceof window.OnesyTest.OnesyMiddleware,
+        onesyGroup.preEveryGroupTo[0] instanceof window.OnesyTest.OnesyMiddleware,
 
-        amauiGroup.postAll[0] instanceof window.AmauiTest.AmauiMiddleware,
-        amauiGroup.postEveryGroup[0] instanceof window.AmauiTest.AmauiMiddleware,
-        amauiGroup.postEveryTo[0] instanceof window.AmauiTest.AmauiMiddleware,
-        amauiGroup.post[0] instanceof window.AmauiTest.AmauiMiddleware,
-        amauiGroup.postEveryGroupGroup[0] instanceof window.AmauiTest.AmauiMiddleware,
-        amauiGroup.postTo[0] instanceof window.AmauiTest.AmauiMiddleware,
-        amauiGroup.postEveryGroupTo[0] instanceof window.AmauiTest.AmauiMiddleware,
+        onesyGroup.postAll[0] instanceof window.OnesyTest.OnesyMiddleware,
+        onesyGroup.postEveryGroup[0] instanceof window.OnesyTest.OnesyMiddleware,
+        onesyGroup.postEveryTo[0] instanceof window.OnesyTest.OnesyMiddleware,
+        onesyGroup.post[0] instanceof window.OnesyTest.OnesyMiddleware,
+        onesyGroup.postEveryGroupGroup[0] instanceof window.OnesyTest.OnesyMiddleware,
+        onesyGroup.postTo[0] instanceof window.OnesyTest.OnesyMiddleware,
+        onesyGroup.postEveryGroupTo[0] instanceof window.OnesyTest.OnesyMiddleware,
       );
 
-      delete amauiGroup.parent;
-      delete amauiGroup.method;
-      delete amauiGroup.response.for;
+      delete onesyGroup.parent;
+      delete onesyGroup.method;
+      delete onesyGroup.response.for;
 
-      delete amauiGroup.groups;
-      delete amauiGroup.tos;
+      delete onesyGroup.groups;
+      delete onesyGroup.tos;
 
-      delete amauiGroup.preAll;
-      delete amauiGroup.preEveryGroup;
-      delete amauiGroup.preEveryTo;
-      delete amauiGroup.pre;
-      delete amauiGroup.preEveryGroupGroup;
-      delete amauiGroup.preTo;
-      delete amauiGroup.preEveryGroupTo;
+      delete onesyGroup.preAll;
+      delete onesyGroup.preEveryGroup;
+      delete onesyGroup.preEveryTo;
+      delete onesyGroup.pre;
+      delete onesyGroup.preEveryGroupGroup;
+      delete onesyGroup.preTo;
+      delete onesyGroup.preEveryGroupTo;
 
-      delete amauiGroup.postAll;
-      delete amauiGroup.postEveryGroup;
-      delete amauiGroup.postEveryTo;
-      delete amauiGroup.post;
-      delete amauiGroup.postEveryGroupGroup;
-      delete amauiGroup.postTo;
-      delete amauiGroup.postEveryGroupTo;
+      delete onesyGroup.postAll;
+      delete onesyGroup.postEveryGroup;
+      delete onesyGroup.postEveryTo;
+      delete onesyGroup.post;
+      delete onesyGroup.postEveryGroupGroup;
+      delete onesyGroup.postTo;
+      delete onesyGroup.postEveryGroupTo;
 
-      values_.push(amauiGroup);
+      values_.push(onesyGroup);
 
       return values_;
     });

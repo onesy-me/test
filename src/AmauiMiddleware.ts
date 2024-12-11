@@ -1,21 +1,21 @@
-import { TMethod } from '@amaui/models';
+import { TMethod } from '@onesy/models';
 
-import AmauiGroup from './AmauiGroup';
-import { IAmauiResponse } from './AmauiTest';
+import OnesyGroup from './OnesyGroup';
+import { IOnesyResponse } from './OnesyTest';
 
-export interface IAmauiMiddleware {
+export interface IOnesyMiddleware {
   name: string;
   method: TMethod;
-  parent: AmauiGroup;
+  parent: OnesyGroup;
   file?: string;
 
-  responses?: Array<IAmauiResponse>;
+  responses?: Array<IOnesyResponse>;
 }
 
-class AmauiMiddleware implements IAmauiMiddleware {
-  public parent: AmauiGroup;
+class OnesyMiddleware implements IOnesyMiddleware {
+  public parent: OnesyGroup;
   public file?: string;
-  public responses: Array<IAmauiResponse> = [];
+  public responses: Array<IOnesyResponse> = [];
 
   constructor(
     public name: string,
@@ -24,4 +24,4 @@ class AmauiMiddleware implements IAmauiMiddleware {
 
 }
 
-export default AmauiMiddleware;
+export default OnesyMiddleware;

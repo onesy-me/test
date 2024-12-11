@@ -47,11 +47,11 @@ const run = async () => {
     const paths = (await fg('build/umd/*.prod.min.js', { onlyFiles: true }));
 
     paths.push(
-      'https://unpkg.com/@amaui/utils@latest/umd/amaui-utils.prod.min.js',
+      'https://unpkg.com/@onesy/utils@latest/umd/onesy-utils.prod.min.js',
 
-      'https://unpkg.com/@amaui/date@latest/umd/amaui-date.prod.min.js',
+      'https://unpkg.com/@onesy/date@latest/umd/onesy-date.prod.min.js',
 
-      'https://unpkg.com/@amaui/diff@latest/umd/amaui-diff.prod.min.js',
+      'https://unpkg.com/@onesy/diff@latest/umd/onesy-diff.prod.min.js',
 
       'https://unpkg.com/react@latest/umd/react.production.min.js'
     );
@@ -68,8 +68,8 @@ const run = async () => {
 <body>
   a
 
-  <div id='amaui-test>
-    <div id='amaui-test-results'></div>
+  <div id='onesy-test>
+    <div id='onesy-test-results'></div>
   </div>
 
 </body>
@@ -94,8 +94,8 @@ const run = async () => {
 
     if (['HEAD', 'OPTIONS'].indexOf(response.method) === -1) return res.status(200).json(response);
 
-    res.set('amaui-method', response.method);
-    res.set('amaui-url', response.url);
+    res.set('onesy-method', response.method);
+    res.set('onesy-url', response.url);
 
     return res.send();
   });

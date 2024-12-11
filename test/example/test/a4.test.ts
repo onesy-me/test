@@ -1,5 +1,5 @@
 /* tslint:disable: no-shadowed-variable */
-import { wait } from '@amaui/utils';
+import { wait } from '@onesy/utils';
 
 import { assert } from '../../../src';
 
@@ -27,7 +27,7 @@ to('a', async () => {
   assert(4).eq(4);
 });
 
-group('@amaui/a', () => {
+group('@onesy/a', () => {
 
   pre(async () => {
     await wait(140);
@@ -53,7 +53,7 @@ group('@amaui/a', () => {
     assert(4).eq(4);
   });
 
-  group('@amaui/a11', () => {
+  group('@onesy/a11', () => {
 
     to('a11', async () => {
       assert('a').eq(4);
@@ -65,7 +65,7 @@ group('@amaui/a', () => {
     assert(4).eq(4);
   });
 
-  group('@amaui/a14', () => {
+  group('@onesy/a14', () => {
     let a: any;
 
     pre(async () => {

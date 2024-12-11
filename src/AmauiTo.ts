@@ -1,27 +1,27 @@
-import { TMethod } from '@amaui/models';
+import { TMethod } from '@onesy/models';
 
-import AmauiGroup from './AmauiGroup';
-import { IAmauiResponse } from './AmauiTest';
+import OnesyGroup from './OnesyGroup';
+import { IOnesyResponse } from './OnesyTest';
 
-export interface IAmauiTo {
+export interface IOnesyTo {
   name: string;
   method: TMethod;
-  parent: AmauiGroup;
+  parent: OnesyGroup;
   level: number;
   file?: string;
   index: number;
   mainIndex: number;
 
-  response?: IAmauiResponse;
+  response?: IOnesyResponse;
 }
 
-class AmauiTo implements IAmauiTo {
-  public parent: AmauiGroup;
+class OnesyTo implements IOnesyTo {
+  public parent: OnesyGroup;
   public index = 0;
   public mainIndex = 0;
   public level: number;
   public file?: string;
-  public response: IAmauiResponse = {};
+  public response: IOnesyResponse = {};
 
   constructor(
     public name: string,
@@ -30,4 +30,4 @@ class AmauiTo implements IAmauiTo {
 
 }
 
-export default AmauiTo;
+export default OnesyTo;
