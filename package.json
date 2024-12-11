@@ -2,7 +2,7 @@
   "name": "@onesy/test",
   "version": "1.0.0",
   "description": "Test suite for front end and back end",
-  "repository": "https://github.com/onesy-org/onesy-test.git",
+  "repository": "https://github.com/onesy-me/test.git",
   "author": "Lazar <lazareric.com@gmail.com>",
   "license": "MIT",
   "private": false,
