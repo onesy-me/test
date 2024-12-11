@@ -19,7 +19,7 @@ import duration from '@onesy/date/duration';
 import OnesyLog from '@onesy/log';
 import OnesySubscription from '@onesy/subscription';
 import OnesyDiff from '@onesy/diff';
-import { IDiff } from '@onesy/diff/onesy-diff';
+import { IDiff } from '@onesy/diff/OnesyDiff';
 
 import OnesyGroup from './OnesyGroup';
 import OnesyTo from './OnesyTo';
