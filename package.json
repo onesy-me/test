@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Test suite for front end and back end",
   "repository": "https://github.com/onesy-me/test.git",
-  "author": "Lazar <lazareric.com@gmail.com>",
+  "author": "Lazar <lazareric2@gmail.com>",
   "license": "MIT",
   "private": false,
   "main": "./src/index.ts",
