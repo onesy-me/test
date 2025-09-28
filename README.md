@@ -4,7 +4,7 @@
 
 <p align='center'>
   <a target='_blank' rel='noopener noreferrer' href='#'>
-    <img src='utils/images/logo.svg' alt='onesy logo' />
+    <img width='auto' height='84' src='https://raw.githubusercontent.com/onesy-me/onesy/refs/heads/main/utils/images/logo.png' alt='onesy logo' />
   </a>
 </p>
 
@@ -322,7 +322,7 @@ Make an OnesyTest instance, which will prepare the environment, write all the te
 
 Results logged in nodejs and browser (and with an option for HTML logs)
 
-![OnesyTest results](utils/images/onesy-test-results.jpg)
+![OnesyTest results](utils/images/test-results.jpg)
 
 ### Dev
 
